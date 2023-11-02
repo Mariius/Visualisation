@@ -1,0 +1,86 @@
+{
+  "lastID": 1,
+  "questions": [
+    {
+      "name": "Question 1",
+      "text": "What is the capital of France?",
+      "answers": [
+        {
+          "id": 0,
+          "text": "Paris",
+          "points": 10,
+          "correct": true,
+          "percentage": 100
+        },
+        {
+          "id": 1,
+          "text": "London",
+          "points": 0,
+          "correct": false,
+          "percentage": 100
+        },
+        {
+          "id": 2,
+          "text": "Berlin",
+          "points": 0,
+          "correct": false,
+          "percentage": 50
+        }
+      ]
+    },
+    {
+      "name": "Question 2",
+      "text": "What is the largest planet in our solar system?",
+      "answers": [
+        {
+          "id": 3,
+          "text": "Jupiter",
+          "points": 10,
+          "correct": true,
+          "percentage": 100
+        },
+        {
+          "id": 4,
+          "text": "Mars",
+          "points": 0,
+          "correct": false,
+          "percentage": 100
+        },
+        {
+          "id": 5,
+          "text": "Earth",
+          "points": 0,
+          "correct": false,
+          "percentage": 100
+        }
+      ]
+    },
+    {
+      "name": "Testing Question",
+      "text": "Some nice question text...",
+      "answers": [
+        {
+          "id": 11,
+          "text": "It is 42",
+          "points": 1,
+          "correct": true,
+          "percentage": 100
+        },
+        {
+          "id": 2,
+          "text": "Berlin",
+          "points": 0,
+          "correct": false,
+          "percentage": 75
+        },
+        {
+          "id": 5,
+          "text": "Earth",
+          "points": 0,
+          "correct": false,
+          "percentage": 50
+        }
+      ]
+    }
+  ]
+}
