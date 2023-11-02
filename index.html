@@ -5,9 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visualisation</title>
     <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="script.js"></script>
+   
+    
 </head>
 <body>
-    
+    <header>
+        <h1>Visualisation</h1>
+    </header>
+    <div class="container">
+
+        <div class="left-column">
+            <p> Left column</p>
+        </div>
+        <div class="right-column">
+
+            <form onsubmit="newElement(event)">
+                <input title="text eingeben" type="text" id="el"/> 
+                <button type="submit">speichern</button>
+            </form>
+            <ul id="elemente">
+                <li >
+                    elemente 
+                </li>
+            </ul>
+
+            <div id="json-content">
+                <!-- Json Daten -->
+            </div>
+            
+        </div>
+        
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
