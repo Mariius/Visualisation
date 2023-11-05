@@ -30,6 +30,31 @@ section{
 }
 
 .right-column {
+    display: flex;
+    flex-direction: column;
     flex: 1; /* Die rechte Spalte nimmt ebenfalls den verfügbaren Platz ein */
     background-color:rgb(220, 228, 228); /* Hintergrundfarbe für die rechte Spalte */
+    
+}
+
+.upper{
+    display: flex;
+    flex: 1;
+}
+
+.lower{
+    flex: 1;
+    background-color: aqua;
+}
+
+.left-column1 {
+    flex: 1; /* Die linke Spalte nimmt den verfügbaren Platz ein */
+    /* background-color: #f2f2f2; Hintergrundfarbe für die linke Spalte */
+}
+
+.right-column1 {
+    
+    flex: 1; /* Die rechte Spalte nimmt ebenfalls den verfügbaren Platz ein */
+    background-color:rgb(68, 156, 156); /* Hintergrundfarbe für die rechte Spalte */
+  
 }
