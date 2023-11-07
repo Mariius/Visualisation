@@ -274,6 +274,33 @@
           "percentage": 0
         }
       ]
+    },
+    {
+      "name": "capital",
+      "text": "capital of name",
+      "answers": [
+        {
+          "id": 0,
+          "text": "yaounde",
+          "points": 30,
+          "correct": true,
+          "percentage": 100
+        },
+        {
+          "id": 1,
+          "text": "doula",
+          "points": 0,
+          "correct": false,
+          "percentage": 0
+        },
+        {
+          "id": 2,
+          "text": "bafoussam",
+          "points": 0,
+          "correct": false,
+          "percentage": 0
+        }
+      ]
     }
   ]
 }

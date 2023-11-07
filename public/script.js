@@ -1,11 +1,11 @@
-function newElement(event) {
-    event.preventDefault();
-    var el = document.getElementById("el");
-    var inputValue = el.value; 
-    var elementeList = document.getElementById("elemente");
-    elementeList.innerHTML += `<li>${inputValue}</li>`;
-    el.value = ""; 
-}
+// function newElement(event) {
+//     event.preventDefault();
+//     var el = document.getElementById("el");
+//     var inputValue = el.value; 
+//     var elementeList = document.getElementById("elemente");
+//     elementeList.innerHTML += `<li>${inputValue}</li>`;
+//     el.value = ""; 
+// }
 
 // --------------------load json data, add data to the json file -----------------------------------------------------------------------------------------------------------------
     const dataList = document.getElementById('data-list');
@@ -19,6 +19,7 @@ function newElement(event) {
           dataList.innerHTML = '';
           data.questions.forEach(question => {
             const listItem = document.createElement('li');
+           listItem+= document.createAttribute()
             listItem.textContent = `${question.name}: ${question.text}`;
             dataList.appendChild(listItem);
             myQuestions.push(`${question.name}: ${question.text}`);
