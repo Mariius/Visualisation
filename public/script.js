@@ -6,6 +6,7 @@
 //     elementeList.innerHTML += `<li>${inputValue}</li>`;
 //     el.value = ""; 
 // }
+// ggggggggggggg
 
 // --------------------load json data, add data to the json file -----------------------------------------------------------------------------------------------------------------
     const dataList = document.getElementById('data-list');
