@@ -1,30 +1,57 @@
+const express = require('express');
 const fs = require('fs');
+const app = express();
+const port = 3000;
 
-function addEntry(entry) {
-    // Lade die vorhandenen Einträge aus der JSON-Datei
-    const filePath = path.join(__dirname, 'menu.json');
-    let entries = [];
+app.use(express.static('public')); // index.html muss sich im Ordner public befinden
+app.use(express.json());
 
-    try {
-        const data = fs.readFileSync(filePath, 'utf8');
-        entries = JSON.parse(data);
-    } catch (err) {
-        // Wenn die Datei nicht existiert oder nicht gelesen werden kann, erstelle ein leeres Array
-        entries = [];
+// Endpoint zum Lesen der JSON-Daten
+app.get('/api/data', (req, res) => {
+  fs.readFile('quiz.json', 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+      return;
+    }
+    res.json(JSON.parse(data));
+  });
+});
+
+// Endpoint zum Hinzufügen neuer Fragen und Antworten
+app.post('/api/add', (req, res) => {
+  if (!req.body || !req.body.name || !req.body.text) {
+    res.status(400).json({ error: 'Bad Request: Name and Text are required fields.' });
+    return;
+  }
+
+  fs.readFile('quiz.json', 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+      return;
     }
 
-    // Füge den neuen Eintrag hinzu
-    entries.push(entry);
+    const jsonData = JSON.parse(data);
+    const newEntry = {
+      name: req.body.name,
+      text: req.body.text,
+      answers: req.body.answers,
+    };
 
-    // Schreibe die aktualisierte Liste in die JSON-Datei
-    fs.writeFileSync(filePath, JSON.stringify(entries));
+    jsonData.questions.push(newEntry);
 
-    return entries;
-}
+    fs.writeFile('quiz.json', JSON.stringify(jsonData, null, 2), 'utf8', (err) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+        return;
+      }
+      res.json({ success: true });
+    });
+  });
+});
 
-app.post('/addEntry', (req, res) => {
-    const entry = req.body.entry;
-    const updatedEntries = addEntry(entry);
-
-    res.send('Eintrag wurde hinzugefügt');
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });
