@@ -193,6 +193,87 @@
           "percentage": 100
         }
       ]
+    },
+    {
+      "name": "frucht",
+      "text": "was ist sauer?",
+      "answers": [
+        {
+          "id": 0,
+          "text": "orange",
+          "points": 0,
+          "correct": false,
+          "percentage": 0
+        },
+        {
+          "id": 1,
+          "text": "zitrone",
+          "points": 7,
+          "correct": true,
+          "percentage": 100
+        },
+        {
+          "id": 2,
+          "text": "Mango",
+          "points": 6,
+          "correct": true,
+          "percentage": 100
+        }
+      ]
+    },
+    {
+      "name": "frucht",
+      "text": "was ist sauer?",
+      "answers": [
+        {
+          "id": 0,
+          "text": "orange",
+          "points": 0,
+          "correct": false,
+          "percentage": 0
+        },
+        {
+          "id": 1,
+          "text": "zitrone",
+          "points": 10,
+          "correct": true,
+          "percentage": 100
+        },
+        {
+          "id": 2,
+          "text": "Mango",
+          "points": 0,
+          "correct": false,
+          "percentage": 0
+        }
+      ]
+    },
+    {
+      "name": "ques 34",
+      "text": "was ist gesmacktlos?",
+      "answers": [
+        {
+          "id": 0,
+          "text": "orange",
+          "points": 0,
+          "correct": false,
+          "percentage": 0
+        },
+        {
+          "id": 1,
+          "text": "wasser",
+          "points": 7,
+          "correct": true,
+          "percentage": 100
+        },
+        {
+          "id": 2,
+          "text": "werefg",
+          "points": 0,
+          "correct": false,
+          "percentage": 0
+        }
+      ]
     }
   ]
 }

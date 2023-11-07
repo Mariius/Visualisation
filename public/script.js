@@ -85,10 +85,22 @@ function newElement(event) {
         .then(response => response.json())
         .then(data => {
           if (data.success) {
+            document.getElementById("questionName").value = '';
+            document.getElementById("questionText").value = '';
+            document.getElementById("answer1Text").value = '';
+            document.getElementById("answer1Points").value = '';
+            document.getElementById("answer1Correct").checked = false;
+            document.getElementById("answer2Text").value = '';
+            document.getElementById("answer2Points").value = '';
+            document.getElementById("answer2Correct").checked = false;
+            document.getElementById("answer3Text").value = '';
+            document.getElementById("answer3Points").value = '';
+            document.getElementById("answer3Correct").checked = false;
             loadData();
             
           }
         });
+
     });
 
     // Initial laden der Daten
