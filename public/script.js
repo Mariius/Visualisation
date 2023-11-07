@@ -19,11 +19,22 @@
         .then(data => {
           dataList.innerHTML = '';
           data.questions.forEach(question => {
-            const listItem = document.createElement('li');
-           listItem+= document.createAttribute()
+            const listItem = document.createElement('button');
+            listItem.id='buttonstyle';
+           // listItem.classList.add('transition', 'gradient','label'); 
+            const newline = document.createElement('br'); 
+             
+            
+           
+
             listItem.textContent = `${question.name}: ${question.text}`;
             dataList.appendChild(listItem);
+            dataList.appendChild(newline); 
             myQuestions.push(`${question.name}: ${question.text}`);
+            
+          
+           
+
           });
         });
     }
