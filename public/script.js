@@ -103,7 +103,16 @@
           document.getElementById("answer3Points").value = '';
           document.getElementById("answer3Correct").checked = false;
           loadData();
+          const done=document.createElement('p');
+          done.textContent=`the question ${questionName} was added successfuly`;
+          messageDiv.appendChild(done);
+
           
+        }
+        else{
+          const failled=document.createElement('p');
+          failled.textContent=`the question ${questionName} could not be added`;
+          messageDiv.appendChild(failled);
         }
       });
 
