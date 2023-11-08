@@ -140,6 +140,7 @@
 
     // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+    // Inhalte in rigth-column1 ein und ausblenden
     function showContent(contentId) {
       // Alle Inhaltscontainer ausblenden
       var contentContainers = document.querySelectorAll('.inhalt_recht');
@@ -150,5 +151,13 @@
       // Den ausgewählten Inhalt anzeigen
       var selectedContent = document.getElementById(contentId);
       selectedContent.style.display = 'block';
-  }
+   }
+
+  //  Details einer Frage anzeigen
+
+  const details = document.getElementById("questionDetails");
+  details.innerHTML = ` `;
+  const dItem=createElement("li");
+
+  
   

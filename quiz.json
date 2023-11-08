@@ -459,6 +459,33 @@
           "percentage": 100
         }
       ]
+    },
+    {
+      "name": "wjehwje",
+      "text": "was ist sauer?",
+      "answers": [
+        {
+          "id": 0,
+          "text": "orange",
+          "points": 2,
+          "correct": false,
+          "percentage": 0
+        },
+        {
+          "id": 1,
+          "text": "zitrone",
+          "points": -2,
+          "correct": true,
+          "percentage": 100
+        },
+        {
+          "id": 2,
+          "text": "werefg",
+          "points": -2,
+          "correct": true,
+          "percentage": 100
+        }
+      ]
     }
   ]
 }
