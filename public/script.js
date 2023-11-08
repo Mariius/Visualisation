@@ -36,6 +36,8 @@
    
     const form = document.getElementById("dataForm");
     const messageDiv = document.getElementById("message");
+    const newQ = document.getElementById("newQuestion");
+    const startR1 = document.getElementById("start");
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -108,11 +110,26 @@
           messageDiv.appendChild(done);
 
           
+          setTimeout(function() {
+            messageDiv.style.display = "none";
+            newQ.style.display = "none";
+            startR1.style.display ="flex";
+          }, 100); // 10000 Millisekunden (10 Sekunden)
+
+          
         }
         else{
           const failled=document.createElement('p');
           failled.textContent=`the question ${questionName} could not be added`;
           messageDiv.appendChild(failled);
+
+          
+          setTimeout(function() {
+            messageDiv.style.display = "none";
+            newQ.style.display = "none";
+            startR1.style.display ="flex";
+          }, 100); // 10000 Millisekunden (10 Sekunden)
+
         }
       });
 

@@ -82,7 +82,6 @@
         }
       ]
     },
-    
     {
       "name": "wjehwje",
       "text": "ewewewewe",
@@ -296,6 +295,168 @@
           "points": 0,
           "correct": false,
           "percentage": 0
+        }
+      ]
+    },
+    {
+      "name": "frucht",
+      "text": "was ist sauer?",
+      "answers": [
+        {
+          "id": 0,
+          "text": "orange",
+          "points": 0,
+          "correct": false,
+          "percentage": 0
+        },
+        {
+          "id": 1,
+          "text": "zitrone",
+          "points": 10,
+          "correct": true,
+          "percentage": 100
+        },
+        {
+          "id": 2,
+          "text": "Mango",
+          "points": 0,
+          "correct": false,
+          "percentage": 0
+        }
+      ]
+    },
+    {
+      "name": "ques 35",
+      "text": "was ist gesmacktlos?",
+      "answers": [
+        {
+          "id": 0,
+          "text": "weed",
+          "points": 0,
+          "correct": false,
+          "percentage": 0
+        },
+        {
+          "id": 1,
+          "text": "wasser",
+          "points": 9,
+          "correct": true,
+          "percentage": 100
+        },
+        {
+          "id": 2,
+          "text": "Mango",
+          "points": 0,
+          "correct": false,
+          "percentage": 0
+        }
+      ]
+    },
+    {
+      "name": "frucht",
+      "text": "ewewewewe",
+      "answers": [
+        {
+          "id": 0,
+          "text": "orange",
+          "points": -1,
+          "correct": true,
+          "percentage": 100
+        },
+        {
+          "id": 1,
+          "text": "zitrone",
+          "points": 2,
+          "correct": false,
+          "percentage": 0
+        },
+        {
+          "id": 2,
+          "text": "werefg",
+          "points": 2,
+          "correct": false,
+          "percentage": 0
+        }
+      ]
+    },
+    {
+      "name": "qssss",
+      "text": "ewewewewe",
+      "answers": [
+        {
+          "id": 0,
+          "text": "orange",
+          "points": 1,
+          "correct": false,
+          "percentage": 0
+        },
+        {
+          "id": 1,
+          "text": "zitrone",
+          "points": 1,
+          "correct": true,
+          "percentage": 100
+        },
+        {
+          "id": 2,
+          "text": "werefg",
+          "points": 1,
+          "correct": false,
+          "percentage": 0
+        }
+      ]
+    },
+    {
+      "name": "wjehwje",
+      "text": "ewewewewe",
+      "answers": [
+        {
+          "id": 0,
+          "text": "wewd",
+          "points": -1,
+          "correct": false,
+          "percentage": 0
+        },
+        {
+          "id": 1,
+          "text": "dwdw",
+          "points": 1,
+          "correct": false,
+          "percentage": 0
+        },
+        {
+          "id": 2,
+          "text": "werefg",
+          "points": 1,
+          "correct": false,
+          "percentage": 0
+        }
+      ]
+    },
+    {
+      "name": "wjehwje",
+      "text": "ewewewewe",
+      "answers": [
+        {
+          "id": 0,
+          "text": "orange",
+          "points": -1,
+          "correct": false,
+          "percentage": 0
+        },
+        {
+          "id": 1,
+          "text": "zitrone",
+          "points": 1,
+          "correct": false,
+          "percentage": 0
+        },
+        {
+          "id": 2,
+          "text": "werefg",
+          "points": -1,
+          "correct": true,
+          "percentage": 100
         }
       ]
     }
