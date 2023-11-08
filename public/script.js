@@ -22,23 +22,17 @@
             listItem.id='buttonstyle';
            // listItem.classList.add('transition', 'gradient','label'); 
             const newline = document.createElement('br'); 
-             
-            
-           
-
             listItem.textContent = `${question.name}: ${question.text}`;
             dataList.appendChild(listItem);
             dataList.appendChild(newline); 
             myQuestions.push(`${question.name}: ${question.text}`);
             
-          
-           
 
           });
         });
     }
     
-    console.log(myQuestions);
+    // console.log(myQuestions);
    
     const form = document.getElementById("dataForm");
     const messageDiv = document.getElementById("message");
@@ -119,3 +113,16 @@
     loadData();
 
     // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    function showContent(contentId) {
+      // Alle Inhaltscontainer ausblenden
+      var contentContainers = document.querySelectorAll('.inhalt_recht');
+      contentContainers.forEach(function (container) {
+          container.style.display = 'none';
+      });
+  
+      // Den ausgewählten Inhalt anzeigen
+      var selectedContent = document.getElementById(contentId);
+      selectedContent.style.display = 'block';
+  }
+  

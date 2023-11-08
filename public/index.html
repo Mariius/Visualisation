@@ -1,91 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualisation</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-   
-    
-</head>
-<body>
-    <header>
-        <h1>Visualisation</h1>
-    </header>
-    <div class="container">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Visualisation</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+       
+    </head>
+    <body>
+        <header>
+            <h1>Visualisation</h1>
+        </header>
+        <div class="container">
 
-        <div class="left-column">
-            <p> Left column (do not use)</p>
-        </div>
-        <div class="right-column">
-
-            <div class="upper">
+            <div class="left-column">
+                <p> Left column (do not use)</p>
                 
-                <div class="left-column1">
-                    <form onsubmit="newElement(event)">
-                        <input title="text eingeben" type="text" id="el"/> 
-                        <button type="submit">speichern</button>
-                    </form>
-                    <ul id="elemente">
-                        <li >
-                            elemente 
-                        </li>
-                    </ul>
+                <i class="fa fa-car"></i>
+                <i class="fa fa-car" style="font-size:48px;"></i>
+                <i class="fa fa-car" style="font-size:60px;color:red;"></i>
 
-                    <h1>Questions</h1>
-                    <ul id="data-list"></ul>
+            </div>
+            <div class="right-column">
+
+                <div class="upper">
+                    
+                    <div class="left-column1" style="position: relative">
+                        <form onsubmit="newElement(event)">
+                            <input title="text eingeben" type="text" id="el"/> 
+                            <button type="submit">speichern</button>
+                        </form>
+                        <ul id="elemente">
+                            <li >
+                                elemente 
+                            </li>
+                        </ul>
+
+                        <h1>Questions</h1>
+                        <ul id="data-list"></ul>
+                        
+                        <!-- button to add a new Question -->
+                        <button onclick="showContent('newQuestion')" style="position: absolute;  bottom: 0; right: 0;"><i style="font-size:24px" class="fa">&#xf067;</i></button>
+
+                    </div>
+                    <div class="right-column1">
+
+                        <i style='font-size:24px' class='fas inhalt_recht'>&#xf518;</i>
+                        
+                        <div id="newQuestion" class="inhalt_recht" style="display: none;">
+                            <h1>Add a new question</h1>
+                            <form id="dataForm">
+                                <label for="questionName">Question Name:</label>
+                                <input type="text" id="questionName" name="questionName" required><br><br>
+                        
+                                <label for="questionText">Question Text:</label>
+                                <input type="text" id="questionText" name="questionText" required><br><br>
+                        
+                                <label for="answers">Answers:</label><br>
+                        
+                                <!-- Answer 1 -->
+                                <label for="answer1Text">Answer 1 Text:</label>
+                                <input type="text" id="answer1Text" name="answer1Text" required>
+                                <label for="answer1Points">Points:</label>
+                                <input type="number" id="answer1Points" name="answer1Points" required>
+                                <label for="answer1Correct">Correct:</label>
+                                <input type="checkbox" id="answer1Correct" name="answer1Correct"><br>
+                        
+                                <!-- Answer 2 -->
+                                <label for="answer2Text">Answer 2 Text:</label>
+                                <input type="text" id="answer2Text" name="answer2Text" required>
+                                <label for="answer2Points">Points:</label>
+                                <input type="number" id="answer2Points" name="answer2Points" required>
+                                <label for="answer2Correct">Correct:</label>
+                                <input type="checkbox" id="answer2Correct" name="answer2Correct"><br>
+                        
+                                <!-- Answer 3 -->
+                                <label for="answer3Text">Answer 3 Text:</label>
+                                <input type="text" id="answer3Text" name="answer3Text" required>
+                                <label for="answer3Points">Points:</label>
+                                <input type="number" id="answer3Points" name="answer3Points" required>
+                                <label for="answer3Correct">Correct:</label>
+                                <input type="checkbox" id="answer3Correct" name="answer3Correct"><br>
+                        
+                                <button type="submit">Add Question</button>
+                            </form>
+                        </div>
+                    
+                        <div id="message"></div>
+                    </div>    
+                </div>
+                <div class="lower">
+
+                    <h1>Unten</h1>
 
                 </div>
-                <div class="right-column1">
-
-                    <h1>Add a new question</h1>
-                    <form id="dataForm">
-                        <label for="questionName">Question Name:</label>
-                        <input type="text" id="questionName" name="questionName" required><br><br>
-                
-                        <label for="questionText">Question Text:</label>
-                        <input type="text" id="questionText" name="questionText" required><br><br>
-                
-                        <label for="answers">Answers:</label><br>
-                
-                        <!-- Answer 1 -->
-                        <label for="answer1Text">Answer 1 Text:</label>
-                        <input type="text" id="answer1Text" name="answer1Text" required>
-                        <label for="answer1Points">Points:</label>
-                        <input type="number" id="answer1Points" name="answer1Points" required>
-                        <label for="answer1Correct">Correct:</label>
-                        <input type="checkbox" id="answer1Correct" name="answer1Correct"><br>
-                
-                        <!-- Answer 2 -->
-                        <label for="answer2Text">Answer 2 Text:</label>
-                        <input type="text" id="answer2Text" name="answer2Text" required>
-                        <label for="answer2Points">Points:</label>
-                        <input type="number" id="answer2Points" name="answer2Points" required>
-                        <label for="answer2Correct">Correct:</label>
-                        <input type="checkbox" id="answer2Correct" name="answer2Correct"><br>
-                
-                        <!-- Answer 3 -->
-                        <label for="answer3Text">Answer 3 Text:</label>
-                        <input type="text" id="answer3Text" name="answer3Text" required>
-                        <label for="answer3Points">Points:</label>
-                        <input type="number" id="answer3Points" name="answer3Points" required>
-                        <label for="answer3Correct">Correct:</label>
-                        <input type="checkbox" id="answer3Correct" name="answer3Correct"><br>
-                
-                        <button type="submit">Add Question</button>
-                    </form>
-                
-                    <div id="message"></div>
-                </div>    
             </div>
-            <div class="lower">
-
-                <h1>Unten</h1>
-
-            </div>
+            
         </div>
-        
-    </div>
-    <script src="script.js"></script>
-</body>
+        <script src="script.js"></script>
+       
+    </body>
 </html>
