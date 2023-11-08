@@ -27,25 +27,23 @@
 
                 <div class="upper">
                     
-                    <div class="left-column1" style="position: relative">
-                        <form onsubmit="newElement(event)">
-                            <input title="text eingeben" type="text" id="el"/> 
-                            <button type="submit">speichern</button>
-                        </form>
-                        <ul id="elemente">
-                            <li >
-                                elemente 
-                            </li>
-                        </ul>
-
-                        <h1>Questions</h1>
+                    
+                    <div class="left-column1" style="position: relative" > 
+                        <div style="height: 100px; z-index: 1; position: fixed;  width: 23.9%;  background-color: #7a3d3d; ">
+                            <h1 style="text-align: center;">Questions</h1>
+                        </div>
                         <!-- <ul id="data-list"></ul> -->
-                        <table id="data-table">                           
-                        </table>
-                        
-                        <!-- button to add a new Question -->
-                        <button onclick="showContent('newQuestion')" style="position: absolute;  bottom: 0; right: 0;"><i style="font-size:24px" class="fa">&#xf067;</i></button>
+                        <div style="margin-top: 100px;">
+                            <table id="data-table">                           
+                            </table>
+                        </div>
+                        <div style="z-index: 2; ; height: 20px;">
+                            <!-- button to add a new Question -->
+                            <button onclick="showContent('newQuestion')" style="position: absolute;  bottom: 0; right: 0; border-radius: 50%;"><i style="font-size:24px" class="fa">&#xf067;</i></button>
 
+                        </div>
+                        
+                        
                     </div>
                     <div class="right-column1">
                         
