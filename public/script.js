@@ -22,7 +22,7 @@ const myQuestions = [];
       fetch('/api/data')
         .then(response => response.json())
         .then(data => {
-          dataList.innerHTML = '';
+          
           data.questions.forEach(question => {
 
           //tabelle Elemente erstellen 
