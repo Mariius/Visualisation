@@ -26,7 +26,9 @@ function loadData() {
         //tabelle Elemente erstellen 
         var tr = document.createElement('tr');
         var td = document.createElement('td');; 
-        td.textContent = `${question.name}`; // Fragebezeichnung als Textinhalt jede Zelle zuweisen
+        var buttonItem= document.createElement('button');
+        buttonItem.textContent = `${question.name}`; // Fragebezeichnung als Textinhalt jede Zelle zuweisen
+        td.appendChild(buttonItem); 
         tr.appendChild(td);
         tbdy.appendChild(tr);
 
