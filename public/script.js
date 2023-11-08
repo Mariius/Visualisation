@@ -37,11 +37,13 @@ function loadData() {
 
         tr.onmouseover = function(){
           td.textContent=`${question.text}`;
+          td.style.backgroundColor="green" ; 
          }
 
         tr.onmouseleave = function(){
       
              td.textContent=`${question.name}`;
+             td.style.backgroundColor="#15a0af";
          }
         
         myQuestions.push(`${question.name}: ${question.text}`);
