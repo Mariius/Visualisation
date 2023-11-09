@@ -193,6 +193,13 @@ function showContent(contentId) {
   selectedContent.style.display = 'block';
 }
 
+function hideContent(contentId) {
+  
+  var selectedContent = document.getElementById(contentId);
+  selectedContent.style.display = 'none';
+  startR1.style.display = "flex";
+}
+
 //  Details einer Frage anzeigen
 
 const details = document.getElementById("questionDetails");
