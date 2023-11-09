@@ -540,6 +540,33 @@
           "percentage": "100%"
         }
       ]
+    },
+    {
+      "name": "ques 34",
+      "text": "habe ich es geschaft?",
+      "answers": [
+        {
+          "id": 0,
+          "text": "ja",
+          "points": -1,
+          "correct": false,
+          "percentage": 17
+        },
+        {
+          "id": 1,
+          "text": "nein",
+          "points": -1,
+          "correct": false,
+          "percentage": 28
+        },
+        {
+          "id": 2,
+          "text": "mal sehen",
+          "points": 21,
+          "correct": true,
+          "percentage": 78
+        }
+      ]
     }
   ]
 }

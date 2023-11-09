@@ -47,64 +47,63 @@
                     <div class="right-column1">
                         
                         <!-- is displayed at the start in the right-column1 -->
-                        <div id="start"
-                        style="position: relative;
-                        height: 40vh; 
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;"
-                        class="inhalt_recht">
+                        <div id="start" class="inhalt_recht" style="position: relative; height: 40vh;  display: flex; justify-content: center; align-items: center;">
                             <i style="font-size:100px" class="fa">&#xf0db;</i>
                         </div>
+
+                        <!-- details about each question -->
                         <div id="questionResponses" class="inhalt_recht" style="display: none; width: 100%; justify-content: center; margin: 20px;">
                             <form id ="teste-01">
 
                             </form>
                         </div>
+
                         <!-- form to add new question -->
                         <div id="newQuestion" class="inhalt_recht" style="display: none; width: 100%; justify-content: center; margin: 20px;">
-                            <h1 style="text-align: center;">Add a new question</h1>
+                            <h1 style="text-align: center; margin-top: 0; margin-bottom: 10px;">Add a new question</h1> 
                             <form id="dataForm">
-                                <label for="questionName">Question Name:</label>
-                                <input type="text" id="questionName" name="questionName" required><br><br>
-                        
-                                <label for="questionText">Question Text:</label>
-                                <input type="text" id="questionText" name="questionText" required><br><br>
-                        
-                                <label for="answers">Answers:</label><br>
-                        
-                                <!-- Answer 1 -->
-                                <label for="answer1Text">Answer 1 Text:</label>
-                                <input type="text" id="answer1Text" name="answer1Text" required><br>
-                                <label for="answer1Points">Points:</label>
-                                <input type="number" id="answer1Points" name="answer1Points" required>
-                                <label for="answer1Correct">Correct:</label>
-                                <input type="checkbox" id="answer1Correct" name="answer1Correct"><br>
-                                <label for="answer1Percentage">Percentage:</label>
-                                <input type="number" id="answer1Percentage" name="answer1Percentage" required><br>
-                        
-                                <!-- Answer 2 -->
-                                <label for="answer2Text">Answer 2 Text:</label>
-                                <input type="text" id="answer2Text" name="answer2Text" required><br>
-                                <label for="answer2Points">Points:</label>
-                                <input type="number" id="answer2Points" name="answer2Points" required>
-                                <label for="answer2Correct">Correct:</label>
-                                <input type="checkbox" id="answer2Correct" name="answer2Correct"><br>
-                                <label for="answer2Percentage">Percentage:</label>
-                                <input type="number" id="answer2Percentage" name="answer2Percentage" required><br>
-                        
-                                <!-- Answer 3 -->
-                                <label for="answer3Text">Answer 3 Text:</label>
-                                <input type="text" id="answer3Text" name="answer3Text" required><br>
-                                <label for="answer3Points">Points:</label>
-                                <input type="number" id="answer3Points" name="answer3Points" required>
-                                <label for="answer3Correct">Correct:</label>
-                                <input type="checkbox" id="answer3Correct" name="answer3Correct"><br>
-                                <label for="answer3Percentage">Percentage:</label>
-                                <input type="number" id="answer3Percentage" name="answer3Percentage" required><br><br>
-                        
-                                <button onclick="hideContent('newQuestion')">cancel</button>
-                                <button type="submit" style="right: 0;">Add Question</button>
+                                <table>
+                                    <tr><td><label for="questionName">Question Name:</label></td>
+                                    <td><input type="text" id="questionName" name="questionName" required></td></tr>
+                            
+                                    <tr><td><label for="questionText">Question Text:</label></td>
+                                    <td><input type="text" id="questionText" name="questionText" required></td></tr>
+                            
+                                    <tr><td><label for="answers">Answers:</label></td></tr>
+                            
+                                    <!-- Answer 1 -->
+                                    <tr><td><label for="answer1Text">Answer 1 Text:</label></td>
+                                    <td><input type="text" id="answer1Text" name="answer1Text" required></td></tr>
+                                    <tr><td><label for="answer1Points">Points:</label></td>
+                                    <td><input type="number" id="answer1Points" name="answer1Points" required></td></tr>
+                                    <tr><td><label for="answer1Correct">Correct:</label></td>
+                                    <td><input type="checkbox" id="answer1Correct" name="answer1Correct"></td></tr>
+                                    <tr><td><label for="answer1Percentage">Percentage:</label></td>
+                                    <td><input type="number" id="answer1Percentage" name="answer1Percentage" required></td></tr>
+                            
+                                    <!-- Answer 2 -->
+                                    <tr><td><label for="answer1Text">Answer 2 Text:</label></td>
+                                    <td><input type="text" id="answer2Text" name="answer2Text" required></td></tr>
+                                    <tr><td><label for="answer2Points">Points:</label></td>
+                                    <td><input type="number" id="answer2Points" name="answer2Points" required></td></tr>
+                                    <tr><td><label for="answer2Correct">Correct:</label></td>
+                                    <td><input type="checkbox" id="answer2Correct" name="answer2Correct"></td></tr>
+                                    <tr><td><label for="answer2Percentage">Percentage:</label></td>
+                                    <td><input type="number" id="answer2Percentage" name="answer2Percentage" required></td></tr>
+                            
+                                    <!-- Answer 3 -->
+                                    <tr><td><label for="answer3Text">Answer 3 Text:</label></td>
+                                    <td><input type="text" id="answer3Text" name="answer3Text" required></td></tr>
+                                    <tr><td><label for="answer3Points">Points:</label></td>
+                                    <td><input type="number" id="answer3Points" name="answer3Points" required></td></tr>
+                                    <tr><td><label for="answer3Correct">Correct:</label></td>
+                                    <td><input type="checkbox" id="answer3Correct" name="answer3Correct"></td></tr>>
+                                    <tr><td><label for="answer3Percentage">Percentage:</label></td>
+                                    <td><input type="number" id="answer3Percentage" name="answer3Percentage" required></td></tr>
+                            
+                                    <tr><td><button onclick="hideContent('newQuestion')">cancel</button></td>
+                                    <td><button type="submit" style="right: 0;">Add Question</button></td></tr>
+                                </table>
                             </form>
                         </div>
                          
