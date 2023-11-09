@@ -90,12 +90,15 @@ form.addEventListener("submit", async (event) => {
   const answer1Text = document.getElementById("answer1Text").value;
   const answer1Points = parseInt(document.getElementById("answer1Points").value);
   const answer1Correct = document.getElementById("answer1Correct").checked;
+  const answer1Percentage = parseInt(document.getElementById("answer1Percentage").value);
   const answer2Text = document.getElementById("answer2Text").value;
   const answer2Points = parseInt(document.getElementById("answer2Points").value);
   const answer2Correct = document.getElementById("answer2Correct").checked;
+  const answer2Percentage = parseInt(document.getElementById("answer2Percentage").value);
   const answer3Text = document.getElementById("answer3Text").value;
   const answer3Points = parseInt(document.getElementById("answer3Points").value);
   const answer3Correct = document.getElementById("answer3Correct").checked;
+  const answer3Percentage = parseInt(document.getElementById("answer3Percentage").value);
 
   const newData = {
     "name": questionName,
@@ -106,21 +109,21 @@ form.addEventListener("submit", async (event) => {
         "text": answer1Text,
         "points": answer1Points,
         "correct": answer1Correct,
-        "percentage": answer1Correct ? 100 : 0
+        "percentage": answer1Percentage 
       },
       {
         "id": 1,
         "text": answer2Text,
         "points": answer2Points,
         "correct": answer2Correct,
-        "percentage": answer2Correct ? 100 : 0
+        "percentage": answer2Percentage 
       },
       {
         "id": 2,
         "text": answer3Text,
         "points": answer3Points,
         "correct": answer3Correct,
-        "percentage": answer3Correct ? 100 : 0
+        "percentage": answer3Percentage 
       }
     ]
   };
