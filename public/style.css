@@ -6,6 +6,10 @@ header{
     padding: 10px;
     text-align: center;
     color: aliceblue;
+    border-radius: 26px;
+    background: #7a54eb;
+    box-shadow: inset -5px -5px 4px #31225e,
+            inset 5px 5px 4px #c386ff;
 }
 /* 
 section{
@@ -47,6 +51,10 @@ section{
 .lower{
     flex: 1;
     background-color: aqua;
+    border-radius: 26px;
+    /* background: #7a54eb; */
+    box-shadow: inset -5px -5px 4px #31225e,
+            inset 5px 5px 4px #c386ff;
 }
 
 .left-column1 {
@@ -68,27 +76,6 @@ section{
     padding: auto;
 }
 
-/* td{
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    font-size: 17px;
-    padding: 1em 2.7em;
-    font-weight: 500;
-    background: #1F2937;
-    color: white;
-    border: none;
-    position: relative;
-    overflow: hidden;
-   
-
-    border-radius: 18px;
-    background: linear-gradient(145deg, #cacaca, #f0f0f0); 
-    box-shadow:  8px 8px 18px #c7c7c7,
-             -8px -8px 18px #f9f9f9;
-
-    margin: 3cm; 
- } */
-
-
  td{
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     font-size: 17px;
@@ -100,10 +87,28 @@ section{
     overflow: hidden;
     border-radius: 0.6em;
 
-    border-radius: 18px;
-    background:#15a0af;
-    box-shadow:  8px 8px 18px #c7c7c7,
-             -8px -8px 18px #f9f9f9;
+    border-radius: 20px;
+    background: #cfc5ed;
+    box-shadow: inset -5px -5px 4px #31225e,
+            inset 5px 5px 4px #c386ff;
+ }
+
+ .left-column1 ::-webkit-scrollbar{
+    height:10%; 
+    z-index: 1; 
+ }
+
+ #questionstitle{
+    height: 100px;
+    z-index: 1; 
+    position: fixed; 
+     width: 24.7%;  
+     /* background-color: #7a3d3d;  */
+     border-radius: 26px;
+     background: #7a54eb;
+     box-shadow: inset -5px -5px 4px #31225e,
+                 inset 5px 5px 4px #c386ff;
+
  }
 
  
