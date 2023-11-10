@@ -52,7 +52,9 @@ function loadData() {
         myQuestions.set(question.name, question.text);
         questions.set(question.name, question);
         //  show Answer's details when we click on some Questions in a Table
-        tablerow.onmousedown = function () {
+        
+        tablerow.onclick = function () {
+        tabledivision.style.backgroundColor= "blue"; 
         const currentQuestion = questions.get(buttonItem.id)
         var questionResponses = document.getElementById('questionResponses');
         questionResponses.innerHTML = '';
