@@ -58,7 +58,7 @@ function loadData() {
           var label = document.createElement('label');
           for(let i= 0; i<currentQuestion.answers.length; i++ )
           {
-            label.innerHTML += currentQuestion.answers[i].text+' ' ;
+            label.innerHTML +='Answers'+(i+1) +': '+ currentQuestion.answers[i].text+' '+ 'Points:'+currentQuestion.answers[i].points ;
           }
           questionResponses.appendChild(label);
           // Alle Inhaltscontainer ausblenden
