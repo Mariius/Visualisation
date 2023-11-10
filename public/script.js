@@ -28,39 +28,74 @@ function loadData() {
       data.questions.forEach(question => {
 
         //tabelle Elemente erstellen 
-        var tr = document.createElement('tr');
-        var td = document.createElement('td');;
+        var tablerow = document.createElement('tr');
+        var tabledivision = document.createElement('td');
+        tabledivision.id= "tbCellSelector"; 
         var buttonItem = document.createElement('button');
         buttonItem.id = question.name;
         buttonItem.textContent = `${question.name}`; // Fragebezeichnung als Textinhalt jede Zelle zuweisen
-        td.appendChild(buttonItem);
-        tr.appendChild(td);
-        tbdy.appendChild(tr);
+        tabledivision.appendChild(buttonItem);
+        tablerow.appendChild(tabledivision);
+        tbdy.appendChild(tablerow);
         // The Mouse over some Question will change the style
-        tr.onmouseover = function () {
-          td.textContent = `${question.text}`;
-          td.style.backgroundColor = "skyblue";
+        tablerow.onmouseover = function () {
+          tabledivision.textContent = `${question.text}`;
+          tabledivision.style.backgroundColor = "skyblue";
         }
         
         // The Style will return to the initial style
-        tr.onmouseleave = function () {
-          td.textContent = `${question.name}`;
-          td.style.backgroundColor = "#15a0af";
+        tablerow.onmouseleave = function () {
+          tabledivision.textContent = `${question.name}`;
+          //tabledivision.style.backgroundColor = "";
         }
         // loading all data  in our maps
         myQuestions.set(question.name, question.text);
         questions.set(question.name, question);
-        //  show Answer's details when we click on some Questions
-        tr.onmousedown = function () {
-          const currentQuestion = questions.get(buttonItem.id)
-          var questionResponses = document.getElementById('questionResponses');
-          questionResponses.innerHTML = '';
-          var label = document.createElement('label');
+        //  show Answer's details when we click on some Questions in a Table
+        tablerow.onmousedown = function () {
+        const currentQuestion = questions.get(buttonItem.id)
+        var questionResponses = document.getElementById('questionResponses');
+        questionResponses.innerHTML = '';
+        // var label = document.createElement('label');
+        // var answerdivision=  document.createElement('div');
+        const answerTable = document.createElement('table');
+        const  answerTableBody = document.createElement('tbody');
+
+        
+        answerTable.appendChild(answerTableBody);
+        ;
           for(let i= 0; i<currentQuestion.answers.length; i++ )
-          {
-            label.innerHTML +='Answers'+(i+1) +': '+ currentQuestion.answers[i].text+' '+ 'Points:'+currentQuestion.answers[i].points ;
+          {  
+            var Row1 = document.createElement('tr');
+            var colum1 = document.createElement('td');
+            colum1.textContent=  "RESPONSE: "+ currentQuestion.answers[i].text; 
+            Row1.appendChild(colum1); 
+            answerTableBody.appendChild(Row1);
+
+            var Row2 = document.createElement('tr');
+            var colum2 = document.createElement('td');
+            colum2.textContent=  "CORRECT: "+ currentQuestion.answers[i].correct; 
+            Row2.appendChild(colum2); 
+            answerTableBody.appendChild(Row2);
+
+            var Row3 = document.createElement('tr');
+            var colum3 = document.createElement('td');
+            colum3.textContent=  "POINTS: "+ currentQuestion.answers[i].points; 
+            Row3.appendChild(colum3); 
+            answerTableBody.appendChild(Row3);
+
+            var Row4 = document.createElement('tr');
+            var colum4 = document.createElement('td');
+            colum4.textContent=  "PERCENTAGE: "+ currentQuestion.answers[i].percentage;
+            Row4.appendChild(colum4);
+            answerTableBody.appendChild(Row4);
+
+            var ligne= document.createElement('hr')
+            ligne.style= "align:center"; 
+            answerTableBody.appendChild(ligne)
           }
-          questionResponses.appendChild(label);
+          
+          questionResponses.appendChild(answerTable);
           // Alle Inhaltscontainer ausblenden
           //  Dies habe ich von Mario kopiert
           var contentContainers = document.querySelectorAll('.inhalt_recht');

@@ -77,7 +77,7 @@ section{
     padding: auto;
 }
 
- /* td{
+#tbCellSelector{
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     font-size: 17px;
     padding: 1em 2.7em;
@@ -92,7 +92,7 @@ section{
     background: #cfc5ed;
     box-shadow: inset -5px -5px 4px #31225e,
             inset 5px 5px 4px #c386ff;
- } */
+ } 
 
  .left-column1 ::-webkit-scrollbar{
     height:10%; 
@@ -111,6 +111,30 @@ section{
                  inset 5px 5px 4px #c386ff;
 
  }
+
+ #customers {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #customers tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #customers tr:hover {background-color: #ddd;}
+  
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+     
+  }
 
  
 
