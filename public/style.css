@@ -63,6 +63,7 @@ section{
     overflow-y: auto;
     overflow-x: auto;
     height: 500px;
+    position: relative;
 }
 
 .right-column1 {
@@ -70,6 +71,7 @@ section{
     flex: 1; /* Die rechte Spalte nimmt ebenfalls den verfügbaren Platz ein */
     background-color:  rgb(75, 122, 122); /* Hintergrundfarbe für die rechte Spalte */
     border-radius: 26px;
+    position: relative;
   
 }
 
