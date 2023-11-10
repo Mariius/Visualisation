@@ -59,40 +59,57 @@ function loadData() {
         // var label = document.createElement('label');
         // var answerdivision=  document.createElement('div');
         const answerTable = document.createElement('table');
+        answerTable.setAttribute('id', 'customers');
         const  answerTableBody = document.createElement('tbody');
-
         
+        const idTh = document.createElement('th');
+        idTh.innerHTML = 'Id';
+        answerTableBody.appendChild(idTh);
+
+        const textTh = document.createElement('th');
+        textTh.innerHTML = 'Text';
+        answerTableBody.appendChild(textTh);
+
+        const pointsTh = document.createElement('th');
+        pointsTh.innerHTML = 'Points';
+        answerTableBody.appendChild(pointsTh);
+
+        const correctTh = document.createElement('th');
+        correctTh.innerHTML = 'IsCorrect';
+        answerTableBody.appendChild(correctTh);
+
+        const percentageTh = document.createElement('th');
+        percentageTh.innerHTML = 'Percentage';
+        answerTableBody.appendChild(percentageTh);
         answerTable.appendChild(answerTableBody);
-        ;
+
           for(let i= 0; i<currentQuestion.answers.length; i++ )
           {  
             var Row1 = document.createElement('tr');
-            var colum1 = document.createElement('td');
-            colum1.textContent=  "RESPONSE: "+ currentQuestion.answers[i].text; 
-            Row1.appendChild(colum1); 
+
+            var idtd = document.createElement('td');
+            idtd.innerHTML = currentQuestion.answers[i].id;
+            Row1.appendChild(idtd);
+
+            var textTd = document.createElement('td');
+            textTd.innerHTML = currentQuestion.answers[i].text;
+            Row1.appendChild(textTd);
+
+            var pointsTd = document.createElement('td');
+            pointsTd.innerHTML = currentQuestion.answers[i].points;
+            Row1.appendChild(pointsTd);
+
+            var correctTd = document.createElement('td');
+            correctTd.innerHTML = currentQuestion.answers[i].correct;
+            Row1.appendChild(correctTd);
+
+            var percentageTd = document.createElement('td');
+            percentageTd.innerHTML = currentQuestion.answers[i].percentage;
+            Row1.appendChild(percentageTd);
             answerTableBody.appendChild(Row1);
-
-            var Row2 = document.createElement('tr');
-            var colum2 = document.createElement('td');
-            colum2.textContent=  "CORRECT: "+ currentQuestion.answers[i].correct; 
-            Row2.appendChild(colum2); 
-            answerTableBody.appendChild(Row2);
-
-            var Row3 = document.createElement('tr');
-            var colum3 = document.createElement('td');
-            colum3.textContent=  "POINTS: "+ currentQuestion.answers[i].points; 
-            Row3.appendChild(colum3); 
-            answerTableBody.appendChild(Row3);
-
-            var Row4 = document.createElement('tr');
-            var colum4 = document.createElement('td');
-            colum4.textContent=  "PERCENTAGE: "+ currentQuestion.answers[i].percentage;
-            Row4.appendChild(colum4);
-            answerTableBody.appendChild(Row4);
-
-            var ligne= document.createElement('hr')
-            ligne.style= "align:center"; 
-            answerTableBody.appendChild(ligne)
+            // var ligne= document.createElement('hr')
+            //ligne.style= "align:center"; 
+            //answerTableBody.appendChild(ligne)
           }
           
           questionResponses.appendChild(answerTable);
