@@ -46,8 +46,9 @@ section{
 .upper{
     display: flex;
     flex: 1;
-    background-color: rgb(109, 63, 131);
     position: relative;
+    border-style: solid;
+    border-width: 1px;
 }
 
 .lower{

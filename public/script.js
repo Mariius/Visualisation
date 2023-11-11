@@ -13,119 +13,20 @@ const myQuestions = new Map();
 const questions = new Map();// hold all data from JSON-file an store it here
 
 // Funktion zum Laden der JSON-Daten und Anzeigen als Liste
-var tbl = document.getElementById('data-table');
-tbl.style.width = '100%';
-//tbl.setAttribute('border', '1');
-tbl.setAttribute('borderRadius', '20px');
-var tbdy = document.createElement('tbody');
-tbl.appendChild(tbdy);
-
 function loadData() {
   fetch('/api/data')
     .then(response => response.json())
     .then(data => {
-
+      dataList.innerHTML = '';
       data.questions.forEach(question => {
-
-        //tabelle Elemente erstellen 
-        var tablerow = document.createElement('tr');
-        var tabledivision = document.createElement('td');
-        tabledivision.id= "tbCellSelector"; 
-        var buttonItem = document.createElement('button');
-        buttonItem.id = question.name;
-        buttonItem.textContent = `${question.name}`; // Fragebezeichnung als Textinhalt jede Zelle zuweisen
-        tabledivision.appendChild(buttonItem);
-        tablerow.appendChild(tabledivision);
-        tbdy.appendChild(tablerow);
-        // The Mouse over some Question will change the style
-        tablerow.onmouseover = function () {
-          tabledivision.textContent = `${question.text}`;
-          tabledivision.style.backgroundColor = "skyblue";
-        }
-        
-        // The Style will return to the initial style
-        tablerow.onmouseleave = function () {
-          tabledivision.textContent = `${question.name}`;
-          //tabledivision.style.backgroundColor = "";
-        }
-        // loading all data  in our maps
-        myQuestions.set(question.name, question.text);
+        const listItem = document.createElement('li');
+        listItem.textContent = `${question.name}: ${question.text}`;
+        dataList.appendChild(listItem);
+        myQuestions.push(question.name,question.text);
         questions.set(question.name, question);
-        //  show Answer's details when we click on some Questions in a Table
-        tablerow.onmousedown = function () {
-        const currentQuestion = questions.get(buttonItem.id)
-        var questionResponses = document.getElementById('questionResponses');
-        questionResponses.innerHTML = '';
-        // var label = document.createElement('label');
-        // var answerdivision=  document.createElement('div');
-        const answerTable = document.createElement('table');
-        answerTable.setAttribute('id', 'customers');
-        const  answerTableBody = document.createElement('tbody');
-        
-        const idTh = document.createElement('th');
-        idTh.innerHTML = 'Id';
-        answerTableBody.appendChild(idTh);
-
-        const textTh = document.createElement('th');
-        textTh.innerHTML = 'Text';
-        answerTableBody.appendChild(textTh);
-
-        const pointsTh = document.createElement('th');
-        pointsTh.innerHTML = 'Points';
-        answerTableBody.appendChild(pointsTh);
-
-        const correctTh = document.createElement('th');
-        correctTh.innerHTML = 'IsCorrect';
-        answerTableBody.appendChild(correctTh);
-
-        const percentageTh = document.createElement('th');
-        percentageTh.innerHTML = 'Percentage';
-        answerTableBody.appendChild(percentageTh);
-        answerTable.appendChild(answerTableBody);
-
-          for(let i= 0; i<currentQuestion.answers.length; i++ )
-          {  
-            var Row1 = document.createElement('tr');
-
-            var idtd = document.createElement('td');
-            idtd.innerHTML = currentQuestion.answers[i].id;
-            Row1.appendChild(idtd);
-
-            var textTd = document.createElement('td');
-            textTd.innerHTML = currentQuestion.answers[i].text;
-            Row1.appendChild(textTd);
-
-            var pointsTd = document.createElement('td');
-            pointsTd.innerHTML = currentQuestion.answers[i].points;
-            Row1.appendChild(pointsTd);
-
-            var correctTd = document.createElement('td');
-            correctTd.innerHTML = currentQuestion.answers[i].correct;
-            Row1.appendChild(correctTd);
-
-            var percentageTd = document.createElement('td');
-            percentageTd.innerHTML = currentQuestion.answers[i].percentage;
-            Row1.appendChild(percentageTd);
-            answerTableBody.appendChild(Row1);
-            // var ligne= document.createElement('hr')
-            //ligne.style= "align:center"; 
-            //answerTableBody.appendChild(ligne)
-          }
-          
-          questionResponses.appendChild(answerTable);
-          // Alle Inhaltscontainer ausblenden
-          //  Dies habe ich von Mario kopiert
-          var contentContainers = document.querySelectorAll('.inhalt_recht');
-          contentContainers.forEach(function (container) {
-            container.style.display = 'none';
-          });
-          // Den ausgewählten Inhalt anzeigen
-          questionResponses.style.display = 'block';
-        }
-
       });
     });
-}
+  }
 
 console.log(myQuestions);
 
