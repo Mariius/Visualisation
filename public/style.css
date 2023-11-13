@@ -11,16 +11,6 @@ header{
     box-shadow: inset -5px -5px 4px #31225e,
             inset 5px 5px 4px #c386ff;
 }
-/* 
-section{
-    background-color: aquamarine;
-    margin: 0px 1000px 11px 100px;
-    margin-right: 0%;
-    margin-left: 60%;
-    width: 800px;
-    height: 800px;
-
-} */
 
 .container {
     display: flex; /* Flexbox verwenden */
@@ -49,14 +39,17 @@ section{
     position: relative;
     border-style: solid;
     border-width: 1px;
+    background-color: #c386ff;
+    border-radius: 26px;
     
     /* height: 200px; Höhe deines Containers */
     overflow-x: auto; /* Horizontales Scrollen aktivieren */
-    white-space: nowrap; /* Elemente werden in einer einzigen Zeile angezeigt */
+    /* white-space: nowrap; Elemente werden in einer einzigen Zeile angezeigt */
 }
 
 .lower{
     flex: 1;
+    position: relative;
     background-color: aqua;
     border-radius: 26px;
     /* background: #7a54eb; */
