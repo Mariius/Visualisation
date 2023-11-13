@@ -3,6 +3,9 @@
 #bodytree {
   font-family: sans-serif;
   font-size: 15px;
+  display: inline-block; /* Bäume werden nebeneinander angezeigt */
+    height: 100%; /* Volle Höhe des Containers nutzen */
+    white-space: normal; /* Normaler Zeilenumbruch in den Bäumen */
 }
 
 .TreeDiagram ul {
@@ -90,4 +93,26 @@
 .TreeDiagram li a:hover + ul::before,
 .TreeDiagram li a:hover + ul ul::before {
   border-color: #e9453f;
+}
+
+.infoQuestion {
+  position: absolute;
+  top: 35%; /* Platziert das Element unter dem ursprünglichen Link */
+  left: 0;
+  background: #fff; /* Hintergrundfarbe des zusätzlichen Texts */
+  border: 1px solid #ccc; /* Rahmen um den zusätzlichen Text */
+  padding: 5px;
+  display: none; /* Anfangs unsichtbar */
+  z-index: 999; /* Stellt sicher, dass der zusätzliche Text im Vordergrund liegt */
+}
+
+.infoAnswer {
+  position: absolute;
+  top: 100%; /* Platziert das Element unter dem ursprünglichen Link */
+  left: 0;
+  background: #fff; /* Hintergrundfarbe des zusätzlichen Texts */
+  border: 1px solid #ccc; /* Rahmen um den zusätzlichen Text */
+  padding: 5px;
+  display: none; /* Anfangs unsichtbar */
+  z-index: 999; /* Stellt sicher, dass der zusätzliche Text im Vordergrund liegt */
 }

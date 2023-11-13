@@ -49,6 +49,10 @@ section{
     position: relative;
     border-style: solid;
     border-width: 1px;
+    
+    /* height: 200px; Höhe deines Containers */
+    overflow-x: auto; /* Horizontales Scrollen aktivieren */
+    white-space: nowrap; /* Elemente werden in einer einzigen Zeile angezeigt */
 }
 
 .lower{

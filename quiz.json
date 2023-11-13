@@ -567,6 +567,33 @@
           "percentage": 78
         }
       ]
+    },
+    {
+      "name": "new Quest",
+      "text": "habe ich es geschaft?",
+      "answers": [
+        {
+          "id": 0,
+          "text": "ja",
+          "points": 3,
+          "correct": false,
+          "percentage": 5
+        },
+        {
+          "id": 1,
+          "text": "nein",
+          "points": -1,
+          "correct": false,
+          "percentage": 23
+        },
+        {
+          "id": 2,
+          "text": "mal sehen",
+          "points": 18,
+          "correct": true,
+          "percentage": 30
+        }
+      ]
     }
   ]
 }

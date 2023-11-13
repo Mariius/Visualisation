@@ -13,20 +13,97 @@ const myQuestions = new Map();
 const questions = new Map();// hold all data from JSON-file an store it here
 
 // Funktion zum Laden der JSON-Daten und Anzeigen als Liste
+// function loadData() {
+//   fetch('/api/data')
+//     .then(response => response.json())
+//     .then(data => {
+//       dataList.innerHTML = '';
+//       data.questions.forEach(question => {
+//         const listItem = document.createElement('li');
+//         listItem.textContent = `${question.name}: ${question.text}`;
+//         dataList.appendChild(listItem);
+//         myQuestions.push(question.name,question.text);
+//         questions.set(question.name, question);
+//       });
+//     });
+//   }
+
+const bodyTree = document.getElementById('bodytree');
 function loadData() {
   fetch('/api/data')
-    .then(response => response.json())
-    .then(data => {
-      dataList.innerHTML = '';
-      data.questions.forEach(question => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${question.name}: ${question.text}`;
-        dataList.appendChild(listItem);
-        myQuestions.push(question.name,question.text);
-        questions.set(question.name, question);
+      .then(response => response.json())
+      .then(data => {
+          data.questions.forEach(question => {
+              const listItem = document.createElement('li');
+              const questionLink = document.createElement('a');
+              questionLink.href = `#${question.name}`;
+              questionLink.textContent = question.name;
+
+              // Mouseover für die Frage
+
+              const questionText = document.createElement('span'); // Zusätzliche Textfläche für die Frage
+              questionText.style.display = 'none'; // Anfangs unsichtbar
+              questionText.textContent = question.text;
+              questionText.classList.add('infoQuestion');
+              listItem.appendChild(questionText);
+
+              questionLink.addEventListener('mouseover', () => {
+                questionText.style.display = 'inline'; // Zeige den Text bei mouseover
+              });
+
+              // Mouseout für die Frage
+
+              questionLink.addEventListener('mouseout', () => {
+                const e = event.toElement || event.relatedTarget;
+                    if (e.parentNode == questionLink || e == questionLink) {
+                      questionText.style.display = 'inline';
+                    } else {
+                        questionText.style.display = 'none';
+                    }
+              });
+
+              const innerList = document.createElement('ul');
+
+              question.answers.forEach(answer => {
+                  const innerListItem = document.createElement('li');
+                  const responseLink = document.createElement('a');
+                  responseLink.href = `#${answer.id}`;
+                  responseLink.textContent = answer.text;
+
+                  // Mouseover für die Antwort
+
+                  const answerText = document.createElement('span'); // Zusätzliche Textfläche für die Antwort
+                  answerText.style.display = 'none'; // Anfangs unsichtbar
+                  answerText.innerHTML = `Points: ${answer.points}, <br>correct: ${answer.correct}, <br>Percentage: ${answer.percentage}%`;
+                  answerText.classList.add('infoAnswer');
+                  innerListItem.appendChild(answerText);
+
+                  responseLink.addEventListener('mouseover', () => {
+                    answerText.style.display = 'inline'; // Zeige den Text bei mouseover
+                  });
+
+                  // Mouseout für die Antwort
+                  responseLink.addEventListener('mouseout', () => {
+                    const e = event.toElement || event.relatedTarget;
+                    if (e.parentNode == responseLink || e == responseLink) {
+                        return;
+                    } else {
+                        answerText.style.display = 'none';
+                    }
+                  });
+
+                  innerListItem.appendChild(responseLink);
+                  innerList.appendChild(innerListItem);
+              });
+
+              listItem.appendChild(questionLink);
+              listItem.appendChild(innerList);
+              bodyTree.appendChild(listItem);
+          });
       });
-    });
-  }
+}
+
+
 
 console.log(myQuestions);
 
