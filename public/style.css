@@ -28,7 +28,7 @@ header{
     flex-direction: column;
     flex: 1; /* Die rechte Spalte nimmt ebenfalls den verfügbaren Platz ein */
     /* background-color:rgb(220, 228, 228); Hintergrundfarbe für die rechte Spalte */
-    height:flex ;
+    height:600px ;
     width: 800px;
   
     
@@ -42,6 +42,7 @@ header{
     border-width: 1px;
     background-color: #c386ff;
     border-radius: 26px;
+    height: 200px;
 
     /* height: 200px; Höhe deines Containers */
     overflow: auto; /* Horizontales Scrollen aktivieren */

@@ -124,18 +124,28 @@ function loadData() {
             var cellEd = rowDelEd.insertCell();
             cellEd.style.title = "edit the Question";
             cellEd.innerHTML = `<i class="fa fa-edit" style="font-size:24px"></i>`;
+            cellEd.addEventListener('mouseover', () => {
+              cellEd.style.color = "blue";
+            });
+            cellEd.addEventListener('mouseout', () => {
+              cellEd.style.color = "black";
+            });
 
             var cellClose = rowDelEd.insertCell();
             cellClose.innerHTML = `<button onclick="hideContent('tab_D')">close</button>`;
-            // cellClose.addEventListener('click', () => {
-            //   hideContent("tab_D");
-            // });
+            
 
             var cellDel = rowDelEd.insertCell();
             cellDel.innerHTML = `<i class="fa fa-trash" style="font-size:24px"></i>`;
             cellDel.addEventListener('click', () => {
               deleteQuestion(question.name);
-              });
+            });
+            cellDel.addEventListener('mouseover', () => {
+              cellDel.style.color = "red";
+            });
+            cellDel.addEventListener('mouseout', () => {
+              cellDel.style.color = "black";
+            });
 
             
             details.appendChild(tab);
@@ -293,6 +303,11 @@ function deleteQuestion(questionName) {
   .then(result => {
       console.log('Frage erfolgreich gelöscht:', result);
       // Hier kannst du weitere Aktionen nach dem Löschen durchführen
+      var contentContainers = document.querySelectorAll('.upper');
+      contentContainers.forEach(function (container) {
+        container.style.display = 'none';
+      });
+      loadData();
   })
   .catch(error => {
       console.error('Fehler beim Löschen der Frage:', error);

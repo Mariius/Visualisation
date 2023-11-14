@@ -1,5 +1,5 @@
 const express = require('express');
-const fs = require('fs');
+const fs = require('fs'); //fs= file system, zugriff auf Dateisystem des Betribsystems
 const cors = require('cors');
 const app = express();
 const port = 3000;
