@@ -1,10 +1,12 @@
 const express = require('express');
 const fs = require('fs');
+const cors = require('cors');
 const app = express();
 const port = 3000;
 
 app.use(express.static('public')); // index.html muss sich im Ordner public befinden
 app.use(express.json());
+app.use(cors());
 
 // Endpoint zum Lesen der JSON-Daten
 app.get('/api/data', (req, res) => {
@@ -51,6 +53,40 @@ app.post('/api/add', (req, res) => {
     });
   });
 });
+
+// Endpoint zum Löschen einer Frage anhand des Namens
+app.delete('/api/delete/:name', (req, res) => {
+  const questionNameToDelete = req.params.name;
+
+  fs.readFile('quiz.json', 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+      return;
+    }
+
+    const jsonData = JSON.parse(data);
+    const updatedQuestions = jsonData.questions.filter(question => question.name !== questionNameToDelete);
+
+    if (jsonData.questions.length !== updatedQuestions.length) {
+      // Es wurde mindestens eine Frage gefunden und gelöscht
+      jsonData.questions = updatedQuestions;
+
+      // Speichere die aktualisierten Daten in der JSON-Datei
+      fs.writeFile('quiz.json', JSON.stringify(jsonData, null, 2), 'utf8', (err) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send('Internal Server Error');
+          return;
+        }
+        res.json({ success: true });
+      });
+    } else {
+      res.status(404).json({ error: 'Frage nicht gefunden' });
+    }
+  });
+});
+
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

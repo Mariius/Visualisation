@@ -63,11 +63,11 @@ function loadData() {
             details.style.display = "flex";
 
             var tab = document.createElement("table");
-            tab.style.id = "tab_D";
+            tab.id = "tab_D";
             
             var rowD = tab.insertRow();
             var cellD = rowD.insertCell();
-            cellD.textContent = question.text;
+            cellD.innerHTML =`<h3>${question.text}<h3>`;
 
             var i = 1;
             question.answers.forEach(answer => {
@@ -93,15 +93,23 @@ function loadData() {
 
             var rowDelEd = tab.insertRow();
             var cellEd = rowDelEd.insertCell();
+            cellEd.style.title = "edit the Question";
             cellEd.innerHTML = `<i class="fa fa-edit" style="font-size:24px"></i>`;
 
             var cellClose = rowDelEd.insertCell();
             cellClose.innerHTML = `<button onclick="hideContent('tab_D')">close</button>`;
+            // cellClose.addEventListener('click', () => {
+            //   hideContent("tab_D");
+            //   console.log(myQuestions);
+            // });
 
             var cellDel = rowDelEd.insertCell();
             cellDel.innerHTML = `<i class="fa fa-trash" style="font-size:24px"></i>`;
+            cellDel.addEventListener('click', () => {
+              deleteQuestion(question.name);
+              });
 
-
+            
 
 
             details.appendChild(tab);
@@ -273,4 +281,29 @@ function hideContent(contentId) {
   selectedContent.style.display = 'none';
   startR1.style.display = "flex";
 }
+
+// cellEd.addEventListener('click', ()=>{
+
+// });
+
+function deleteQuestion(questionName) {
+  fetch(`/api/delete/${encodeURIComponent(questionName)}`, {
+      method: 'DELETE',
+  })
+  .then(response => {
+      if (!response.ok) {
+          throw new Error(`Fehler beim Löschen der Frage: ${response.status}`);
+      }
+      return response.json();
+  })
+  .then(result => {
+      console.log('Frage erfolgreich gelöscht:', result);
+      // Hier kannst du weitere Aktionen nach dem Löschen durchführen
+  })
+  .catch(error => {
+      console.error('Fehler beim Löschen der Frage:', error);
+  });
+}
+
+// Beispielaufruf der Funktion
 
