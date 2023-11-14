@@ -26,6 +26,7 @@ function loadData() {
           const questionLink = document.createElement('a');
           questionLink.href = `#${question.name}`;
           questionLink.textContent = question.name;
+          questionLink.id= "questionLink"; // damit kann in css file darauf zugreifen 
 
           // Mouseover für die Frage
 
@@ -36,13 +37,15 @@ function loadData() {
           listItem.appendChild(questionText);
 
           questionLink.addEventListener('mouseover', () => {
-            questionText.style.display = 'inline'; // Zeige den Text bei mouseover
+            //questionText.style.display = 'inline'; // Zeige den Text bei mouseover
+            setTimeout(()=>{ questionLink.textContent= question.text; } ,300)
           });
 
           // Mouseout für die Frage
 
           questionLink.addEventListener('mouseout', () => {
-            questionText.style.display = 'none';
+            //questionText.style.display = 'none';
+            setTimeout(()=>{ questionLink.textContent= question.name; } ,300)
           });
            
           // to show details in the lower part

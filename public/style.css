@@ -28,7 +28,7 @@ header{
     flex-direction: column;
     flex: 1; /* Die rechte Spalte nimmt ebenfalls den verfügbaren Platz ein */
     /* background-color:rgb(220, 228, 228); Hintergrundfarbe für die rechte Spalte */
-    height:600px ;
+    height:flex ;
     width: 800px;
   
     
