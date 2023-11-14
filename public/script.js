@@ -63,6 +63,7 @@ function loadData() {
             details.style.display = "flex";
 
             var tab = document.createElement("table");
+            tab.style.id = "tab_D";
             
             var rowD = tab.insertRow();
             var cellD = rowD.insertCell();
@@ -89,6 +90,17 @@ function loadData() {
               i++;
 
             }); 
+
+            var rowDelEd = tab.insertRow();
+            var cellEd = rowDelEd.insertCell();
+            cellEd.innerHTML = `<i class="fa fa-edit" style="font-size:24px"></i>`;
+
+            var cellClose = rowDelEd.insertCell();
+            cellClose.innerHTML = `<button onclick="hideContent('tab_D')">close</button>`;
+
+            var cellDel = rowDelEd.insertCell();
+            cellDel.innerHTML = `<i class="fa fa-trash" style="font-size:24px"></i>`;
+
 
 
 
