@@ -3,9 +3,10 @@
 #bodytree {
   font-family: sans-serif;
   font-size: 15px;
-  display: inline-block; /* Bäume werden nebeneinander angezeigt */
-  height: 100%; /* Volle Höhe des Containers nutzen */
+  display:contents;  /* Bäume werden nebeneinander angezeigt */
+  height: 100%; /*Volle Höhe des Containers nutzen */
   white-space: normal; /* Normaler Zeilenumbruch in den Bäumen */
+  overflow-x: auto;
 }
 
 .TreeDiagram ul {
@@ -13,8 +14,8 @@
   padding: 1em 0;
   white-space: nowrap;
   margin: 0 auto;
-  text-align: center;
 }
+
 .TreeDiagram ul::after {
   content: "";
   display: table;

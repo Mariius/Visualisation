@@ -22,6 +22,7 @@ function loadData() {
     .then(data => {
         data.questions.forEach(question => {
           const listItem = document.createElement('li');
+          listItem.style.alignSelf= 'center'; // Question werden in der Mitte horizontalisch angezeigt
           const questionLink = document.createElement('a');
           questionLink.href = `#${question.name}`;
           questionLink.textContent = question.name;
