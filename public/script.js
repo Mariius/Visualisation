@@ -28,15 +28,15 @@ function loadData() {
           listItem.appendChild(questionText);
 
           questionLink.addEventListener('mouseover', () => {
-            //questionText.style.display = 'inline'; // Zeige den Text bei mouseover
-            setTimeout(()=>{ questionLink.textContent= question.text; } ,300)
+          questionText.style.display = 'inline'; // Zeige den Text bei mouseover
+           // setTimeout(()=>{ questionLink.textContent= question.text; } ,300)
           });
 
           // Mouseout für die Frage
 
           questionLink.addEventListener('mouseout', () => {
-            //questionText.style.display = 'none';
-            setTimeout(()=>{ questionLink.textContent= question.name; } ,300)
+            questionText.style.display = 'none';
+            //setTimeout(()=>{ questionLink.textContent= question.name; } ,300)
           });
            
           
