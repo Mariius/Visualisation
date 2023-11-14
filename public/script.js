@@ -1,12 +1,3 @@
-// function newElement(event) {
-//     event.preventDefault();
-//     var el = document.getElementById("el");
-//     var inputValue = el.value; 
-//     var elementeList = document.getElementById("elemente");
-//     elementeList.innerHTML += `<li>${inputValue}</li>`;
-//     el.value = ""; 
-// }
-
 // --------------------load json data, add data to the json file -----------------------------------------------------------------------------------------------------------------
 //const dataList = document.getElementById('data-table');
 const myQuestions = new Map();
@@ -48,6 +39,40 @@ function loadData() {
             setTimeout(()=>{ questionLink.textContent= question.name; } ,300)
           });
            
+          
+          const innerList = document.createElement('ul');
+
+          question.answers.forEach(answer => {
+              const innerListItem = document.createElement('li');
+              const responseLink = document.createElement('a');
+              responseLink.href = `#${answer.id}`;
+              responseLink.textContent = answer.text;
+
+              // Mouseover für die Antwort
+
+              const answerText = document.createElement('span'); // Zusätzliche Textfläche für die Antwort
+              answerText.style.display = 'none'; // Anfangs unsichtbar
+              answerText.innerHTML = `Points: ${answer.points}, <br>correct: ${answer.correct}, <br>Percentage: ${answer.percentage}%`;
+              answerText.classList.add('infoAnswer');
+              innerListItem.appendChild(answerText);
+
+              responseLink.addEventListener('mouseover', () => {
+                answerText.style.display = 'inline'; // Zeige den Text bei mouseover
+              });
+
+              // Mouseout für die Antwort
+              responseLink.addEventListener('mouseout', () => {
+                  answerText.style.display = 'none';
+              });
+
+              innerListItem.appendChild(responseLink);
+              innerList.appendChild(innerListItem);
+          });
+
+          listItem.appendChild(questionLink);
+          listItem.appendChild(innerList);
+          bodyTree.appendChild(listItem);
+
           // to show details in the lower part
           var details = document.getElementById("questionResponses");
           
@@ -117,38 +142,6 @@ function loadData() {
 
           });
 
-          const innerList = document.createElement('ul');
-
-          question.answers.forEach(answer => {
-              const innerListItem = document.createElement('li');
-              const responseLink = document.createElement('a');
-              responseLink.href = `#${answer.id}`;
-              responseLink.textContent = answer.text;
-
-              // Mouseover für die Antwort
-
-              const answerText = document.createElement('span'); // Zusätzliche Textfläche für die Antwort
-              answerText.style.display = 'none'; // Anfangs unsichtbar
-              answerText.innerHTML = `Points: ${answer.points}, <br>correct: ${answer.correct}, <br>Percentage: ${answer.percentage}%`;
-              answerText.classList.add('infoAnswer');
-              innerListItem.appendChild(answerText);
-
-              responseLink.addEventListener('mouseover', () => {
-                answerText.style.display = 'inline'; // Zeige den Text bei mouseover
-              });
-
-              // Mouseout für die Antwort
-              responseLink.addEventListener('mouseout', () => {
-                  answerText.style.display = 'none';
-              });
-
-              innerListItem.appendChild(responseLink);
-              innerList.appendChild(innerListItem);
-          });
-
-          listItem.appendChild(questionLink);
-          listItem.appendChild(innerList);
-          bodyTree.appendChild(listItem);
         });
     });
 }
@@ -305,6 +298,4 @@ function deleteQuestion(questionName) {
       console.error('Fehler beim Löschen der Frage:', error);
   });
 }
-
-// Beispielaufruf der Funktion
 
