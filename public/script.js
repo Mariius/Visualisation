@@ -71,14 +71,14 @@ function loadData() {
             
             var rowD = tab.insertRow();
             var cellD = rowD.insertCell();
-            cellD.innerHTML =`<h3>${question.text}<h3>`;
+            cellD.innerHTML =`<h3>${question.name}: ${question.text}<h3>`;
 
-            var i = 1;
+            var count = 1;
             question.answers.forEach(answer => {
 
               var rowD0 = tab.insertRow();
               var cellD0 = rowD0.insertCell();
-              cellD0.innerHTML = `respone ${i}:  ${answer.text}`;
+              cellD0.innerHTML = `respone ${count}:  ${answer.text}`;
 
               var rowD1 = tab.insertRow();
               var cellD1 = rowD1.insertCell();
@@ -91,7 +91,7 @@ function loadData() {
               var rowD3 = tab.insertRow();
               var cellD3 = rowD3.insertCell();
               cellD3.innerHTML = `percentage:  ${answer.percentage}% <hr>`;
-              i++;
+              count++;
 
             }); 
 
@@ -104,7 +104,6 @@ function loadData() {
             cellClose.innerHTML = `<button onclick="hideContent('tab_D')">close</button>`;
             // cellClose.addEventListener('click', () => {
             //   hideContent("tab_D");
-            //   console.log(myQuestions);
             // });
 
             var cellDel = rowDelEd.insertCell();
@@ -114,8 +113,6 @@ function loadData() {
               });
 
             
-
-
             details.appendChild(tab);
 
           });
