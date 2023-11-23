@@ -16,7 +16,7 @@ function loadData() {
             // allowCopy: false,
             layout: $(go.TreeLayout, {
               angle: 90,
-              nodeSpacing: 50,
+              nodeSpacing: 10,
               layerSpacing: 150,
               layerStyle: go.TreeLayout.LayerUniform
             })
@@ -27,41 +27,101 @@ function loadData() {
       TreeDiagram.nodeTemplate = 
         $(go.Node, "Auto",
           $(go.Shape, "RoundedRectangle", {fill: "lightblue", stroke: "black"}),
-          $(go.TextBlock, {margin:8}, new go.Binding("text", "text"))
+          $(go.TextBlock, {margin:8}, new go.Binding("text", "text", function(text) {
+            // Begrenzen Sie den Text auf beispielsweise 10 Zeichen
+            if (text.length > 15) {
+              return text.substring(0, 10) + "...";
+            } else {
+              return text;
+            }
+          }))
         );
 
-      // links
+      // links 1: Orthgonel lines
+
+      // TreeDiagram.linkTemplate = 
+      //     $(go.Link, {
+      //       routing: go.Link.Orthogonal, 
+      //       corner: 5,
+      //       selectable: false
+      //       },
+      //     $(go.Shape, {
+      //       strokeWidth: 3,
+      //       stroke: '#424242'
+      //     })
+      //     );
+
+      // links 2: netz
 
       TreeDiagram.linkTemplate = 
-          $(go.Link, {
-            routing: go.Link.Orthogonal, 
-            corner: 5,
-            selectable: false
-            },
-          $(go.Shape, {
-            strokeWidth: 3,
-            stroke: '#424242'
-          })
-          );
+        $(go.Link, {
+          routing: go.Link.Normal, // Setzen Sie routing auf 'go.Link.Normal'
+          curve: go.Link.Bezier, // Verwenden Sie Bezier-Kurven für eine geschwungene Verbindung
+          corner: 10, // Passen Sie den Wert nach Bedarf an
+          selectable: false
+        },
+        $(go.Shape, {
+          strokeWidth: 3,
+          stroke: '#424242'
+        })
+      );
+
+      var specificNode = TreeDiagram.findNodeForKey('specificNodeKey');
+
+      // Deaktivieren Sie das Drag-and-Drop für dieses spezifische Node
+      if (specificNode) {
+          specificNode.movable = false;
+      }
+
 
       // load data to the Diagram
-      TreeDiagram.model = new go.TreeModel(convertData(data));
+      TreeDiagram.model = new go.GraphLinksModel(convertData(data));
 
       // function to convert data to an optimal format for the Treediagramm
-      function convertData(data){
-
-        var convertedData = {"nodeDataArray": []};
-
-        convertedData.nodeDataArray.push({key: data.lastID, text: "Questions"});
-        data.questions.forEach(function(question){
-          convertedData.nodeDataArray.push({key: question.name, parent: data.lastID, text: question.text, answers: question.answers});
-          question.answers.forEach(function(answer){
-            convertedData.nodeDataArray.push({key: answer.id, parent:question.name, text:answer.text})
-          });
-        });
+     
+      function convertData(data) {
+        var convertedData = { "nodeDataArray": [], "linkDataArray": [] };
+        var addedAnswer = [];
+      
+        // Hinzufügen des Elternknotens für Fragen
+        convertedData.nodeDataArray.push({ key: data.lastID, text: "Questions" });
+      
+        // For-Schleife für Fragen
+        for (let i = 0; i < data.questions.length; i++) {
+          var question = data.questions[i];
+      
+          // Hinzufügen des Knotens für die Frage
+          convertedData.nodeDataArray.push({ key: question.name, text: question.text, answers: question.answers });
+      
+          convertedData.linkDataArray.push({ from: data.lastID, to: question.name });
+      
+          // For-Schleife für Antworten
+          for (let j = 0; j < question.answers.length; j++) {
+            var answer = question.answers[j];
+      
+            // Überprüfen, ob die Antwort bereits hinzugefügt wurde
+            if (addedAnswer.includes(answer.text)) {
+              // Verwende den bereits vorhandenen Knoten für die Antwort
+              convertedData.linkDataArray.push({ from: question.name, to: answer.text });
+            } else {
+              // Füge die Antwort zum Array der hinzugefügten Antworten hinzu
+              addedAnswer.push(answer.text);
+      
+              // Füge den neuen Knoten für die Antwort hinzu
+              convertedData.nodeDataArray.push({ key: answer.text, text: answer.text });
+      
+              // Link zwischen Frage und Antwort erstellen
+              convertedData.linkDataArray.push({ from: question.name, to: answer.text });
+            }
+          }
+        }
+      
         console.log(convertedData);
+        console.log(addedAnswer);
         return convertedData;
       }
+      
+      
 
        
       
