@@ -9,141 +9,131 @@ function loadData() {
 
       // create a GOjs-Diagramm
       var $ = go.GraphObject.make;
-      // var TreeDiagram =
-      //     new go.Diagram("quiz-container", {
-      //       layout: $(go.ForceDirectedLayout),
-      //       // ... andere Optionen ...
-      //       initialContentAlignment: go.Spot.Center, // Zentriert das Diagramm
-      //       contentAlignment: go.Spot.Center, // Zentriert den Inhalt
-      //       // Passen Sie den Zoomfaktor an
-      //       "toolManager.mouseWheelBehavior": go.ToolManager.WheelZoom,
-      //       "undoManager.isEnabled": true,
-      //       "animationManager.isEnabled": false,
-      //       "InitialLayoutCompleted": function(e) {
-      //         TreeDiagram.commandHandler.zoomToFit();
-      //       }
-      //     });
 
       var TreeDiagram =
-  new go.Diagram("quiz-container", {
-    // ... andere Optionen ...
-    layout: $(go.ForceDirectedLayout, {
-      defaultSpringLength: 0, // Steuert die Länge der Feder zwischen den Knoten
-      defaultElectricalCharge: 50 // Steuert die elektrische Ladung zwischen den Knoten
-    })
-  });
+        new go.Diagram("quiz-container", {
+          layout: $(go.ForceDirectedLayout, {
+            defaultSpringLength: 0,
+            defaultElectricalCharge: 50
+          }),
+          "ChangedSelection": onNodeClick
+        });
 
-
-
-
-      // define node
-
-      TreeDiagram.nodeTemplate = 
+      // Define node templates for question and answer nodes
+      TreeDiagram.nodeTemplateMap.add("questionNode",
         $(go.Node, "Auto",
-          $(go.Shape, "RoundedRectangle", {fill: "lightblue", stroke: "black"}),
-          $(go.TextBlock, {margin:8}, new go.Binding("text", "text", function(text) {
-            // Begrenzen Sie den Text auf beispielsweise 10 Zeichen
+          { click: onQuestionClick },
+          $(go.Shape, "RoundedRectangle", { fill: "lightblue", stroke: "black" }),
+          $(go.TextBlock, { margin: 8 }, new go.Binding("text", "text", function (text) {
+            // Limit the text to, for example, 10 characters
             if (text.length > 15) {
               return text.substring(0, 10) + "...";
             } else {
               return text;
             }
           }))
-        );
-
-      // links 1: Orthgonel lines
-
-      // TreeDiagram.linkTemplate = 
-      //     $(go.Link, {
-      //       routing: go.Link.Orthogonal, 
-      //       corner: 5,
-      //       selectable: false
-      //       },
-      //     $(go.Shape, {
-      //       strokeWidth: 3,
-      //       stroke: '#424242'
-      //     })
-      //     );
-
-      // links 2: netz
-
-      TreeDiagram.linkTemplate = 
-        $(go.Link, {
-          routing: go.Link.Normal, // Setzen Sie routing auf 'go.Link.Normal'
-          curve: go.Link.Bezier, // Verwenden Sie Bezier-Kurven für eine geschwungene Verbindung
-          corner: 10, // Passen Sie den Wert nach Bedarf an
-          selectable: false
-        },
-        $(go.Shape, {
-          strokeWidth: 3,
-          stroke: '#424242'
-        })
+        )
       );
 
-      var specificNode = TreeDiagram.findNodeForKey('specificNodeKey');
+      TreeDiagram.nodeTemplateMap.add("answerNode",
+        $(go.Node, "Auto",
+          $(go.Shape, "RoundedRectangle", { fill: "lightgreen", stroke: "black" }),
+          $(go.TextBlock, { margin: 8 }, new go.Binding("text", "text", function (text) {
+            // Limit the text to, for example, 10 characters
+            if (text.length > 15) {
+              return text.substring(0, 10) + "...";
+            } else {
+              return text;
+            }
+          }))
+        )
+      );
 
-      // Deaktivieren Sie das Drag-and-Drop für dieses spezifische Node
-      if (specificNode) {
-          specificNode.movable = false;
-      }
+      // Define link template
+      TreeDiagram.linkTemplate =
+        $(go.Link, {
+          routing: go.Link.Normal,
+          curve: go.Link.Bezier,
+          corner: 10,
+          selectable: false
+        },
+          $(go.Shape, {
+            strokeWidth: 3,
+            stroke: '#424242'
+          })
+        );
 
-
-      // load data to the Diagram
+      // Load data to the Diagram
       TreeDiagram.model = new go.GraphLinksModel(convertData(data));
 
-      // function to convert data to an optimal format for the Treediagramm
-     
+      // Function to convert data to an optimal format for the Tree diagram
       function convertData(data) {
         var convertedData = { "nodeDataArray": [], "linkDataArray": [] };
         var addedAnswer = [];
-      
-        // Hinzufügen des Elternknotens für Fragen
+
+        // Add the parent node for questions
         convertedData.nodeDataArray.push({ key: data.lastID, text: "Questions" });
-      
-        // For-Schleife für Fragen
+
+        // Loop through questions
         for (let i = 0; i < data.questions.length; i++) {
           var question = data.questions[i];
 
-          var randomX = Math.floor(Math.random() * 400) - 200;
-          var randomY = Math.floor(Math.random() * 400) - 200;
-      
-          // Hinzufügen des Knotens für die Frage
-          convertedData.nodeDataArray.push({ key: question.name, text: question.text, answers: question.answers });
-      
-          // convertedData.linkDataArray.push({ from: data.lastID, to: question.name });
-      
-          // For-Schleife für Antworten
+          // Add the node for the question
+          convertedData.nodeDataArray.push({ key: question.name, text: question.text, answers: question.answers, category: "questionNode" });
+
+          // Loop through answers
           for (let j = 0; j < question.answers.length; j++) {
             var answer = question.answers[j];
-      
-            // Überprüfen, ob die Antwort bereits hinzugefügt wurde
+
+            // Check if the answer has already been added
             if (addedAnswer.includes(answer.text)) {
-              // Verwende den bereits vorhandenen Knoten für die Antwort
+              // Use the existing node for the answer
               convertedData.linkDataArray.push({ from: question.name, to: answer.text });
             } else {
-              // Füge die Antwort zum Array der hinzugefügten Antworten hinzu
+              
+              // Add the answer to the array of added answers
               addedAnswer.push(answer.text);
-      
-              // Füge den neuen Knoten für die Antwort hinzu
-              convertedData.nodeDataArray.push({ key: answer.text, text: answer.text });
-      
-              // Link zwischen Frage und Antwort erstellen
+
+              // Add the new node for the answer
+              convertedData.nodeDataArray.push({ key: answer.text, text: answer.text, category: "answerNode" });
+
+              // Create a link between the question and the answer
               convertedData.linkDataArray.push({ from: question.name, to: answer.text });
+             
             }
           }
         }
-      
+
         console.log(convertedData);
         console.log(addedAnswer);
         return convertedData;
       }
       
-      
 
-       
-      
+      // Function for the click event on question nodes
+      function onQuestionClick(e, obj) {
+        var node = obj.part;
+        // Add your code here to respond to the click event for question nodes
+        console.log("Question clicked:", node.data.text);
+      }
+
+      // Function for the click event when selecting nodes
+      function onNodeClick(e) {
+        var node = e.diagram.selection.first();
+        if (node) {
+          // Check the category value to distinguish between question and answer nodes
+          if (node.data.category === "questionNode") {
+            // Add your code here to respond to the click event for question nodes
+            console.log("Question clicked:", node.data.text);
+          } else {
+            // Add your code here to respond to the click event for answer nodes
+            console.log("Answer clicked:", node.data.text);
+          }
+        }
+      }
+
     });
-}
+  }
 
 
 
