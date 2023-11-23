@@ -6,6 +6,63 @@ function loadData() {
   fetch('/api/data')
     .then(response => response.json())
     .then(data => {
+
+      // create a GOjs-Diagramm
+      var $ = go.GraphObject.make;
+      var TreeDiagram =
+          new go.Diagram("quiz-container", {
+            // "toolManager.hoverDelay": 100,
+            // "undoManager.isEnabled": true,
+            // allowCopy: false,
+            layout: $(go.TreeLayout, {
+              angle: 90,
+              nodeSpacing: 50,
+              layerSpacing: 150,
+              layerStyle: go.TreeLayout.LayerUniform
+            })
+          });
+
+      // define node
+
+      TreeDiagram.nodeTemplate = 
+        $(go.Node, "Auto",
+          $(go.Shape, "RoundedRectangle", {fill: "lightblue", stroke: "black"}),
+          $(go.TextBlock, {margin:8}, new go.Binding("text", "text"))
+        );
+
+      // links
+
+      TreeDiagram.linkTemplate = 
+          $(go.Link, {
+            routing: go.Link.Orthogonal, 
+            corner: 5,
+            selectable: false
+            },
+          $(go.Shape, {
+            strokeWidth: 3,
+            stroke: '#424242'
+          })
+          );
+
+      // load data to the Diagram
+      TreeDiagram.model = new go.TreeModel(convertData(data));
+
+      // function to convert data to an optimal format for the Treediagramm
+      function convertData(data){
+
+        var convertedData = {"nodeDataArray": []};
+
+        convertedData.nodeDataArray.push({key: data.lastID, text: "Questions"});
+        data.questions.forEach(function(question){
+          convertedData.nodeDataArray.push({key: question.name, parent: data.lastID, text: question.text, answers: question.answers});
+          question.answers.forEach(function(answer){
+            convertedData.nodeDataArray.push({key: answer.id, parent:question.name, text:answer.text})
+          });
+        });
+        console.log(convertedData);
+        return convertedData;
+      }
+
        
       
     });
