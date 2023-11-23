@@ -9,18 +9,32 @@ function loadData() {
 
       // create a GOjs-Diagramm
       var $ = go.GraphObject.make;
+      // var TreeDiagram =
+      //     new go.Diagram("quiz-container", {
+      //       layout: $(go.ForceDirectedLayout),
+      //       // ... andere Optionen ...
+      //       initialContentAlignment: go.Spot.Center, // Zentriert das Diagramm
+      //       contentAlignment: go.Spot.Center, // Zentriert den Inhalt
+      //       // Passen Sie den Zoomfaktor an
+      //       "toolManager.mouseWheelBehavior": go.ToolManager.WheelZoom,
+      //       "undoManager.isEnabled": true,
+      //       "animationManager.isEnabled": false,
+      //       "InitialLayoutCompleted": function(e) {
+      //         TreeDiagram.commandHandler.zoomToFit();
+      //       }
+      //     });
+
       var TreeDiagram =
-          new go.Diagram("quiz-container", {
-            // "toolManager.hoverDelay": 100,
-            // "undoManager.isEnabled": true,
-            // allowCopy: false,
-            layout: $(go.TreeLayout, {
-              angle: 90,
-              nodeSpacing: 10,
-              layerSpacing: 150,
-              layerStyle: go.TreeLayout.LayerUniform
-            })
-          });
+  new go.Diagram("quiz-container", {
+    // ... andere Optionen ...
+    layout: $(go.ForceDirectedLayout, {
+      defaultSpringLength: 0, // Steuert die Länge der Feder zwischen den Knoten
+      defaultElectricalCharge: 50 // Steuert die elektrische Ladung zwischen den Knoten
+    })
+  });
+
+
+
 
       // define node
 
@@ -89,11 +103,14 @@ function loadData() {
         // For-Schleife für Fragen
         for (let i = 0; i < data.questions.length; i++) {
           var question = data.questions[i];
+
+          var randomX = Math.floor(Math.random() * 400) - 200;
+          var randomY = Math.floor(Math.random() * 400) - 200;
       
           // Hinzufügen des Knotens für die Frage
           convertedData.nodeDataArray.push({ key: question.name, text: question.text, answers: question.answers });
       
-          convertedData.linkDataArray.push({ from: data.lastID, to: question.name });
+          // convertedData.linkDataArray.push({ from: data.lastID, to: question.name });
       
           // For-Schleife für Antworten
           for (let j = 0; j < question.answers.length; j++) {
