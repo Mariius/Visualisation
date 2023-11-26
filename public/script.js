@@ -1,7 +1,5 @@
 // --------------------load json data, add data to the json file -----------------------------------------------------------------------------------------------------------------
 
-// Funktion zum Laden der JSON-Daten und Anzeigen als Liste
-
 function loadData() {
   fetch('/api/data')
     .then(response => response.json())
@@ -15,18 +13,17 @@ function loadData() {
           layout: $(go.ForceDirectedLayout, {
             defaultSpringLength: 0,
             defaultElectricalCharge: 50
-          }),
-          "ChangedSelection": onNodeClick
+          })
         });
 
       // Define node templates for question and answer nodes
       TreeDiagram.nodeTemplateMap.add("questionNode",
         $(go.Node, "Auto",
-          { click: onQuestionClick },
+          { click: onNodeClick },
           $(go.Shape, "RoundedRectangle", { fill: "lightblue", stroke: "black" }),
           $(go.TextBlock, { margin: 8 }, new go.Binding("text", "text", function (text) {
             // Limit the text to, for example, 10 characters
-            if (text.length > 15) {
+            if (text.length > 13) {
               return text.substring(0, 10) + "...";
             } else {
               return text;
@@ -37,10 +34,11 @@ function loadData() {
 
       TreeDiagram.nodeTemplateMap.add("answerNode",
         $(go.Node, "Auto",
+          { click: onNodeClick },
           $(go.Shape, "RoundedRectangle", { fill: "lightgreen", stroke: "black" }),
           $(go.TextBlock, { margin: 8 }, new go.Binding("text", "text", function (text) {
             // Limit the text to, for example, 10 characters
-            if (text.length > 15) {
+            if (text.length > 13) {
               return text.substring(0, 10) + "...";
             } else {
               return text;
@@ -67,9 +65,13 @@ function loadData() {
       TreeDiagram.model = new go.GraphLinksModel(convertData(data));
 
       // Function to convert data to an optimal format for the Tree diagram
+      
       function convertData(data) {
+        
         var convertedData = { "nodeDataArray": [], "linkDataArray": [] };
         var addedAnswer = [];
+        var allAnswers = [];
+
 
         // Add the parent node for questions
         convertedData.nodeDataArray.push({ key: data.lastID, text: "Questions" });
@@ -77,46 +79,54 @@ function loadData() {
         // Loop through questions
         for (let i = 0; i < data.questions.length; i++) {
           var question = data.questions[i];
-
+          
           // Add the node for the question
           convertedData.nodeDataArray.push({ key: question.name, text: question.text, answers: question.answers, category: "questionNode" });
 
           // Loop through answers
           for (let j = 0; j < question.answers.length; j++) {
             var answer = question.answers[j];
+            allAnswers.push(answer.text);
 
-            // Check if the answer has already been added
-            if (addedAnswer.includes(answer.text)) {
-              // Use the existing node for the answer
-              convertedData.linkDataArray.push({ from: question.name, to: answer.text });
-            } else {
-              
-              // Add the answer to the array of added answers
-              addedAnswer.push(answer.text);
+            convertedData.nodeDataArray.push({ key: answer.text, text: answer.text, category: "answerNode" });
+            convertedData.linkDataArray.push({ from: question.name, to: answer.text });
 
-              // Add the new node for the answer
-              convertedData.nodeDataArray.push({ key: answer.text, text: answer.text, category: "answerNode" });
+          //   var count = 0;
+          // for(let l = 0; l > allAnswers.length; l++){
 
-              // Create a link between the question and the answer
-              convertedData.linkDataArray.push({ from: question.name, to: answer.text });
-             
-            }
-          }
+          //   if(allAnswers[l]===answer.text){
+          //     count++;
+          //     if (count>1){
+          //       convertedData.linkDataArray.push({ from: question.name, to: answer.text });
+
+          //     }
+          //   }
+            
+          //   // if (addedAnswer.filter( answer.text.length > 1)) {
+          //   //   // Suche nach allen questionNodes, die diese Antwort enthalten
+          //   //   for (let k = 0; k < convertedData.nodeDataArray.length; k++) {
+          //   //       var nodeData = convertedData.nodeDataArray[k];
+          //   //       if (nodeData.category === "questionNode" && nodeData.answers.includes(answer.text)) {
+          //   //           // Erstelle eine Verbindung zwischen der Frage und der mehrfach auftauchenden Antwort
+          //   //           convertedData.linkDataArray.push({ from: nodeData.key, to: answer.text });
+          //   //       }
+          //   //   }
+          // }
         }
+
+
+            
+          
+        }
+
+
+        
 
         console.log(convertedData);
         console.log(addedAnswer);
         return convertedData;
       }
       
-
-      // Function for the click event on question nodes
-      function onQuestionClick(e, obj) {
-        var node = obj.part;
-        // Add your code here to respond to the click event for question nodes
-        console.log("Question clicked:", node.data.text);
-      }
-
       // Function for the click event when selecting nodes
       function onNodeClick(e) {
         var node = e.diagram.selection.first();
@@ -124,6 +134,15 @@ function loadData() {
           // Check the category value to distinguish between question and answer nodes
           if (node.data.category === "questionNode") {
             // Add your code here to respond to the click event for question nodes
+            data.questions.forEach(question => {
+              for (let j = 0; j < question.answers.length; j++) {
+                var answer = question.answers[j];
+                allAnswers.push(answer.text);
+    
+                convertedData.nodeDataArray.push({ key: answer.text, text: answer.text, category: "answerNode" });
+                convertedData.linkDataArray.push({ from: question.name, to: answer.text });
+              }  
+            });
             console.log("Question clicked:", node.data.text);
           } else {
             // Add your code here to respond to the click event for answer nodes
