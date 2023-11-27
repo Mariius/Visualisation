@@ -1,5 +1,3 @@
-// --------------------load json data, add data to the json file -----------------------------------------------------------------------------------------------------------------
-
 function loadData() {
   fetch('/api/data')
     .then(response => response.json())
@@ -8,7 +6,7 @@ function loadData() {
       // create a GOjs-Diagramm
       var $ = go.GraphObject.make;
 
-      var TreeDiagram =
+      var Diagram =
         new go.Diagram("quiz-container", {
           layout: $(go.ForceDirectedLayout, {
             defaultSpringLength: 0,
@@ -17,9 +15,9 @@ function loadData() {
         });
 
       // Define node templates for question and answer nodes
-      TreeDiagram.nodeTemplateMap.add("questionNode",
+      Diagram.nodeTemplate =
         $(go.Node, "Auto",
-          { click: onQuestionClick },
+          { click: function(e, node) { showAnswers(node); } },
           $(go.Shape, "RoundedRectangle", { fill: "lightblue", stroke: "black" }),
           $(go.TextBlock, { margin: 8 }, new go.Binding("text", "text", function (text) {
             // Limit the text to, for example, 10 characters
@@ -29,12 +27,10 @@ function loadData() {
               return text;
             }
           }))
-        )
-      );
+        );
 
-      TreeDiagram.nodeTemplateMap.add("answerNode",
+      Diagram.nodeTemplateMap.add("answerNode",
         $(go.Node, "Auto",
-          { click: onNodeClick },
           $(go.Shape, "RoundedRectangle", { fill: "lightgreen", stroke: "black" }),
           $(go.TextBlock, { margin: 8 }, new go.Binding("text", "text", function (text) {
             // Limit the text to, for example, 10 characters
@@ -48,95 +44,122 @@ function loadData() {
       );
 
       // Define link template
-      TreeDiagram.linkTemplate =
+      Diagram.linkTemplate =
         $(go.Link, {
           routing: go.Link.Normal,
           curve: go.Link.Bezier,
           corner: 10,
           selectable: false
         },
-          $(go.Shape, {
-            strokeWidth: 3,
-            stroke: '#424242'
-          })
-        );
+        $(go.Shape, {
+          strokeWidth: 3,
+          stroke: '#424242'
+        })
+      );
 
-      
-
-      // Function to convert data to an optimal format for the Tree diagram
-      
-      var convertedData = { "nodeDataArray": [], "linkDataArray": [] };
-      var addedAnswer = [];
-    
-      // Hinzufügen des Elternknotens für Fragen
-      // convertedData.nodeDataArray.push({ key: data.lastID, text: "Questions" ,category: "questionNode" });
-    
-      // For-Schleife für Fragen
-      for (let i = 0; i < data.questions.length; i++) {
-        var question = data.questions[i];
-
-        // Hinzufügen des Knotens für die Frage
-        convertedData.nodeDataArray.push({ key: question.name, text: question.text, answers: question.answers, category: "questionNode" });
-    
-        // convertedData.linkDataArray.push({ from: data.lastID, to: question.name });
-    
-        // For-Schleife für Antworten
-        for (let j = 0; j < question.answers.length; j++) {
-          var answer = question.answers[j];
-    
-          // Überprüfen, ob die Antwort bereits hinzugefügt wurde
-          if (addedAnswer.includes(answer.text)) {
-            // Verwende den bereits vorhandenen Knoten für die Antwort
-            convertedData.linkDataArray.push({ from: question.name, to: answer.text });
-          } else {
-            // Füge die Antwort zum Array der hinzugefügten Antworten hinzu
-            // Function for the click event on question nodes
-            
-            addedAnswer.push(answer.text);
-            
-            TreeDiagram.addDiagramListener("ObjectSingleClicked", onQuestionClick(answer));
-    
-            
-          }
-        }
-      }
-    
-      console.log(convertedData);
-      console.log(addedAnswer);
+      // JSON-Daten in das Diagramm laden
+      Diagram.model = new go.GraphLinksModel(data.questions);
 
      
+
+      // Antwortknoten für alle Fragen erstellen
+      // var allAnswers = [];
+      // 'add all Answers to allAswers'
+      const allAnswers = data.questions.flatMap(question => question.answers.map(answer => answer.text));
+      // data.questions.forEach(function(question) {question.answers.forEach(function(answer) {  allAnswers.push(answer.text); });});
+
+      var commonAnswers=[];
+      var createdAnswersNode = [];
+      var createdLinks = [];  // Array zum Speichern der erstellten Verbindungen
       
-      function onQuestionClick(e, obj, answer) {
-        var node = obj.part;
-        console.log("Question clicked:", node.data.text);
+
+      // Iteriere über alle Fragen
+      data.questions.forEach(function(question) { 
+        var answers = question.answers;
         
-        // Füge den neuen Knoten für die Antwort hinzu
-        convertedData.nodeDataArray.push({ key: answer.text, text: answer.text, category: "answerNode" });
-    
-        // Link zwischen Frage und Antwort erstellen
-        convertedData.linkDataArray.push({ from: question.name, to: answer.text });
-    }
+        // Iteriere über die Antworten dieser Frage
       
-      // Function for the click event when selecting nodes
-      function onNodeClick(e) {
-        var node = e.diagram.selection.first();
-        if (node) {
-          // Check the category value to distinguish between question and answer nodes
-          if (node.data.category === "questionNode") {
-            // Add your code here to respond to the click event for question nodes
-            
-            console.log("Question clicked:", node.data.text);
-          } else {
-            // Add your code here to respond to the click event for answer nodes
-            console.log("Answer clicked:", node.data.text);
+        answers.forEach(function(answer) {
+          let count = 0;
+          
+          for(let i = 0; i < allAnswers.length; i++){
+            if (allAnswers[i]==answer.text) {
+              count++;
+              if(count > 1 && !createdAnswersNode.includes(answer.text)){
+              
+                commonAnswers.push(answer.text);
+                Diagram.model.addNodeData({
+                category: "answerNode",
+                text: answer.text,
+                key: answer.text
+                });
+                createdAnswersNode.push(answer.text);
+                
+              }
+              var linkExists = createdLinks.some(function(link) {
+                return link.from === question.key && link.to === answer.text;
+              });
+        
+              if (!linkExists) {
+                createdLinks.push({
+                  from: question.key,
+                  to: answer.text
+                });
+    
+                // Verbindung zwischen Frage- und Antwortknoten erstellen
+                Diagram.model.addLinkData({
+                  from: question.key,
+                  to: answer.text
+                });
+              }
+            }
+          }
+        });
+        console.log(createdAnswersNode);
+      });
+
+      function showAnswers(questionNode) {
+        var answers = questionNode.data.answers;
+        for (var i = 0; i < answers.length; i++) {
+          var answer = answers[i];
+          var answerText = answer.text;  // Vergleiche sind nicht case-sensitive
+      
+          // Überprüfe, ob ein Knoten mit dem gleichen Text bereits existiert
+          if (!createdAnswersNode.includes(answerText)) {
+            createdAnswersNode.push(answerText);  // Antworttext zum Array hinzufügen
+      
+            Diagram.model.addNodeData({
+              category: "answerNode",
+              text: answer.text,
+              key: answer.text
+            });
+
+            // Überprüfe, ob die Verbindung bereits existiert, bevor du sie erstellst
+            var linkExists = createdLinks.some(function(link) {
+              return link.from === questionNode.key && link.to === answer.text;
+            });
+      
+            if (!linkExists) {
+              createdLinks.push({
+                from: questionNode.key,
+                to: answer.text
+              });
+  
+              // Verbindung zwischen Frage- und Antwortknoten erstellen
+              Diagram.model.addLinkData({
+                from: questionNode.key,
+                to: answer.text
+              });
+            }
           }
         }
+        console.log(createdAnswersNode);
       }
-
-      // Load data to the Diagram
-    TreeDiagram.model = new go.GraphLinksModel(convertedData);
+      
 
     });
+
+    
 
     
   }
@@ -249,8 +272,6 @@ form.addEventListener("submit", async (event) => {
 
 // Initial laden der Daten
 loadData();
-
-// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 function showContent(contentId) {
   // Alle Inhaltscontainer ausblenden
