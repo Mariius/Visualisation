@@ -19,7 +19,7 @@ function loadData() {
       // Define node templates for question and answer nodes
       TreeDiagram.nodeTemplateMap.add("questionNode",
         $(go.Node, "Auto",
-          { click: onNodeClick },
+          { click: onQuestionClick },
           $(go.Shape, "RoundedRectangle", { fill: "lightblue", stroke: "black" }),
           $(go.TextBlock, { margin: 8 }, new go.Binding("text", "text", function (text) {
             // Limit the text to, for example, 10 characters
@@ -61,71 +61,61 @@ function loadData() {
           })
         );
 
-      // Load data to the Diagram
-      TreeDiagram.model = new go.GraphLinksModel(convertData(data));
+      
 
       // Function to convert data to an optimal format for the Tree diagram
       
-      function convertData(data) {
-        
-        var convertedData = { "nodeDataArray": [], "linkDataArray": [] };
-        var addedAnswer = [];
-        var allAnswers = [];
+      var convertedData = { "nodeDataArray": [], "linkDataArray": [] };
+      var addedAnswer = [];
+    
+      // Hinzufügen des Elternknotens für Fragen
+      // convertedData.nodeDataArray.push({ key: data.lastID, text: "Questions" ,category: "questionNode" });
+    
+      // For-Schleife für Fragen
+      for (let i = 0; i < data.questions.length; i++) {
+        var question = data.questions[i];
 
-
-        // Add the parent node for questions
-        convertedData.nodeDataArray.push({ key: data.lastID, text: "Questions" });
-
-        // Loop through questions
-        for (let i = 0; i < data.questions.length; i++) {
-          var question = data.questions[i];
-          
-          // Add the node for the question
-          convertedData.nodeDataArray.push({ key: question.name, text: question.text, answers: question.answers, category: "questionNode" });
-
-          // Loop through answers
-          for (let j = 0; j < question.answers.length; j++) {
-            var answer = question.answers[j];
-            allAnswers.push(answer.text);
-
-            convertedData.nodeDataArray.push({ key: answer.text, text: answer.text, category: "answerNode" });
+        // Hinzufügen des Knotens für die Frage
+        convertedData.nodeDataArray.push({ key: question.name, text: question.text, answers: question.answers, category: "questionNode" });
+    
+        // convertedData.linkDataArray.push({ from: data.lastID, to: question.name });
+    
+        // For-Schleife für Antworten
+        for (let j = 0; j < question.answers.length; j++) {
+          var answer = question.answers[j];
+    
+          // Überprüfen, ob die Antwort bereits hinzugefügt wurde
+          if (addedAnswer.includes(answer.text)) {
+            // Verwende den bereits vorhandenen Knoten für die Antwort
             convertedData.linkDataArray.push({ from: question.name, to: answer.text });
-
-          //   var count = 0;
-          // for(let l = 0; l > allAnswers.length; l++){
-
-          //   if(allAnswers[l]===answer.text){
-          //     count++;
-          //     if (count>1){
-          //       convertedData.linkDataArray.push({ from: question.name, to: answer.text });
-
-          //     }
-          //   }
+          } else {
+            // Füge die Antwort zum Array der hinzugefügten Antworten hinzu
+            // Function for the click event on question nodes
             
-          //   // if (addedAnswer.filter( answer.text.length > 1)) {
-          //   //   // Suche nach allen questionNodes, die diese Antwort enthalten
-          //   //   for (let k = 0; k < convertedData.nodeDataArray.length; k++) {
-          //   //       var nodeData = convertedData.nodeDataArray[k];
-          //   //       if (nodeData.category === "questionNode" && nodeData.answers.includes(answer.text)) {
-          //   //           // Erstelle eine Verbindung zwischen der Frage und der mehrfach auftauchenden Antwort
-          //   //           convertedData.linkDataArray.push({ from: nodeData.key, to: answer.text });
-          //   //       }
-          //   //   }
-          // }
-        }
-
-
+            addedAnswer.push(answer.text);
             
-          
+            TreeDiagram.addDiagramListener("ObjectSingleClicked", onQuestionClick(answer));
+    
+            
+          }
         }
-
-
-        
-
-        console.log(convertedData);
-        console.log(addedAnswer);
-        return convertedData;
       }
+    
+      console.log(convertedData);
+      console.log(addedAnswer);
+
+     
+      
+      function onQuestionClick(e, obj, answer) {
+        var node = obj.part;
+        console.log("Question clicked:", node.data.text);
+        
+        // Füge den neuen Knoten für die Antwort hinzu
+        convertedData.nodeDataArray.push({ key: answer.text, text: answer.text, category: "answerNode" });
+    
+        // Link zwischen Frage und Antwort erstellen
+        convertedData.linkDataArray.push({ from: question.name, to: answer.text });
+    }
       
       // Function for the click event when selecting nodes
       function onNodeClick(e) {
@@ -134,15 +124,7 @@ function loadData() {
           // Check the category value to distinguish between question and answer nodes
           if (node.data.category === "questionNode") {
             // Add your code here to respond to the click event for question nodes
-            data.questions.forEach(question => {
-              for (let j = 0; j < question.answers.length; j++) {
-                var answer = question.answers[j];
-                allAnswers.push(answer.text);
-    
-                convertedData.nodeDataArray.push({ key: answer.text, text: answer.text, category: "answerNode" });
-                convertedData.linkDataArray.push({ from: question.name, to: answer.text });
-              }  
-            });
+            
             console.log("Question clicked:", node.data.text);
           } else {
             // Add your code here to respond to the click event for answer nodes
@@ -151,7 +133,12 @@ function loadData() {
         }
       }
 
+      // Load data to the Diagram
+    TreeDiagram.model = new go.GraphLinksModel(convertedData);
+
     });
+
+    
   }
 
 
