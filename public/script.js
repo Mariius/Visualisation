@@ -17,7 +17,7 @@ function loadData() {
       // Define node templates for question and answer nodes
       Diagram.nodeTemplate =
         $(go.Node, "Auto",
-          { click: function(e, node) { showAnswers(node); } },
+          { click: function(e, node) {showAnswers(node);} },
           $(go.Shape, "RoundedRectangle", { fill: "lightblue", stroke: "black" }),
           $(go.TextBlock, { margin: 8 }, new go.Binding("text", "text", function (text) {
             // Limit the text to, for example, 10 characters
@@ -118,49 +118,110 @@ function loadData() {
         console.log(createdAnswersNode);
       });
 
-      function showAnswers(questionNode) {
-        var answers = questionNode.data.answers;
-        for (var i = 0; i < answers.length; i++) {
-          var answer = answers[i];
-          var answerText = answer.text;  // Vergleiche sind nicht case-sensitive
-      
-          // Überprüfe, ob ein Knoten mit dem gleichen Text bereits existiert
-          if (!createdAnswersNode.includes(answerText)) {
-            createdAnswersNode.push(answerText);  // Antworttext zum Array hinzufügen
-      
-            Diagram.model.addNodeData({
-              category: "answerNode",
-              text: answer.text,
-              key: answer.text
-            });
+      // Initialisiere ein Objekt, um den clickCount für jeden Knoten zu speichern
+      let clickCounts = {};
 
-            // Überprüfe, ob die Verbindung bereits existiert, bevor du sie erstellst
-            var linkExists = createdLinks.some(function(link) {
-              return link.from === questionNode.key && link.to === answer.text;
-            });
-      
-            if (!linkExists) {
-              createdLinks.push({
-                from: questionNode.key,
-                to: answer.text
+
+      function showAnswers(questionNode) {
+        // Überprüfe, ob ein clickCount für diesen Knoten existiert, andernfalls initialisiere ihn mit 0
+        if (!clickCounts[questionNode.key]) {
+          clickCounts[questionNode.key] = 0;
+        }
+
+        // Inkrementiere den clickCount für diesen Knoten
+        clickCounts[questionNode.key]++;
+        var answers = questionNode.data.answers;
+        if(clickCounts[questionNode.key] % 2 != 0){
+          for (var i = 0; i < answers.length; i++) {
+            var answer = answers[i];
+            var answerText = answer.text;  // Vergleiche sind nicht case-sensitive
+        
+            // Überprüfe, ob ein Knoten mit dem gleichen Text bereits existiert
+            if (!createdAnswersNode.includes(answerText)) {
+              createdAnswersNode.push(answerText);  // Antworttext zum Array hinzufügen
+        
+              Diagram.model.addNodeData({
+                category: "answerNode",
+                text: answer.text,
+                key: answer.text
               });
   
-              // Verbindung zwischen Frage- und Antwortknoten erstellen
-              Diagram.model.addLinkData({
-                from: questionNode.key,
-                to: answer.text
+              // Überprüfe, ob die Verbindung bereits existiert, bevor du sie erstellst
+              var linkExists = createdLinks.some(function(link) {
+                return link.from === questionNode.key && link.to === answer.text;
               });
+        
+              if (!linkExists) {
+                createdLinks.push({
+                  from: questionNode.key,
+                  to: answer.text
+                });
+    
+                // Verbindung zwischen Frage- und Antwortknoten erstellen
+                Diagram.model.addLinkData({
+                  from: questionNode.key,
+                  to: answer.text
+                });
+              }
             }
           }
+          console.log("single click: create" + clickCounts[questionNode.key]);
+          console.log(clickCounts);
         }
-        console.log(createdAnswersNode);
+        else{
+          // Entferne nur die während des aktuellen Durchlaufs hinzugefügten Knoten und Verbindungen
+          for (var i = 0; i < answers.length; i++) {
+            var answer = answers[i];
+            var answerText = answer.text;
+      
+            if (createdAnswersNode.includes(answerText)) {
+
+              if (commonAnswers.includes(answerText)) {
+                break;
+              }
+              else{
+                // entfernt answerText aus createdAnswersNode
+                createdAnswersNode.splice(createdAnswersNode.indexOf(answerText), 1);
+        
+                // Hier wird der Knoten auch aus dem Diagramm entfernt
+                // Suche den Index des Knotens im Diagramm
+                var nodeIndex = Diagram.model.nodeDataArray.findIndex(function(node) {
+                  return node.key === answer.text;
+                });
+
+                // Wenn der Knoten gefunden wurde, entferne ihn aus dem Diagramm
+                if (nodeIndex !== -1) {
+                  Diagram.model.removeNodeData(Diagram.model.nodeDataArray[nodeIndex]);
+                }
+
+                // Suche den Index des Links im createdLinks-Array
+                var linkIndex = Diagram.model.linkDataArray.findIndex(function(link) {
+                  return link.from === questionNode.key && link.to === answerText;
+                });
+                
+                // Wenn der Link gefunden wurde, entferne ihn aus createdLinks und dem Diagramm
+                if (linkIndex !== -1) {
+                  // link aus createdLinks entfernen
+                  createdLinks.splice(linkIndex, 1);
+
+                  // Entferne den Link aus dem Diagramm
+                  Diagram.model.removeLinkData(Diagram.model.linkDataArray[linkIndex]);
+                }
+
+              }
+            }
+          }
+      
+          console.log("single click: delete" + clickCounts[questionNode.key]);
+          console.log(clickCounts);
+        }
+        
+        Diagram.updateAllTargetBindings();
+        Diagram.layoutDiagram();
+        
       }
       
-
     });
-
-    
-
     
   }
 
