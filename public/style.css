@@ -1,7 +1,7 @@
 body{
     margin: 0;
 }
-header{
+/* header{
     background-color: #531f39;
     padding: 10px;
     text-align: center;
@@ -10,7 +10,7 @@ header{
     background: #7a54eb;
     box-shadow: inset -5px -5px 4px #31225e,
             inset 5px 5px 4px #c386ff;
-}
+} */
 
 .container {
     display: flex; /* Flexbox verwenden */
@@ -140,6 +140,5 @@ header{
      
   }
 
- 
 
  

@@ -5,85 +5,50 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Visualisation</title>
         <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="layout.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://unpkg.com/gojs/release/go-debug.js"></script>
        
     </head>
     <body>
+
         <header>
-            <h1>Visualisation</h1>
+            <div id="pageTitle">
+                <h1 style="margin-left: 10px;">Quiz</h1>
+            </div>
+            <div class="searchQuestion">
+                <input type="text" id="searchInput" placeholder="Suche...">
+            </div>
+            <div class="menuItem">
+                <span onclick="openContainer('newQuestion')">Add Question</span>
+                <span onclick="openContainer('newExam')">Create Exam</span>
+            </div>
         </header>
-        <div id="quiz-container" style="width:100%; height:800px;"></div>
         <div class="container">
-            
-            
 
-            <!-- is displayed at the start in the lower -->
-            <div id="start" class="inhalt_recht" style="position: relative; height: 40vh; display: none; justify-content: center; align-items: center;">
-                <i style="font-size:100px" class="fa">&#xf0db;</i>
+            <div id="main-content">
+                <!-- Hauptinhalt, standardmäßig auf volle Breite -->
+                <div id="quiz-container" style="width:100%; height:100vh;"></div>
             </div>
-
-            <!-- details about each question -->
-            <div id="questionResponses" class="inhalt_recht" style="display: none; width: 100%; justify-content: center; margin: 20px;">
-                <form id ="details">
-
-                </form>
+    
+            <div id="newQuestion" class="newContainer">
+                <!-- Inhalt für new Question -->
+                <h1 style="text-align: center;">Add new Question</h1>
+                <button onclick="closeContainer('newQuestion')">cancel</button>
             </div>
-
-            <!-- form to add new question -->
-            <div id="newQuestion" class="inhalt_recht" style="display: none; width: 100%; justify-content: center; margin: 20px;">
-                <h1 style="text-align: center; margin-top: 0; margin-bottom: 10px;">Add a new question</h1> 
-                <form id="dataForm">
-                    <table>
-                        <tr><td><label for="questionName">Question Name:</label></td>
-                        <td><input type="text" id="questionName" name="questionName" required></td></tr>
-                
-                        <tr><td><label for="questionText">Question Text:</label></td>
-                        <td><input type="text" id="questionText" name="questionText" required></td></tr>
-                
-                        <tr><td><label for="answers">Answers:</label></td></tr>
-                
-                        <!-- Answer 1 -->
-                        <tr><td><label for="answer1Text">Answer 1 Text:</label></td>
-                        <td><input type="text" id="answer1Text" name="answer1Text" required></td></tr>
-                        <tr><td><label for="answer1Points">Points:</label></td>
-                        <td><input type="number" id="answer1Points" name="answer1Points" required></td></tr>
-                        <tr><td><label for="answer1Correct">Correct:</label></td>
-                        <td><input type="checkbox" id="answer1Correct" name="answer1Correct"></td></tr>
-                        <tr><td><label for="answer1Percentage">Percentage:</label></td>
-                        <td><input type="number" id="answer1Percentage" name="answer1Percentage" required></td></tr>
-                
-                        <!-- Answer 2 -->
-                        <tr><td><label for="answer1Text">Answer 2 Text:</label></td>
-                        <td><input type="text" id="answer2Text" name="answer2Text" required></td></tr>
-                        <tr><td><label for="answer2Points">Points:</label></td>
-                        <td><input type="number" id="answer2Points" name="answer2Points" required></td></tr>
-                        <tr><td><label for="answer2Correct">Correct:</label></td>
-                        <td><input type="checkbox" id="answer2Correct" name="answer2Correct"></td></tr>
-                        <tr><td><label for="answer2Percentage">Percentage:</label></td>
-                        <td><input type="number" id="answer2Percentage" name="answer2Percentage" required></td></tr>
-                
-                        <!-- Answer 3 -->
-                        <tr><td><label for="answer3Text">Answer 3 Text:</label></td>
-                        <td><input type="text" id="answer3Text" name="answer3Text" required></td></tr>
-                        <tr><td><label for="answer3Points">Points:</label></td>
-                        <td><input type="number" id="answer3Points" name="answer3Points" required></td></tr>
-                        <tr><td><label for="answer3Correct">Correct:</label></td>
-                        <td><input type="checkbox" id="answer3Correct" name="answer3Correct"></td></tr>>
-                        <tr><td><label for="answer3Percentage">Percentage:</label></td>
-                        <td><input type="number" id="answer3Percentage" name="answer3Percentage" required></td></tr>
-                
-                        <tr><td><button onclick="hideContent('newQuestion')">cancel</button></td>
-                        <td><button type="submit" style="right: 0;">Add Question</button></td></tr>
-                    </table>
-                </form>
+    
+            <div id="newExam" class="newContainer">
+                 <!-- Inhalt für new Exam -->
+                <button onclick="closeContainer('newExam')">cancel</button>
             </div>
-                
-            <!-- message after adding a new question -->
-            <div id="message"></div>
-
         </div>
+        <footer>
+            <p>&copy; 2023 HSRM</p>
+        </footer>
+        
+        
         <script src="script.js"></script>
+        <script src="LayScript.js"></script>
        
     </body>
 </html>
