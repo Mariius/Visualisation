@@ -23,3 +23,13 @@ function closeContainer(containerId) {
     // Setze den aktuell geöffneten Container zurück
     openContainerId = null;
 }
+
+function onmouse(ident)
+{
+ ident.style.color = 'aquamarine' ;
+}
+
+function mouseout(ident)
+{
+ ident.style.color='white'; 
+}
