@@ -4,7 +4,6 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Visualisation</title>
-        <link rel="stylesheet" type="text/css" href="style.css">
         <link rel="stylesheet" type="text/css" href="layout.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://unpkg.com/gojs/release/go-debug.js"></script>
@@ -34,6 +33,25 @@
             <div id="newQuestion" class="newContainer">
                 <!-- Inhalt für new Question -->
                 <h1 style="text-align: center;">Add new Question</h1>
+                <div id="newQuestion" style="width: 100%; justify-content: center; margin: 20px;">
+                    <form id="dataForm">
+                      <table>
+                        <tr>
+                          <td><label for="questionName">Question Name:</label></td>
+                          <td><input type="text" id="questionName" name="questionName" required></td>
+                        </tr>
+                        <tr>
+                          <td><label for="questionText">Question Text:</label></td>
+                          <td><input type="text" id="questionText" name="questionText" required></td>
+                        </tr>
+                        <tbody id="answersContainer" class="answerRow"></tbody>
+                        <tr>
+                          <td><button type="button" id="addAnswerBtn">Add Answer</button></td>
+                          <td><button type="submit">Add Question</button></td>
+                        </tr>
+                      </table>
+                    </form>
+                  </div>
                 <button onclick="closeContainer('newQuestion')">cancel</button>
             </div>
     

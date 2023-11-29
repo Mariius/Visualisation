@@ -223,64 +223,128 @@ function loadData() {
     });
     
   }
-  loadData();
+  
+  
+document.addEventListener("DOMContentLoaded", function () {
+  const answerSelect = document.createElement("select");
+  const answersContainer = document.getElementById("answersContainer");
 
+  function populateAnswerSelect(data) {
+    answerSelect.name = "answerSelect";
+    answerSelect.classList.add("answerSelect");
+    answerSelect.innerHTML = '<option value="" disabled selected>Select an Answer</option>';
+    data.questions.forEach((question) => {
+      question.answers.forEach((answer) => {
+        const option = document.createElement("option");
+        option.value = answer.id;
+        option.text = answer.text;
+        answerSelect.appendChild(option);
+      });
+    });
 
+    // Event listener for answer select
+    answerSelect.addEventListener("change", (event) => {
+      const selectedAnswerId = parseInt(event.target.value);
+      if (!isNaN(selectedAnswerId)) {
+        // Find the selected answer in the JSON data
+        let selectedAnswer;
+        for (const question of data.questions) {
+          selectedAnswer = question.answers.find((answer) => answer.id === selectedAnswerId);
+          if (selectedAnswer) break;
+        }
 
-// console.log(myQuestions);
+        // Populate form fields with selected answer data
+        const answerRow = answerSelect.closest(".answerRow");
+        answerRow.querySelector(".answerText").value = selectedAnswer.text;
+        answerRow.querySelector(".answerPoints").value = selectedAnswer.points;
+        answerRow.querySelector(".answerCorrect").checked = selectedAnswer.correct;
+        answerRow.querySelector(".answerPercentage").value = selectedAnswer.percentage;
+      }
+    });
+  }
 
-// old code
+  function addAnswerRow() {
+    const newRow = document.createElement("tbody");
+    newRow.classList.add("answerRow");
 
-// const form = document.getElementById("dataForm");
-// const messageDiv = document.getElementById("message");
-// const newQ = document.getElementById("newQuestion");
-// const startR1 = document.getElementById("start");
+    newRow.innerHTML = `
+      <tr>
+        <td><label for="answerSelect">Select answer:</label></td>
+        <td>${answerSelect.outerHTML}</td>
+      </tr>
+      <tr><td><label for="answerText">Answer Text:</label></td>
+      <td><input type="text" class="answerText" name="answerText" required></td></tr>
+      <tr><td><label for="answerPoints">Points:</label></td>
+      <td><input type="number" class="answerPoints" name="answerPoints" required></td></tr>
+      <tr><td><label for="answerCorrect">Correct:</label></td>
+      <td><input type="checkbox" class="answerCorrect" name="answerCorrect"></td></tr>
+      <tr><td><label for="answerPercentage">Percentage:</label></td>
+      <td><input type="number" class="answerPercentage" name="answerPercentage" required></td></tr>
+    `;
 
-// form.addEventListener("submit", async (event) => {
-//   event.preventDefault();
+    answersContainer.appendChild(newRow);
+  }
 
-//   const questionName = document.getElementById("questionName").value;
-//   const questionText = document.getElementById("questionText").value;
-//   const answer1Text = document.getElementById("answer1Text").value;
-//   const answer1Points = parseInt(document.getElementById("answer1Points").value);
-//   const answer1Correct = document.getElementById("answer1Correct").checked;
-//   const answer1Percentage = parseInt(document.getElementById("answer1Percentage").value);
-//   const answer2Text = document.getElementById("answer2Text").value;
-//   const answer2Points = parseInt(document.getElementById("answer2Points").value);
-//   const answer2Correct = document.getElementById("answer2Correct").checked;
-//   const answer2Percentage = parseInt(document.getElementById("answer2Percentage").value);
-//   const answer3Text = document.getElementById("answer3Text").value;
-//   const answer3Points = parseInt(document.getElementById("answer3Points").value);
-//   const answer3Correct = document.getElementById("answer3Correct").checked;
-//   const answer3Percentage = parseInt(document.getElementById("answer3Percentage").value);
+  function resetForm() {
+    document.getElementById("questionName").value = "";
+    document.getElementById("questionText").value = "";
+    answersContainer.innerHTML = ""; // Clear previous answer rows
+  }
 
-//   const newData = {
-//     "name": questionName,
-//     "text": questionText,
-//     "answers": [
-//       {
-//         "id": 0,
-//         "text": answer1Text,
-//         "points": answer1Points,
-//         "correct": answer1Correct,
-//         "percentage": answer1Percentage 
-//       },
-//       {
-//         "id": 1,
-//         "text": answer2Text,
-//         "points": answer2Points,
-//         "correct": answer2Correct,
-//         "percentage": answer2Percentage 
-//       },
-//       {
-//         "id": 2,
-//         "text": answer3Text,
-//         "points": answer3Points,
-//         "correct": answer3Correct,
-//         "percentage": answer3Percentage 
-//       }
-//     ]
-//   };
+  function submitForm(event) {
+    event.preventDefault();
+
+    const questionName = document.getElementById("questionName").value;
+    const questionText = document.getElementById("questionText").value;
+
+    const answers = [];
+    document.querySelectorAll(".answerRow").forEach((row, index) => {
+      const answerText = row.querySelector(".answerText").value;
+      const answerPoints = parseInt(row.querySelector(".answerPoints").value);
+      const answerCorrect = row.querySelector(".answerCorrect").checked;
+      const answerPercentage = parseInt(row.querySelector(".answerPercentage").value);
+
+      answers.push({
+        id: index,
+        text: answerText,
+        points: answerPoints,
+        correct: answerCorrect,
+        percentage: answerPercentage,
+      });
+    });
+
+    const newData = {
+      name: questionName,
+      text: questionText,
+      answers: answers,
+    };
+
+    fetch("/api/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          loadData(); // You might want to define/load this function
+          resetForm();
+        }
+      });
+  }
+
+  // Initial population of answerSelect
+  fetch("/api/data")
+    .then((response) => response.json())
+    .then((data) => populateAnswerSelect(data));
+
+  // Event listeners
+  document.getElementById("dataForm").addEventListener("submit", submitForm);
+  document.getElementById("addAnswerBtn").addEventListener("click", addAnswerRow);
+});
+
 
 
 //   fetch('/api/add', {

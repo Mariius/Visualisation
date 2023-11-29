@@ -162,6 +162,74 @@
           "percentage": 100
         }
       ]
+    },
+    {
+      "name": "frucht",
+      "text": "habe ich es geschaft?",
+      "answers": [
+        {
+          "id": 0,
+          "text": "nein",
+          "points": -2,
+          "correct": false,
+          "percentage": -2
+        },
+        {
+          "id": 1,
+          "text": "nein",
+          "points": -2,
+          "correct": false,
+          "percentage": -2
+        },
+        {
+          "id": 2,
+          "text": "ups",
+          "points": 2,
+          "correct": true,
+          "percentage": -2
+        }
+      ]
+    },
+    {
+      "name": "reality",
+      "text": "is it real?",
+      "answers": [
+        {
+          "id": 0,
+          "text": "don't know",
+          "points": 2,
+          "correct": true,
+          "percentage": -3
+        },
+        {
+          "id": 1,
+          "text": "don't know",
+          "points": 2,
+          "correct": true,
+          "percentage": -3
+        },
+        {
+          "id": 2,
+          "text": "maybe",
+          "points": 2,
+          "correct": false,
+          "percentage": -3
+        },
+        {
+          "id": 3,
+          "text": "ja",
+          "points": -2,
+          "correct": false,
+          "percentage": -2
+        },
+        {
+          "id": 4,
+          "text": "a",
+          "points": 8,
+          "correct": true,
+          "percentage": -8
+        }
+      ]
     }
   ]
 }
