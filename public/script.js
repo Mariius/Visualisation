@@ -218,11 +218,15 @@ function loadData() {
         
         Diagram.updateAllTargetBindings();
         Diagram.layoutDiagram();
+        console.log("common: "+commonAnswers);
+        console.log(createdAnswersNode);
       }
 
     });
     
   }
+
+  loadData();
   
   
 document.addEventListener("DOMContentLoaded", function () {

@@ -168,21 +168,21 @@
       "text": "habe ich es geschaft?",
       "answers": [
         {
-          "id": 0,
-          "text": "nein",
+          "id": 18,
+          "text": "nö",
           "points": -2,
           "correct": false,
           "percentage": -2
         },
         {
-          "id": 1,
-          "text": "nein",
+          "id": 19,
+          "text": "yap",
           "points": -2,
           "correct": false,
           "percentage": -2
         },
         {
-          "id": 2,
+          "id": 20,
           "text": "ups",
           "points": 2,
           "correct": true,
@@ -195,35 +195,35 @@
       "text": "is it real?",
       "answers": [
         {
-          "id": 0,
+          "id": 21,
           "text": "don't know",
           "points": 2,
           "correct": true,
           "percentage": -3
         },
         {
-          "id": 1,
+          "id": 22,
           "text": "don't know",
           "points": 2,
           "correct": true,
           "percentage": -3
         },
         {
-          "id": 2,
+          "id": 23,
           "text": "maybe",
           "points": 2,
           "correct": false,
           "percentage": -3
         },
         {
-          "id": 3,
+          "id": 24,
           "text": "ja",
           "points": -2,
           "correct": false,
           "percentage": -2
         },
         {
-          "id": 4,
+          "id": 25,
           "text": "a",
           "points": 8,
           "correct": true,
