@@ -287,9 +287,34 @@ document.addEventListener("DOMContentLoaded", function () {
   // Event listeners
   document.getElementById("dataForm").addEventListener("submit", submitForm);
   document.getElementById("addAnswerBtn").addEventListener("click", addAnswerRow);
-});
+})
 
 
+//_____________________UPDATE JSON FILE_______________________
+function updateQuiz(){
+  const updatedData = myDiagram.model.toJson();
+  
+  fetch('/api/updateAll', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(updatedData)
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data); // Output success or any other response from the server
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  
+ }
 
 //   fetch('/api/add', {
 //     method: 'POST',
