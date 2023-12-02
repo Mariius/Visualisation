@@ -1,16 +1,22 @@
-
 function init() {
 
   myDiagram = new go.Diagram("quiz-container",
-      {
-        // when a drag-drop occurs in the Diagram's background, make it a top-level node
-        mouseDrop: e => finishDrop(e, null),
-        layout:  // Diagram has simple horizontal layout
-          new go.GridLayout(
-            { wrappingWidth: Infinity, alignment: go.GridLayout.Position, cellSize: new go.Size(1, 1) }),
-        "commandHandler.archetypeGroupData": { isGroup: true, text: "Group", horiz: false },
-        "undoManager.isEnabled": true
-      });
+{
+    // when a drag-drop occurs in the Diagram's background, make it a top-level node
+    mouseDrop: e => finishDrop(e, null),
+    layout:  // Diagram has horizontal layout with wrapping
+        new go.GridLayout(
+            {
+                wrappingColumn: Infinity,
+                spacing: new go.Size(5, 5),  // optional: set spacing between nodes
+                cellSize: new go.Size(1, 1),
+                alignment: go.GridLayout.Position
+            }),
+    "commandHandler.archetypeGroupData": { isGroup: true, text: "Group", horiz: false },
+    "undoManager.isEnabled": true
+});
+
+
 
   // The one template for Groups can be configured to be either layout out its members
   // horizontally or vertically, each with a different default color.
@@ -72,6 +78,7 @@ function init() {
       {
         background: "blue",
         ungroupable: true,
+        isSubGraphExpanded: false,
         // highlight when dragging into the Group
         mouseDragEnter: (e, grp, prev) => highlightGroup(e, grp, true),
         mouseDragLeave: (e, grp, next) => highlightGroup(e, grp, false),
@@ -111,7 +118,7 @@ function init() {
           .add(new go.Placeholder({ padding: 5, alignment: go.Spot.TopLeft }))
       )  // end Vertical Panel
 
-
+     
   myDiagram.nodeTemplate =
     new go.Node("Auto",
       { // dropping on a Node is the same as dropping on its containing Group, even if it's top-level
@@ -128,18 +135,6 @@ function init() {
         .bind("text", "text", null, null));  // `null` as the fourth argument makes this a two-way binding
 
   loadData();
-}
-
-function reexpand(e) {
-  myDiagram.commit(diag => {
-    var level = parseInt(document.getElementById("levelSlider").value);
-    diag.findTopLevelGroups().each(g => expandGroups(g, 0, level))
-  } ,"reexpand");
-}
-function expandGroups(g, i, level) {
-  if (!(g instanceof go.Group)) return;
-  g.isSubGraphExpanded = i < level;
-  g.memberParts.each(m => expandGroups(m, i + 1, level))
 }
 
 // save a model to and load a model from JSON text, displayed below the Diagram
