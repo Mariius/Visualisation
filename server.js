@@ -110,29 +110,8 @@ app.put('/api/updateAll', (req, res) => {
     }
     res.json({ success: true });
   });
-});// Endpoint zum Aktualisieren aller Daten in der JSON-Datei
-app.put('/api/updateAll', (req, res) => {
-  if (!req.body || !req.body.lastID || !req.body.questions) {
-    res.status(400).json({ error: 'Bad Request: lastID and questions are required fields for updating all data.' });
-    return;
-  }
-
-
- const updatedData = {
-    lastID: req.body.lastID,
-    questions: req.body.questions
-  };
-
-
- fs.writeFile('quiz.json', JSON.stringify(updatedData, null, 2), 'utf8', (err) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Internal Server Error');
-      return;
-    }
-    res.json({ success: true });
-  });
 });
+
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

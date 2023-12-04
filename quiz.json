@@ -169,14 +169,14 @@
       "answers": [
         {
           "id": 19,
-          "text": "yap",
-          "points": -2,
+          "text": "ich glaube ja",
+          "points": 12,
           "correct": false,
-          "percentage": -2
+          "percentage": 100
         },
         {
           "id": 20,
-          "text": "ups",
+          "text": "es kann sein",
           "points": 2,
           "correct": true,
           "percentage": -2

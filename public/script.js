@@ -136,29 +136,26 @@ function init() {
 
   loadData();
 }
+// initiate the diagram
+init();
 
-// save a model to and load a model from JSON text, displayed below the Diagram
-function save() {
-  document.getElementById("mySavedModel").value = myDiagram.model.toJson();
-  myDiagram.isModified = false;
-}
-
-
+// ..................................Load data to Diagramm..............................
 function loadData() {
   fetch('/api/data')
     .then(response => response.json())
     .then(data => {
+      console.log(data);
 
       var quizData = { "nodeDataArray": [], "linkDataArray": [] };
+      quizData.nodeDataArray.push({text: "lastID: "+ data.lastID})
       data.questions.forEach(question =>{
 
         quizData.nodeDataArray.push({key: question.name ,text: question.text, isGroup:true, horiz:true});
         question.answers.forEach(answer => {
           quizData.nodeDataArray.push({key:answer.id, text: answer.text, isGroup: true, group: question.name});
-          quizData.nodeDataArray.push({text: "ist correct: "+answer.correct, group:answer.id});
+          quizData.nodeDataArray.push({text: "correct: "+answer.correct, group:answer.id});
           quizData.nodeDataArray.push({text: "points: "+answer.points, group:answer.id});
           quizData.nodeDataArray.push({text: "percentage: "+answer.percentage, group:answer.id});
-
         })
 
       });
@@ -167,7 +164,82 @@ function loadData() {
 
     });
   }
-init();
+
+
+//..............................UPDATE JSON FILE..........................................
+function updateData() {
+  var Data = myDiagram.model.toJson();
+  console.log(JSON.parse(Data));
+  myDiagram.isModified = false;
+  var newQuizData = JSON.parse(Data);
+  const updatedData = {
+    lastID: getLastID(), // Replace with the new lastID
+    questions: [
+      // Replace with the updated array of questions
+      // ...
+    ]
+  };
+
+  newQuizData.nodeDataArray.forEach(element => {
+    if(element.isGroup)
+    {
+    if(element.horiz ){  updatedData.questions.push({ "name": element.key, "text":element.text ,"answers":[]});
+    } 
+    }
+
+});
+
+newQuizData.nodeDataArray.forEach(el => {
+    updatedData.questions.forEach(ques => {
+        if(ques.name == el.group){
+            ques.answers.push({"id":el.key, "text":el.text, "points": getPoints(el.key) , "correct": getCorrect(el.key), "percentage":getPercentage(el.key)});
+        }
+    })
+});
+
+function getPoints(group) {
+    const match = newQuizData.nodeDataArray.find(node => node.group === group && node.text.includes("points"));
+    return match ? parseInt(match.text.split(":")[1].trim()) : 0;
+  }
+  function getPercentage(group) {
+    const match = newQuizData.nodeDataArray.find(node => node.group === group && node.text.includes("percentage"));
+    return match ? parseInt(match.text.split(":")[1].trim()) : 0;
+  }
+
+function getCorrect(group) {
+    const match = newQuizData.nodeDataArray.find(node => node.group === group && node.text.includes("correct"));
+    // return match.text.split(":")[1].trim();
+    return /^true$/i.test(match.text.split(":")[1].trim());
+  }
+function getLastID() {
+  const match = newQuizData.nodeDataArray.find(node =>  node.text.includes("lastID"));
+  return match ? parseInt(match.text.split(":")[1].trim()) : 0;
+}
+  
+  
+
+  
+  fetch('/api/updateAll', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(updatedData)
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data); // Output success or any other response from the server
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
 //...............Add New question........................................................................................................................... 
 document.addEventListener("DOMContentLoaded", function () {
   const answerSelect = document.createElement("select");
@@ -290,31 +362,7 @@ document.addEventListener("DOMContentLoaded", function () {
 })
 
 
-//_____________________UPDATE JSON FILE_______________________
-function updateQuiz(){
-  const updatedData = myDiagram.model.toJson();
-  
-  fetch('/api/updateAll', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(updatedData)
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log(data); // Output success or any other response from the server
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-  
- }
+
 
 //   fetch('/api/add', {
 //     method: 'POST',

@@ -26,9 +26,15 @@
         <div class="container">
 
             <div id="main-content">
+              <button id="updateQuiz" onclick="updateData()" style="z-index: 1; ">Modified</button>
                 <!-- Hauptinhalt, standardmäßig auf volle Breite -->
                 <div id="quiz-container" style="width:100%; height:100vh;"></div>
-                <button id="updateQuiz" onclick="updateQuiz()">Modified</button>
+                <!-- <div style="z-index: 1; position: absolute; bottom: 40px; right: 45px; ">
+                  
+                  <button onclick="updateData()" style=" position: fixed; border-radius: 50%;"><i style="font-size:36px" class="fa">&#xf067;</i></button>
+
+              </div> -->
+                
             </div>
     
             <div id="newQuestion" class="newContainer">
