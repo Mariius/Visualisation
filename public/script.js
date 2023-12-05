@@ -187,37 +187,34 @@ function updateData() {
     } 
     }
 
-});
+  });
 
-newQuizData.nodeDataArray.forEach(el => {
-    updatedData.questions.forEach(ques => {
-        if(ques.name == el.group){
-            ques.answers.push({"id":el.key, "text":el.text, "points": getPoints(el.key) , "correct": getCorrect(el.key), "percentage":getPercentage(el.key)});
-        }
-    })
-});
+  newQuizData.nodeDataArray.forEach(el => {
+      updatedData.questions.forEach(ques => {
+          if(ques.name == el.group){
+              ques.answers.push({"id":el.key, "text":el.text, "points": getPoints(el.key) , "correct": getCorrect(el.key), "percentage":getPercentage(el.key)});
+          }
+      })
+  });
 
-function getPoints(group) {
-    const match = newQuizData.nodeDataArray.find(node => node.group === group && node.text.includes("points"));
-    return match ? parseInt(match.text.split(":")[1].trim()) : 0;
-  }
+  function getPoints(group) {
+      const match = newQuizData.nodeDataArray.find(node => node.group === group && node.text.includes("points"));
+      return match ? parseInt(match.text.split(":")[1].trim()) : 0;
+    }
   function getPercentage(group) {
     const match = newQuizData.nodeDataArray.find(node => node.group === group && node.text.includes("percentage"));
     return match ? parseInt(match.text.split(":")[1].trim()) : 0;
   }
 
-function getCorrect(group) {
+  function getCorrect(group) {
     const match = newQuizData.nodeDataArray.find(node => node.group === group && node.text.includes("correct"));
     // return match.text.split(":")[1].trim();
     return /^true$/i.test(match.text.split(":")[1].trim());
   }
-function getLastID() {
-  const match = newQuizData.nodeDataArray.find(node =>  node.text.includes("lastID"));
-  return match ? parseInt(match.text.split(":")[1].trim()) : 0;
-}
-  
-  
-
+  function getLastID() {
+    const match = newQuizData.nodeDataArray.find(node =>  node.text.includes("lastID"));
+    return match ? parseInt(match.text.split(":")[1].trim()) : 0;
+  }
   
   fetch('/api/updateAll', {
     method: 'PUT',
@@ -234,6 +231,20 @@ function getLastID() {
     })
     .then(data => {
       console.log(data); // Output success or any other response from the server
+
+      // dialog Fenster
+      const dialog = document.getElementById("dialog");
+
+      // dialog.show();
+
+      dialog.showModal();
+
+      // Warte 10 Sekunden, bevor das Modal geschlossen wird
+      setTimeout(function() {
+          // Schließe das Modal nach 10 Sekunden
+          dialog.close();
+      }, 5000); // 10000 Millisekunden entsprechen 10 Sekunden
+
     })
     .catch(error => {
       console.error('Error:', error);
@@ -268,9 +279,9 @@ document.addEventListener("DOMContentLoaded", function () {
           selectedAnswer = question.answers.find((answer) => answer.id === selectedAnswerId);
           if (selectedAnswer) break;
         }
-
+    
         // Populate form fields with selected answer data
-        const answerRow = answerSelect.closest(".answerRow");
+        const answerRow = event.target.closest("tbody.answerRow");
         answerRow.querySelector(".answerText").value = selectedAnswer.text;
         answerRow.querySelector(".answerPoints").value = selectedAnswer.points;
         answerRow.querySelector(".answerCorrect").checked = selectedAnswer.correct;

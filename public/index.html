@@ -16,17 +16,18 @@
                 <h1 style="margin-left: 10px;">Quiz</h1>
             </div>
             <div class="searchQuestion">
-                <input type="text" id="searchInput" placeholder="Suche...">
+                <input type="text" id="searchInput" placeholder="Suche..." title="search a question">
             </div>
             <div class="menuItem">
-                <span  id= "AddQuestion" onclick="openContainer('newQuestion')" onmouseover="onmouse(this)" onmouseout="mouseout(this)">Add Question</span>
-                <span id=" CreateExam" onclick="openContainer('newExam')" onmouseover="onmouse(this)"  onmouseout="mouseout(this)">Create Exam</span> 
+                <span id="updateQuiz" onclick="updateData()" onmouseover="onmouse(this)" onmouseout="mouseout(this)" title="save all changes on questions and answers" >save changes</span>
+                <span  id= "AddQuestion" onclick="openContainer('newQuestion')" onmouseover="onmouse(this)" onmouseout="mouseout(this)" title="Add a new Question">Add Question</span>
+                <span id=" CreateExam" onclick="openContainer('newExam')" onmouseover="onmouse(this)"  onmouseout="mouseout(this)" title="create an exam">Create Exam</span> 
             </div>
         </header>
         <div class="container">
 
             <div id="main-content">
-              <button id="updateQuiz" onclick="updateData()" style="z-index: 1; ">Modified</button>
+              
                 <!-- Hauptinhalt, standardmäßig auf volle Breite -->
                 <div id="quiz-container" style="width:100%; height:100vh;"></div>
                 <!-- <div style="z-index: 1; position: absolute; bottom: 40px; right: 45px; ">
@@ -34,6 +35,12 @@
                   <button onclick="updateData()" style=" position: fixed; border-radius: 50%;"><i style="font-size:36px" class="fa">&#xf067;</i></button>
 
               </div> -->
+
+              <dialog id="dialog">
+
+                <h2>the questions have been successfully updated </h2>
+          
+              </dialog>
                 
             </div>
     
@@ -41,24 +48,33 @@
                 <!-- Inhalt für new Question -->
                 <h1 style="text-align: center;">Add new Question</h1>
                 <div id="newQuestion" style="width: 100%; justify-content: center; margin: 20px;">
-                    <form id="dataForm">
-                      <table>
-                        <tr>
-                          <td><label for="questionName">Question Name:</label></td>
-                          <td><input type="text" id="questionName" name="questionName" required></td>
-                        </tr>
-                        <tr>
-                          <td><label for="questionText">Question Text:</label></td>
-                          <td><input type="text" id="questionText" name="questionText" required></td>
-                        </tr>
-                        <tbody id="answersContainer" class="answerRow"></tbody>
-                        <tr>
-                          <td><button type="button" id="addAnswerBtn">Add Answer</button></td>
-                          <td><button type="submit">Add Question</button></td>
-                        </tr>
-                      </table>
-                    </form>
-                  </div>
+                  <form id="dataForm">
+                    <table>
+                      <tr>
+                        <td><label for="questionName">Question Name:</label></td>
+                        <td><input type="text" id="questionName" name="questionName" required></td>
+                      </tr>
+                      <tr>
+                        <td><label for="questionText">Question Text:</label></td>
+                        <td><input type="text" id="questionText" name="questionText" required></td>
+                      </tr>
+                      <tr>
+                        <!-- Hier sollte <tbody> innerhalb von <table> starten -->
+                        <td colspan="2">
+                          <table>
+                            <tbody id="answersContainer" class="answerRow"></tbody>
+                          </table>
+                        </td>
+                        <!-- Hier sollte </tbody> innerhalb von </table> enden -->
+                      </tr>
+                      <tr>
+                        <td><button type="button" id="addAnswerBtn">Add Answer</button></td>
+                        <td><button type="submit">Add Question</button></td>
+                      </tr>
+                    </table>
+                  </form>
+                </div>
+                
                 <button onclick="closeContainer('newQuestion')">cancel</button>
             </div>
     
