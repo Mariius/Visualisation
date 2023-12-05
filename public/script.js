@@ -257,12 +257,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const answersContainer = document.getElementById("answersContainer");
 
   function populateAnswerSelect(data) {
-    answerSelect.name = "answerSelect";
-    answerSelect.classList.add("answerSelect");
-    answerSelect.innerHTML = '<option value="" disabled selected>Select an Answer</option>';
-    data.questions.forEach((question) => {
-      question.answers.forEach((answer) => {
-        const option = document.createElement("option");
+    answerSelect.name = 'answerSelect';
+    answerSelect.classList.add('answerSelect');
+    answerSelect.innerHTML = '<option value="" >Select an Answer</option>';
+    data.questions.forEach(question => {
+      question.answers.forEach(answer => {
+        const option = document.createElement('option');
         option.value = answer.id;
         option.text = answer.text;
         answerSelect.appendChild(option);
@@ -270,24 +270,24 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Event listener for answer select
-    answerSelect.addEventListener("change", (event) => {
+    answersContainer.addEventListener('change', (event) => {
       const selectedAnswerId = parseInt(event.target.value);
       if (!isNaN(selectedAnswerId)) {
         // Find the selected answer in the JSON data
         let selectedAnswer;
         for (const question of data.questions) {
-          selectedAnswer = question.answers.find((answer) => answer.id === selectedAnswerId);
+          selectedAnswer = question.answers.find(answer => answer.id === selectedAnswerId);
           if (selectedAnswer) break;
         }
-    
-        // Populate form fields with selected answer data
-        const answerRow = event.target.closest("tbody.answerRow");
-        answerRow.querySelector(".answerText").value = selectedAnswer.text;
-        answerRow.querySelector(".answerPoints").value = selectedAnswer.points;
-        answerRow.querySelector(".answerCorrect").checked = selectedAnswer.correct;
-        answerRow.querySelector(".answerPercentage").value = selectedAnswer.percentage;
-      }
-    });
+
+    // Populate form fields with selected answer data
+    const answerRow = event.target.closest('.answerRow');
+    answerRow.querySelector('.ansText').value = selectedAnswer.text;
+    answerRow.querySelector('.ansPoints').value = selectedAnswer.points;
+    answerRow.querySelector('.ansCorrect').checked = selectedAnswer.correct;
+    answerRow.querySelector('.ansPercentage').value = selectedAnswer.percentage;
+  }
+});
   }
 
   function addAnswerRow() {
@@ -300,13 +300,13 @@ document.addEventListener("DOMContentLoaded", function () {
         <td>${answerSelect.outerHTML}</td>
       </tr>
       <tr><td><label for="answerText">Answer Text:</label></td>
-      <td><input type="text" class="answerText" name="answerText" required></td></tr>
+      <td><input type="text" id="answerText" class="ansText" name="ansText" required></td></tr>
       <tr><td><label for="answerPoints">Points:</label></td>
-      <td><input type="number" class="answerPoints" name="answerPoints" required></td></tr>
+      <td><input type="number" id="answerPoints" class="ansPoints" name="ansPoints" required></td></tr>
       <tr><td><label for="answerCorrect">Correct:</label></td>
-      <td><input type="checkbox" class="answerCorrect" name="answerCorrect"></td></tr>
+      <td><input type="checkbox" id="answerCorrect" class="ansCorrect" name="ansCorrect"></td></tr>
       <tr><td><label for="answerPercentage">Percentage:</label></td>
-      <td><input type="number" class="answerPercentage" name="answerPercentage" required></td></tr>
+      <td><input type="number" id="answerPercentage" class="ansPercentage" name="ansPercentage" required></td></tr>
     `;
 
     answersContainer.appendChild(newRow);
