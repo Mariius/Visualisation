@@ -1,5 +1,5 @@
 {
-  "lastID": 20,
+  "lastID": 25,
   "questions": [
     {
       "name": "Question 1",
@@ -168,14 +168,14 @@
       "text": "habe ich es geschaft?",
       "answers": [
         {
-          "id": 19,
+          "id": 18,
           "text": "ich glaube ja",
           "points": 12,
           "correct": false,
           "percentage": 100
         },
         {
-          "id": 20,
+          "id": 19,
           "text": "es kann sein",
           "points": 2,
           "correct": true,
@@ -188,173 +188,39 @@
       "text": "is it real?",
       "answers": [
         {
-          "id": 21,
+          "id": 20,
           "text": " know",
           "points": 2,
           "correct": true,
           "percentage": -3
         },
         {
-          "id": 22,
+          "id": 21,
           "text": "don't know",
           "points": 2,
           "correct": true,
           "percentage": -3
         },
         {
-          "id": 23,
+          "id": 22,
           "text": "maybe",
           "points": 2,
           "correct": false,
           "percentage": -3
         },
         {
-          "id": 24,
+          "id": 23,
           "text": "jas",
           "points": -2,
           "correct": false,
           "percentage": -2
         },
         {
-          "id": 25,
+          "id": 24,
           "text": "a",
           "points": 8,
           "correct": true,
           "percentage": -8
-        }
-      ]
-    },
-    {
-      "name": "frucht",
-      "text": "was ist sauer?",
-      "answers": [
-        {
-          "id": 0,
-          "text": "sdkjhskd",
-          "points": 3,
-          "correct": true,
-          "percentage": 3
-        },
-        {
-          "id": 1,
-          "text": "sdkjhskd",
-          "points": 3,
-          "correct": true,
-          "percentage": 3
-        }
-      ]
-    },
-    {
-      "name": "wjehwje",
-      "text": "ewewewewe",
-      "answers": [
-        {
-          "id": 0,
-          "text": "nein",
-          "points": -3,
-          "correct": false,
-          "percentage": -3
-        },
-        {
-          "id": 1,
-          "text": "nein",
-          "points": -3,
-          "correct": false,
-          "percentage": -3
-        }
-      ]
-    },
-    {
-      "name": "quest 100",
-      "text": "dfrf",
-      "answers": [
-        {
-          "id": 0,
-          "text": "sdkjhskd",
-          "points": 3,
-          "correct": true,
-          "percentage": 4
-        },
-        {
-          "id": 1,
-          "text": "sdkjhskd",
-          "points": 3,
-          "correct": true,
-          "percentage": 4
-        }
-      ]
-    },
-    {
-      "name": "wjehwje",
-      "text": "was ist gesmacktlos und nicht gut?",
-      "answers": [
-        {
-          "id": 0,
-          "text": "bafoussam",
-          "points": 0,
-          "correct": false,
-          "percentage": 0
-        },
-        {
-          "id": 1,
-          "text": "bafoussam",
-          "points": 0,
-          "correct": false,
-          "percentage": 0
-        },
-        {
-          "id": 2,
-          "text": "Earth",
-          "points": 0,
-          "correct": false,
-          "percentage": 50
-        }
-      ]
-    },
-    {
-      "name": "newbe",
-      "text": "nihct gut?",
-      "answers": [
-        {
-          "id": 0,
-          "text": "neio",
-          "points": 0,
-          "correct": false,
-          "percentage": 100
-        },
-        {
-          "id": 1,
-          "text": "neio",
-          "points": 0,
-          "correct": false,
-          "percentage": 100
-        },
-        {
-          "id": 2,
-          "text": "London",
-          "points": 0,
-          "correct": false,
-          "percentage": 102
-        }
-      ]
-    },
-    {
-      "name": "wwwwwww",
-      "text": "wsssssssssss",
-      "answers": [
-        {
-          "id": 0,
-          "text": "London",
-          "points": 0,
-          "correct": false,
-          "percentage": 100
-        },
-        {
-          "id": 1,
-          "text": "London",
-          "points": 0,
-          "correct": false,
-          "percentage": 100
         }
       ]
     }

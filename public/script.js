@@ -252,14 +252,34 @@ function updateData() {
 }
 
 //...............Add New question........................................................................................................................... 
-document.addEventListener("DOMContentLoaded", function () {
-  const answerSelect = document.createElement("select");
-  const answersContainer = document.getElementById("answersContainer");
+// Funktion zum Aktualisieren von lastID
+// function updateLastID(newLastID) {
+//   fetch("/api/update", {
+//     method: "PUT", // Änderung von POST auf PUT, da es sich um eine Aktualisierung handelt
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({ lastID: newLastID }),
+//   })
+//     .then((response) => response.json())
+//     .then((responseData) => {
+//       if (!responseData.success) {
+//         console.error('Failed to update lastID.');
+//       }
+//     })
+//     .catch(error => console.error('Error:', error));
+// }
 
-  function populateAnswerSelect(data) {
+document.addEventListener("DOMContentLoaded", function () {
+
+  function generateUniqueId() {
+   
+  }
+
+  function populateAnswerSelect(data, answerSelect) {
     answerSelect.name = 'answerSelect';
     answerSelect.classList.add('answerSelect');
-    answerSelect.innerHTML = '<option value="" >Select an Answer</option>';
+    answerSelect.innerHTML = '<option value="" disabled selected >Select an Answer</option>';
     data.questions.forEach(question => {
       question.answers.forEach(answer => {
         const option = document.createElement('option');
@@ -268,54 +288,38 @@ document.addEventListener("DOMContentLoaded", function () {
         answerSelect.appendChild(option);
       });
     });
-
-    // Event listener for answer select
-    answersContainer.addEventListener('change', (event) => {
-      const selectedAnswerId = parseInt(event.target.value);
-      if (!isNaN(selectedAnswerId)) {
-        // Find the selected answer in the JSON data
-        let selectedAnswer;
-        for (const question of data.questions) {
-          selectedAnswer = question.answers.find(answer => answer.id === selectedAnswerId);
-          if (selectedAnswer) break;
-        }
-
-    // Populate form fields with selected answer data
-    const answerRow = event.target.closest('.answerRow');
-    answerRow.querySelector('.ansText').value = selectedAnswer.text;
-    answerRow.querySelector('.ansPoints').value = selectedAnswer.points;
-    answerRow.querySelector('.ansCorrect').checked = selectedAnswer.correct;
-    answerRow.querySelector('.ansPercentage').value = selectedAnswer.percentage;
-  }
-});
   }
 
-  function addAnswerRow() {
+  function addAnswerRow(answersContainer) {
     const newRow = document.createElement("tbody");
     newRow.classList.add("answerRow");
 
+    const answerSelect = document.createElement("select");
+    populateAnswerSelect(data, answerSelect);
+
+    const answerId = Math.random(); // Jede Antwortzeile erhält eine neue eindeutige ID
     newRow.innerHTML = `
       <tr>
-        <td><label for="answerSelect">Select answer:</label></td>
+        <td><label for="${answerId}_select">Select answer:</label></td>
         <td>${answerSelect.outerHTML}</td>
       </tr>
-      <tr><td><label for="answerText">Answer Text:</label></td>
-      <td><input type="text" id="answerText" class="ansText" name="ansText" required></td></tr>
-      <tr><td><label for="answerPoints">Points:</label></td>
-      <td><input type="number" id="answerPoints" class="ansPoints" name="ansPoints" required></td></tr>
-      <tr><td><label for="answerCorrect">Correct:</label></td>
-      <td><input type="checkbox" id="answerCorrect" class="ansCorrect" name="ansCorrect"></td></tr>
-      <tr><td><label for="answerPercentage">Percentage:</label></td>
-      <td><input type="number" id="answerPercentage" class="ansPercentage" name="ansPercentage" required></td></tr>
+      <tr><td><label for="${answerId}_text">Answer Text:</label></td>
+      <td><input type="text" id="${answerId}_text" class="ansText" name="ansText" required></td></tr>
+      <tr><td><label for="${answerId}_points">Points:</label></td>
+      <td><input type="number" id="${answerId}_points" class="ansPoints" name="ansPoints" required></td></tr>
+      <tr><td><label for="${answerId}_correct">Correct:</label></td>
+      <td><input type="checkbox" id="${answerId}_correct" class="ansCorrect" name="ansCorrect"></td></tr>
+      <tr><td><label for="${answerId}_percentage">Percentage:</label></td>
+      <td><input type="number" id="${answerId}_percentage" class="ansPercentage" name="ansPercentage" required></td></tr>
     `;
 
     answersContainer.appendChild(newRow);
   }
 
-  function resetForm() {
+  function resetForm(answersContainer) {
     document.getElementById("questionName").value = "";
     document.getElementById("questionText").value = "";
-    answersContainer.innerHTML = ""; // Clear previous answer rows
+    answersContainer.innerHTML = "";
   }
 
   function submitForm(event) {
@@ -326,13 +330,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const answers = [];
     document.querySelectorAll(".answerRow").forEach((row, index) => {
-      const answerText = row.querySelector(".answerText").value;
-      const answerPoints = parseInt(row.querySelector(".answerPoints").value);
-      const answerCorrect = row.querySelector(".answerCorrect").checked;
-      const answerPercentage = parseInt(row.querySelector(".answerPercentage").value);
+      const answerSelect = row.querySelector("select");
+      const answerText = row.querySelector(".ansText").value;
+      const answerPoints = parseInt(row.querySelector(".ansPoints").value);
+      const answerCorrect = row.querySelector(".ansCorrect").checked;
+      const answerPercentage = parseInt(row.querySelector(".ansPercentage").value);
 
       answers.push({
-        id: index,
+        id: generateUniqueId(), // Nutze die aktualisierte generateUniqueId-Funktion
         text: answerText,
         points: answerPoints,
         correct: answerCorrect,
@@ -354,23 +359,46 @@ document.addEventListener("DOMContentLoaded", function () {
       body: JSON.stringify(newData),
     })
       .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          loadData(); // You might want to define/load this function
-          resetForm();
+      .then((responseData) => {
+        if (responseData.success) {
+          loadData();
+          resetForm(document.getElementById("answersContainer"));
         }
-      });
+      })
+      .catch(error => console.error('Error:', error));
   }
 
-  // Initial population of answerSelect
+  const answersContainer = document.getElementById("answersContainer");
+
+  document.getElementById("addAnswerBtn").addEventListener("click", () => {
+    addAnswerRow(answersContainer);
+  });
+
   fetch("/api/data")
     .then((response) => response.json())
-    .then((data) => populateAnswerSelect(data));
+    .then((responseData) => {
+      data = responseData;
+    });
 
-  // Event listeners
+  answersContainer.addEventListener('change', (event) => {
+    const selectedAnswerId = parseInt(event.target.value);
+    if (!isNaN(selectedAnswerId)) {
+      let selectedAnswer;
+      for (const question of data.questions) {
+        selectedAnswer = question.answers.find(answer => answer.id === selectedAnswerId);
+        if (selectedAnswer) break;
+      }
+
+      const answerRow = event.target.closest('.answerRow');
+      answerRow.querySelector('.ansText').value = selectedAnswer.text;
+      answerRow.querySelector('.ansPoints').value = selectedAnswer.points;
+      answerRow.querySelector('.ansCorrect').checked = selectedAnswer.correct;
+      answerRow.querySelector('.ansPercentage').value = selectedAnswer.percentage;
+    }
+  });
+
   document.getElementById("dataForm").addEventListener("submit", submitForm);
-  document.getElementById("addAnswerBtn").addEventListener("click", addAnswerRow);
-})
+});
 
 
 

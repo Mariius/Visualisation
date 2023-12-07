@@ -1,10 +1,10 @@
 const express = require('express');
-const fs = require('fs'); //fs= file system, zugriff auf Dateisystem des Betribsystems
+const fs = require('fs');
 const cors = require('cors');
 const app = express();
 const port = 3000;
 
-app.use(express.static('public')); // index.html muss sich im Ordner public befinden
+app.use(express.static('public'));
 app.use(express.json());
 app.use(cors());
 
@@ -35,6 +35,14 @@ app.post('/api/add', (req, res) => {
     }
 
     const jsonData = JSON.parse(data);
+
+    // Erhöhe lastID um eins und setze die neue ID für jede Antwort
+    jsonData.lastID += 1;
+    req.body.answers.forEach(answer => {
+      answer.id = jsonData.lastID;
+      jsonData.lastID += 1;
+    });
+
     const newEntry = {
       name: req.body.name,
       text: req.body.text,
@@ -87,7 +95,6 @@ app.delete('/api/delete/:name', (req, res) => {
   });
 });
 
-
 // Endpoint zum Aktualisieren aller Daten in der JSON-Datei
 app.put('/api/updateAll', (req, res) => {
   if (!req.body || !req.body.lastID || !req.body.questions) {
@@ -95,14 +102,12 @@ app.put('/api/updateAll', (req, res) => {
     return;
   }
 
-
- const updatedData = {
+  const updatedData = {
     lastID: req.body.lastID,
-    questions: req.body.questions
+    questions: req.body.questions,
   };
 
-
- fs.writeFile('quiz.json', JSON.stringify(updatedData, null, 2), 'utf8', (err) => {
+  fs.writeFile('quiz.json', JSON.stringify(updatedData, null, 2), 'utf8', (err) => {
     if (err) {
       console.error(err);
       res.status(500).send('Internal Server Error');
@@ -112,6 +117,34 @@ app.put('/api/updateAll', (req, res) => {
   });
 });
 
+// // Endpoint zum Aktualisieren von lastID
+// app.put('/api/update', (req, res) => {
+//   if (!req.body || !req.body.lastID) {
+//     res.status(400).json({ error: 'Bad Request: lastID is a required field.' });
+//     return;
+//   }
+
+//   fs.readFile('quiz.json', 'utf8', (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       res.status(500).send('Internal Server Error');
+//       return;
+//     }
+
+//     const jsonData = JSON.parse(data);
+//     jsonData.lastID = req.body.lastID;
+
+//     fs.writeFile('quiz.json', JSON.stringify(jsonData, null, 2), 'utf8', (err) => {
+//       if (err) {
+//         console.error(err);
+//         res.status(500).send('Internal Server Error');
+//         return;
+//       }
+
+//       res.json({ success: true });
+//     });
+//   });
+// });
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
