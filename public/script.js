@@ -253,27 +253,12 @@ function updateData() {
 
 //...............Add New question........................................................................................................................... 
 // Funktion zum Aktualisieren von lastID
-// function updateLastID(newLastID) {
-//   fetch("/api/update", {
-//     method: "PUT", // Änderung von POST auf PUT, da es sich um eine Aktualisierung handelt
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({ lastID: newLastID }),
-//   })
-//     .then((response) => response.json())
-//     .then((responseData) => {
-//       if (!responseData.success) {
-//         console.error('Failed to update lastID.');
-//       }
-//     })
-//     .catch(error => console.error('Error:', error));
-// }
+
 
 document.addEventListener("DOMContentLoaded", function () {
 
   function generateUniqueId() {
-   
+    return ;
   }
 
   function populateAnswerSelect(data, answerSelect) {

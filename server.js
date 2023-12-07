@@ -37,9 +37,9 @@ app.post('/api/add', (req, res) => {
     const jsonData = JSON.parse(data);
 
     // Erhöhe lastID um eins und setze die neue ID für jede Antwort
-    jsonData.lastID += 1;
+    // jsonData.lastID += 1;
     req.body.answers.forEach(answer => {
-      answer.id = jsonData.lastID;
+      answer.id = (jsonData.lastID);
       jsonData.lastID += 1;
     });
 
@@ -117,34 +117,7 @@ app.put('/api/updateAll', (req, res) => {
   });
 });
 
-// // Endpoint zum Aktualisieren von lastID
-// app.put('/api/update', (req, res) => {
-//   if (!req.body || !req.body.lastID) {
-//     res.status(400).json({ error: 'Bad Request: lastID is a required field.' });
-//     return;
-//   }
 
-//   fs.readFile('quiz.json', 'utf8', (err, data) => {
-//     if (err) {
-//       console.error(err);
-//       res.status(500).send('Internal Server Error');
-//       return;
-//     }
-
-//     const jsonData = JSON.parse(data);
-//     jsonData.lastID = req.body.lastID;
-
-//     fs.writeFile('quiz.json', JSON.stringify(jsonData, null, 2), 'utf8', (err) => {
-//       if (err) {
-//         console.error(err);
-//         res.status(500).send('Internal Server Error');
-//         return;
-//       }
-
-//       res.json({ success: true });
-//     });
-//   });
-// });
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
