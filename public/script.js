@@ -252,18 +252,15 @@ function updateData() {
 }
 
 //...............Add New question........................................................................................................................... 
-// Funktion zum Aktualisieren von lastID
-
-
 document.addEventListener("DOMContentLoaded", function () {
 
-  function generateUniqueId() {
-    return ;
+  function setId() {
+    return 0;
   }
 
   function populateAnswerSelect(data, answerSelect) {
-    answerSelect.name = 'answerSelect';
-    answerSelect.classList.add('answerSelect');
+    // answerSelect.name = 'answerSelect';
+    // answerSelect.classList.add('answerSelect');
     answerSelect.innerHTML = '<option value="" disabled selected >Select an Answer</option>';
     data.questions.forEach(question => {
       question.answers.forEach(answer => {
@@ -322,7 +319,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const answerPercentage = parseInt(row.querySelector(".ansPercentage").value);
 
       answers.push({
-        id: generateUniqueId(), // Nutze die aktualisierte generateUniqueId-Funktion
+        id: setId(), // Nutze die aktualisierte setId-Funktion
         text: answerText,
         points: answerPoints,
         correct: answerCorrect,
@@ -365,22 +362,32 @@ document.addEventListener("DOMContentLoaded", function () {
       data = responseData;
     });
 
-  answersContainer.addEventListener('change', (event) => {
-    const selectedAnswerId = parseInt(event.target.value);
-    if (!isNaN(selectedAnswerId)) {
-      let selectedAnswer;
-      for (const question of data.questions) {
-        selectedAnswer = question.answers.find(answer => answer.id === selectedAnswerId);
-        if (selectedAnswer) break;
-      }
+  document.getElementById('answersContainer').addEventListener('input', (event) => {
+    // Prüfen, ob das Event von einem select-Element ausgelöst wurde
+    if (event.target.tagName.toLowerCase() === 'select') {
+        const selectedAnswerId = parseInt(event.target.value);
 
-      const answerRow = event.target.closest('.answerRow');
-      answerRow.querySelector('.ansText').value = selectedAnswer.text;
-      answerRow.querySelector('.ansPoints').value = selectedAnswer.points;
-      answerRow.querySelector('.ansCorrect').checked = selectedAnswer.correct;
-      answerRow.querySelector('.ansPercentage').value = selectedAnswer.percentage;
+        if (!isNaN(selectedAnswerId)) {
+            const selectedQuestion = data.questions.find(question => 
+                question.answers.some(answer => answer.id === selectedAnswerId)
+            );
+
+            if (selectedQuestion) {
+                const selectedAnswer = selectedQuestion.answers.find(answer => answer.id === selectedAnswerId);
+
+                const answerRow = event.target.closest('.answerRow');
+                if (answerRow) {
+                    answerRow.querySelector('.ansText').value = selectedAnswer.text;
+                    answerRow.querySelector('.ansPoints').value = selectedAnswer.points;
+                    answerRow.querySelector('.ansCorrect').checked = selectedAnswer.correct;
+                    answerRow.querySelector('.ansPercentage').value = selectedAnswer.percentage;
+                }
+            }
+        }
     }
   });
+  
+  
 
   document.getElementById("dataForm").addEventListener("submit", submitForm);
 });
