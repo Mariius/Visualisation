@@ -303,6 +303,9 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("questionText").value = "";
     answersContainer.innerHTML = "";
   }
+  
+  window.resetForm = resetForm; // Die Funktion wird global zugänglich gemacht
+
 
   function submitForm(event) {
     event.preventDefault();
@@ -354,6 +357,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.getElementById("addAnswerBtn").addEventListener("click", () => {
     addAnswerRow(answersContainer);
+  });
+
+  document.getElementById("cancelAnswerBtn").addEventListener("click", function () {
+    const answersContainer = document.getElementById("answersContainer");
+    const lastAnswerRow = answersContainer.lastElementChild;
+    if (lastAnswerRow) {
+      answersContainer.removeChild(lastAnswerRow);
+    }
   });
 
   fetch("/api/data")

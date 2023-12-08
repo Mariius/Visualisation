@@ -20,16 +20,24 @@ function closeContainer(containerId) {
     document.getElementById(containerId).style.display = 'none';
     document.getElementById('main-content').style.flex = '1';
 
+    // if (window.resetForm) {
+    //     // Rufen Sie die resetForm-Funktion auf oder verwenden Sie sie nach Bedarf
+    //     window.resetForm(document.getElementById("anderesAnswersContainer"));
+    //   } else {
+    //     console.error('Die resetForm-Funktion wurde nicht gefunden.');
+    //   }
+    // resetFrorm(document.getElementById("answersContainer"));
+
     // Setze den aktuell geöffneten Container zurück
     openContainerId = null;
 }
 
-function onmouse(ident)
+function mousseOnMemuIem(ident)
 {
  ident.style.color = 'aquamarine' ;
 }
 
-function mouseout(ident)
+function mousseOutOfMemuIem(ident)
 {
  ident.style.color='white'; 
 }

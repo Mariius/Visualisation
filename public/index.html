@@ -19,9 +19,9 @@
                 <input type="text" id="searchInput" placeholder="Suche..." title="search a question">
             </div>
             <div class="menuItem">
-                <span id="updateQuiz" onclick="updateData()" onmouseover="onmouse(this)" onmouseout="mouseout(this)" title="save all changes on questions and answers" >save changes</span>
-                <span  id= "AddQuestion" onclick="openContainer('newQuestion')" onmouseover="onmouse(this)" onmouseout="mouseout(this)" title="Add a new Question">Add Question</span>
-                <span id=" CreateExam" onclick="openContainer('newExam')" onmouseover="onmouse(this)"  onmouseout="mouseout(this)" title="create an exam">Create Exam</span> 
+                <span id="updateQuiz" onclick="updateData()" onmouseover="mousseOnMemuIem(this)" onmouseout="mousseOutOfMemuIem(this)" title="save all changes on questions and answers" >save changes</span>
+                <span  id= "AddQuestion" onclick="openContainer('newQuestion')" onmouseover="mousseOnMemuIem(this)" onmouseout="mousseOutOfMemuIem(this)" title="Add a new Question">Add Question</span>
+                <span id=" CreateExam" onclick="openContainer('newExam')" onmouseover="mousseOnMemuIem(this)"  onmouseout="mousseOutOfMemuIem(this)" title="create an exam">Create Exam</span> 
             </div>
         </header>
         <div class="container">
@@ -70,13 +70,16 @@
                       </tr>
                       <tr>
                         <td><button type="button" id="addAnswerBtn">Add Answer</button></td>
+                          <td colspan="2"><button type="button" id="cancelAnswerBtn">Cancel Answer</button></td>
+                          
                         <td><button type="submit">Add Question</button></td>
+                        <td><button onclick="closeContainer('newQuestion')">cancel</button></td>
                       </tr>
                     </table>
                   </form>
                 </div>
                 
-                <button onclick="closeContainer('newQuestion')">cancel</button>
+                <!-- <button onclick="closeContainer('newQuestion')">cancel</button> -->
             </div>
     
             <div id="newExam" class="newContainer">
