@@ -134,6 +134,114 @@ function init() {
         })
         .bind("text", "text", null, null));  // `null` as the fourth argument makes this a two-way binding
 
+  // search
+  document.addEventListener("DOMContentLoaded", function () {
+    
+    // Neues HTML-Element für die Autovervollständigungsliste
+    const autoCompleteList = document.getElementById("autoCompleteList");
+
+    function search() {
+      try {
+        const searchingEl = document.getElementById("searchInput").value.toLowerCase();
+        console.log("Search term:", searchingEl);
+  
+        // Verwende das ursprüngliche nodeDataArray
+        const filteredNodes = originalNodeDataArray.filter((element) => {
+          const groupData = myDiagram.model.findNodeDataForKey(element.group);
+          const parentGroupData = groupData ? myDiagram.model.findNodeDataForKey(groupData.group) : null;
+  
+          return (
+            element.text.toLowerCase().includes(searchingEl) ||
+            (groupData && groupData.text.toLowerCase().includes(searchingEl)) ||
+            (parentGroupData && parentGroupData.text.toLowerCase().includes(searchingEl))
+          );
+        });
+  
+        // Extrahieren aller Nodes mit Details (points, percentage, correct) von jeder Frage oder Antwort
+        const detailsNodes = myDiagram.model.nodeDataArray
+          .filter((node) => filteredNodes.includes(node.group) || filteredNodes.includes(node.key))
+          .map((detailNode) => {
+            return {
+              ...detailNode,
+              isCorrect: detailNode.isCorrect,
+              percentage: detailNode.percentage,
+              points: detailNode.points,
+              id: detailNode.id,
+            };
+          });
+  
+        // Diagramm mit den gefilterten Nodes aktualisieren
+        myDiagram.model.nodeDataArray = filteredNodes.concat(detailsNodes);
+        myDiagram.updateAllTargetBindings();  // Aktualisiere die Bindungen
+  
+        // Zeige die Liste mit den Texten der gefilterten Nodes an
+        updateAutoCompleteList(filteredNodes);
+
+        // Überprüfe, ob das Suchfeld leer ist, und verstecke die Liste entsprechend
+        if (searchingEl === "") {
+          hideAutoCompleteList();
+        }
+  
+        console.log("Filtered nodes:", myDiagram.model.nodeDataArray);
+      } catch (error) {
+        console.error("An error occurred:", error);
+      }
+    }
+  
+    // Funktion zum Aktualisieren der Autovervollständigungsliste
+    function updateAutoCompleteList(filteredNodes) {
+      const autoCompleteList = document.getElementById("autoCompleteList");
+      autoCompleteList.innerHTML = "";
+  
+      // // Leere die vorhandene Liste
+      // while (autoCompleteList.firstChild) {
+      //   autoCompleteList.removeChild(autoCompleteList.firstChild);
+      // }
+  
+      // Füge die Texte der gefilterten Nodes zur Liste hinzu
+      filteredNodes.forEach((node) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = node.text;
+        listItem.addEventListener("click", () => {
+          // Fülle das Suchfeld mit dem ausgewählten Text
+          document.getElementById("searchInput").value = node.text;
+          // Führe die Suche erneut aus, um das Diagramm zu aktualisieren
+          search();
+          hideAutoCompleteList();
+        });
+        autoCompleteList.appendChild(listItem);
+      });
+    }
+
+    // Neue Funktion zum Verstecken der Autovervollständigungsliste
+    function hideAutoCompleteList() {
+      autoCompleteList.style.display = "none";
+    }
+
+    // Neue Funktion zum Anzeigen der Autovervollständigungsliste
+    function showAutoCompleteList() {
+      autoCompleteList.style.display = "block";
+    }
+
+    // Event Listener für das Input-Feld, um die Liste bei Eingabe anzuzeigen und zu aktualisieren
+    document.getElementById('searchInput').addEventListener('input', (event) => {
+      search();
+      // Zeige die Liste, wenn das Suchfeld nicht leer ist
+      if (event.target.value !== "") {
+        showAutoCompleteList();
+      } else {
+        // Verstecke die Liste, wenn das Suchfeld leer ist
+        hideAutoCompleteList();
+      }
+    });
+  
+  });
+
+
+    
+
+
+
   loadData();
 }
 // initiate the diagram
@@ -161,9 +269,13 @@ function loadData() {
       });
       myDiagram.model = go.Model.fromJson(quizData);
 
-
+      originalNodeDataArray = quizData.nodeDataArray.slice(); // Kopiere die Daten für die spätere Verwendung
+      myDiagram.model = go.Model.fromJson(quizData);
     });
-  }
+
+    // Daten beim Laden speichern
+    originalNodeDataArray = JSON.parse(JSON.stringify(myDiagram.model.nodeDataArray));
+}
 
 
 //..............................UPDATE JSON FILE..........................................

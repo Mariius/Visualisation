@@ -77,6 +77,28 @@ footer {
 }
 
 
-
+.autoCompleteContainer {
+    position: absolute;
+    z-index: 1000; /* Z-Index anpassen, um sicherzustellen, dass es über anderen Elementen liegt */
+    background-color:  #333; /* Hintergrundfarbe anpassen */
+    border: 1px solid #e9e6e6; /* Rand hinzufügen, um die Liste zu umgeben */
+    max-height: 200px; /* Maximalhöhe der Liste festlegen (kann nach Bedarf angepasst werden) */
+    overflow-y: auto; /* Bei Bedarf einen Scrollbalken hinzufügen */
+  }
+  
+  #autoCompleteList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  #autoCompleteList li {
+    padding: 5px;
+    cursor: pointer;
+  }
+  
+  #autoCompleteList li:hover {
+    background-color: #bb7474;
+  }
 
 
