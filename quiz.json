@@ -313,6 +313,19 @@
       "name": "jhsafgjaed",
       "text": "lsdghflkds",
       "answers": []
+    },
+    {
+      "name": -145,
+      "text": "ist Marius klug?",
+      "answers": [
+        {
+          "id": -2,
+          "text": "ja",
+          "points": 10,
+          "correct": true,
+          "percentage": 100
+        }
+      ]
     }
   ]
 }

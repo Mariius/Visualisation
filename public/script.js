@@ -144,11 +144,18 @@ function init() {
           });
 
   
-  var newQuestionKey = "question " + Math.random();
+  var newQuestionKey =  Math.floor(Math.random());
+  var answerKey = Math.floor(Math.random()); 
   myPalette.model = new go.GraphLinksModel([
-    { text: "New Node", color: "#ACE600" },
-    {key: Math.random(), text: "new Answer", isGroup: true} ,
-    {key: newQuestionKey ,text: "new question", isGroup:true, horiz:true} 
+    // { text: "New Node", color: "#ACE600" },
+    // {key: Math.random(), text: "new Answer", isGroup: true} ,
+    // {key: newQuestionKey ,text: "new question", isGroup:true, horiz:true} ,
+
+    {key:newQuestionKey, text:"new question" ,isGroup:true,horiz:true},
+    {key:answerKey, text:"New Answer",isGroup:true, group:newQuestionKey},
+    {text:("ist correct:"+"_"),group:answerKey},
+    {text:"points: 10","group":answerKey},
+    {text:"percentage: 100","group":answerKey},
     
   ]);
 
