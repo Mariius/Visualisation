@@ -63,6 +63,15 @@ header {
     transition: all 0.3s ease; /* Animation für die Breitenänderung */
 }
 
+.questionForm{
+    flex: 1;
+}
+
+.questionGraph{
+    flex:1;
+    background-color: aqua;
+}
+
 footer {
     background-color: #333;
     color: #fff;

@@ -134,6 +134,24 @@ function init() {
         })
         .bind("text", "text", null, null));  // `null` as the fourth argument makes this a two-way binding
 
+  // ------- Graphic Add question.---------------
+
+  myPalette =
+        new go.Palette("myPaletteDiv",
+          {
+            nodeTemplateMap: myDiagram.nodeTemplateMap,
+            groupTemplateMap: myDiagram.groupTemplateMap
+          });
+
+  
+  var newQuestionKey = "question " + Math.random();
+  myPalette.model = new go.GraphLinksModel([
+    { text: "New Node", color: "#ACE600" },
+    {key: Math.random(), text: "new Answer", isGroup: true} ,
+    {key: newQuestionKey ,text: "new question", isGroup:true, horiz:true} 
+    
+  ]);
+
   // search
   document.addEventListener("DOMContentLoaded", function () {
     

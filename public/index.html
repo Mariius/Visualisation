@@ -16,11 +16,7 @@
                 <h1 style="margin-left: 10px;">Quiz</h1>
             </div>
             <div class="searchQuestion">
-                <input type="text" id="searchInput"  placeholder="Suche..." title="search a question">
-                <!-- Hier wird die Autovervollständigungsliste eingefügt -->
-                <div class="autoCompleteContainer">
-                  <ul id="autoCompleteList"></ul>
-                </div>
+                <input type="text" id="searchInput" placeholder="Suche..." title="search a question">
             </div>
             <div class="menuItem">
                 <span id="updateQuiz" onclick="updateData()" onmouseover="mousseOnMemuIem(this)" onmouseout="mousseOutOfMemuIem(this)" title="save all changes on questions and answers" >save changes</span>
@@ -82,6 +78,7 @@
                     </table>
                   </form>
                 </div>
+                <div id="myPaletteDiv" style="width: 100%; height: 500px;"></div>
                 
                 <!-- <button onclick="closeContainer('newQuestion')">cancel</button> -->
             </div>
