@@ -16,11 +16,8 @@ function init() {
     "undoManager.isEnabled": true
 });
 
-
-
   // The one template for Groups can be configured to be either layout out its members
   // horizontally or vertically, each with a different default color.
-
   function makeLayout(horiz) {  // a Binding conversion function
     if (horiz) {
       return new go.GridLayout(
@@ -135,7 +132,6 @@ function init() {
         .bind("text", "text", null, null));  // `null` as the fourth argument makes this a two-way binding
 
   // ------- Graphic Add question.---------------
-
   myPalette =
         new go.Palette("myPaletteDiv",
           {
@@ -214,7 +210,6 @@ function init() {
       const autoCompleteList = document.getElementById("autoCompleteList");
       autoCompleteList.innerHTML = "";
   
-  
       // Füge die Texte der gefilterten Nodes zur Liste hinzu
       filteredNodes.forEach((node) => {
         const listItem = document.createElement("li");
@@ -254,15 +249,82 @@ function init() {
   
   });
 
-
-    
-
-
-
+  
   loadData();
 }
 // initiate the diagram
 init();
+
+//--------- Event-Handler für das contextmenu-Ereignis----------------
+myDiagram.div.addEventListener('contextmenu', function (e) {
+  e.preventDefault(); // Verhindert das Standardkontextmenü des Browsers
+  showCustomContextMenu(e.pageX, e.pageY);
+});
+
+// Funktion zum Anzeigen des benutzerdefinierten Kontextmenüs
+function showCustomContextMenu(x, y) {
+  // Erstellen Sie ein HTML-Element für das benutzerdefinierte Kontextmenü
+  var contextMenu = document.createElement('div');
+  contextMenu.style.position = 'absolute';
+  contextMenu.style.left = x + 'px';
+  contextMenu.style.top = y + 'px';
+  contextMenu.style.backgroundColor = '#fff';
+  contextMenu.style.border = '1px solid #ccc';
+  contextMenu.style.padding = '5px';
+  contextMenu.style.zIndex = '1000';
+
+  // Fügen Sie Menüelemente hinzu (ersetzen Sie dies durch Ihre eigenen Aktionen)
+  var copyMenuItem = document.createElement('div');
+  copyMenuItem.textContent = 'Copy';
+  copyMenuItem.addEventListener('click', function () {
+    // Fügen Sie die Logik für die "Copy"-Aktion hinzu
+    myDiagram.commandHandler.copySelection(); 
+    //alert('Copy action');
+    contextMenu.remove();
+  });
+  contextMenu.appendChild(copyMenuItem);
+
+  var pasteMenuItem = document.createElement('div');
+  pasteMenuItem.textContent = 'Paste';
+  pasteMenuItem.addEventListener('click', function () {
+    // Fügen Sie die Logik für die "Paste"-Aktion hinzu
+    myDiagram.commandHandler.pasteSelection(); 
+    //alert('Paste action');
+    contextMenu.remove();
+  });
+  contextMenu.appendChild(pasteMenuItem);
+
+  var undoMenuItem = document.createElement('div');
+  undoMenuItem.textContent = 'Undo';
+  undoMenuItem.addEventListener('click', function () {
+    // Fügen Sie die Logik für die "Undo"-Aktion hinzu
+    myDiagram.commandHandler.undo(); 
+    //alert('Undo action');
+    contextMenu.remove();
+  });
+  contextMenu.appendChild(undoMenuItem);
+
+  var redoMenuItem = document.createElement('div');
+  redoMenuItem.textContent = 'Redo';
+  redoMenuItem.addEventListener('click', function () {
+    // Fügen Sie die Logik für die "Redo"-Aktion hinzu
+    myDiagram.commandHandler.redo(); 
+   // alert('Redo action');
+    contextMenu.remove();
+  });
+  contextMenu.appendChild(redoMenuItem);
+
+  // Fügen Sie das benutzerdefinierte Kontextmenü zum DOM hinzu
+  document.body.appendChild(contextMenu);
+
+  // Event-Handler zum Entfernen des Kontextmenüs beim Klicken außerhalb
+  document.addEventListener('click', function (event) {
+    if (!contextMenu.contains(event.target)) {
+      contextMenu.remove();
+    }
+  });
+}
+
 
 // ..................................Load data to Diagramm..............................
 function loadData() {
@@ -365,7 +427,6 @@ function updateData() {
       const dialog = document.getElementById("dialog");
 
       // dialog.show();
-
       dialog.showModal();
 
       // Warte 10 Sekunden, bevor das Modal geschlossen wird
@@ -526,112 +587,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
   });
-  
-  
-
   document.getElementById("dataForm").addEventListener("submit", submitForm);
 });
 
-
-
-
-//   fetch('/api/add', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify(newData),
-//   })
-//     .then(response => response.json())
-//     .then(data => {
-//       if (data.success) {
-//         document.getElementById("questionName").value = '';
-//         document.getElementById("questionText").value = '';
-//         document.getElementById("answer1Text").value = '';
-//         document.getElementById("answer1Points").value = '';
-//         document.getElementById("answer1Correct").checked = false;
-//         document.getElementById("answer2Text").value = '';
-//         document.getElementById("answer2Points").value = '';
-//         document.getElementById("answer2Correct").checked = false;
-//         document.getElementById("answer3Text").value = '';
-//         document.getElementById("answer3Points").value = '';
-//         document.getElementById("answer3Correct").checked = false;
-//         loadData();
-//         const done = document.createElement('p');
-//         done.textContent = `the question ${questionName} was added successfuly`;
-//         messageDiv.appendChild(done);
-
-//         setTimeout(function () {
-//           messageDiv.style.display = "none";
-//           newQ.style.display = "none";
-//           startR1.style.display = "flex";
-//         }, 100); // 10000 Millisekunden (10 Sekunden)
-
-//       }
-//       else {
-//         const failled = document.createElement('p');
-//         failled.textContent = `the question ${questionName} could not be added`;
-//         messageDiv.appendChild(failled);
-
-
-//         setTimeout(function () {
-//           messageDiv.style.display = "none";
-//           newQ.style.display = "none";
-//           startR1.style.display = "flex";
-//         }, 100); // 10000 Millisekunden (10 Sekunden)
-
-//       }
-//     });
-
-// });
-
-// // Initial laden der Daten
-// loadData();
-
-// function showContent(contentId) {
-//   // Alle Inhaltscontainer ausblenden
-//   var contentContainers = document.querySelectorAll('.inhalt_recht');
-//   contentContainers.forEach(function (container) {
-//     container.style.display = 'none';
-//   });
-
-//   // Den ausgewählten Inhalt anzeigen
-//   var selectedContent = document.getElementById(contentId);
-//   selectedContent.style.display = 'block';
-// }
-
-// function hideContent(contentId) {
-  
-//   var selectedContent = document.getElementById(contentId);
-//   selectedContent.style.display = 'none';
-//   startR1.style.display = "flex";
-// }
-
-// // cellEd.addEventListener('click', ()=>{
-
-// // });
-
-// function deleteQuestion(questionName) {
-//   fetch(`/api/delete/${encodeURIComponent(questionName)}`, {
-//       method: 'DELETE',
-//   })
-//   .then(response => {
-//       if (!response.ok) {
-//           throw new Error(`Fehler beim Löschen der Frage: ${response.status}`);
-//       }
-//       return response.json();
-//   })
-//   .then(result => {
-//       console.log('Frage erfolgreich gelöscht:', result);
-//       // Hier kannst du weitere Aktionen nach dem Löschen durchführen
-//       var contentContainers = document.querySelectorAll('.upper');
-//       contentContainers.forEach(function (container) {
-//         container.style.display = 'none';
-//       });
-//       loadData();
-//   })
-//   .catch(error => {
-//       console.error('Fehler beim Löschen der Frage:', error);
-//   });
-// }
 
