@@ -102,10 +102,38 @@ app.put('/api/updateAll', (req, res) => {
     return;
   }
 
+  let currentID = 0; 
+
   const updatedData = {
-    lastID: req.body.lastID,
-    questions: req.body.questions,
+    lastID: currentID,
+    questions: [],
   };
+
+  // Iteriere über alle Fragen
+  req.body.questions.forEach((question) => {
+    const updatedQuestion = {
+      name: question.name,
+      text: question.text,
+      answers: [],
+    };
+
+    // Setze die Id für jede Antwort in aufsteigender Reihenfolge
+    question.answers.forEach((answer) => {
+      updatedQuestion.answers.push({
+        id: currentID++,
+        text: answer.text,
+        points: answer.points,
+        correct: answer.correct,
+        percentage: answer.percentage,
+      });
+    });
+
+    // Füge die aktualisierte Frage zum updatedData hinzu
+    updatedData.questions.push(updatedQuestion);
+    // Aktualisiere lastID basierend auf der Id der letzten Antwort
+    const lastAnswerId = updatedQuestion.answers.length - 1;
+    updatedData.lastID += lastAnswerId + 1;
+  });
 
   fs.writeFile('quiz.json', JSON.stringify(updatedData, null, 2), 'utf8', (err) => {
     if (err) {
@@ -116,6 +144,7 @@ app.put('/api/updateAll', (req, res) => {
     res.json({ success: true });
   });
 });
+
 
 
 
