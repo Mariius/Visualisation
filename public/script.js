@@ -218,7 +218,7 @@ function init() {
           // Fülle das Suchfeld mit dem ausgewählten Text
           document.getElementById("searchInput").value = node.text;
           // Führe die Suche erneut aus, um das Diagramm zu aktualisieren
-          search();
+          searchQuestion();
           hideAutoCompleteList();
         });
         autoCompleteList.appendChild(listItem);
@@ -316,8 +316,33 @@ function showCustomContextMenu(x, y) {
 
   var deleteMenuItem = document.createElement('div');
   deleteMenuItem.textContent = 'Delete';
-  deleteMenuItem.addEventListener('click', function () {
-    // Fügen Sie die Logik für die "Redo"-Aktion hinzu
+  deleteMenuItem.addEventListener('click', function(event) {
+    if (event.name !== "ObjectSingleClicked") return;
+    var part = event.subject.part;
+  
+    // Überprüfen Sie, ob ein gültiges Teil (Element oder Verbindung) ausgewählt wurde  
+    if (part instanceof go.Part) {
+      // Überprüfen Sie, ob das Teil ein Knoten (Node) ist   
+       if (part instanceof go.Node) {
+  
+        // Zugriff auf die Daten des ausgewählten Knotens     
+         var data = part.data;
+  
+        // Überprüfen Sie, ob das Datenobjekt einen "key" hat      
+        if (data && data.key !== undefined) {
+  
+          // Hier haben Sie den "key" des ausgewählten Elements        
+          var selectedKey = data.key;
+  
+          console.log("Selected Key:", selectedKey);
+
+          // Fügen Sie hier Ihren Code für die Verwendung des "key" hinzu
+  
+        }
+  
+      }
+  
+    }
     
    // alert('Redo action');
     contextMenu.remove();
@@ -333,6 +358,31 @@ function showCustomContextMenu(x, y) {
       contextMenu.remove();
     }
   });
+}
+
+// Funktion zum Aufrufen der Server-API zum Löschen des Elements
+function deleteElementOnServer(elementId) {
+  fetch('/api/deleteElement', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ elementId: elementId }),
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data); // Erfolg oder eine andere Antwort vom Server
+
+      // Hier können Sie weitere Aktionen nach dem Löschen durchführen
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
 }
 
 

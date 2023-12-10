@@ -1,12 +1,15 @@
 const express = require('express');
 const fs = require('fs');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 
 app.use(express.static('public'));
 app.use(express.json());
 app.use(cors());
+app.use(bodyParser.json());
+
 
 // Endpoint zum Lesen der JSON-Daten
 app.get('/api/data', (req, res) => {
@@ -62,39 +65,6 @@ app.post('/api/add', (req, res) => {
   });
 });
 
-// Endpoint zum Löschen einer Frage anhand des Namens
-app.delete('/api/delete/:name', (req, res) => {
-  const questionNameToDelete = req.params.name;
-
-  fs.readFile('quiz.json', 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Internal Server Error');
-      return;
-    }
-
-    const jsonData = JSON.parse(data);
-    const updatedQuestions = jsonData.questions.filter(question => question.name !== questionNameToDelete);
-
-    if (jsonData.questions.length !== updatedQuestions.length) {
-      // Es wurde mindestens eine Frage gefunden und gelöscht
-      jsonData.questions = updatedQuestions;
-
-      // Speichere die aktualisierten Daten in der JSON-Datei
-      fs.writeFile('quiz.json', JSON.stringify(jsonData, null, 2), 'utf8', (err) => {
-        if (err) {
-          console.error(err);
-          res.status(500).send('Internal Server Error');
-          return;
-        }
-        res.json({ success: true });
-      });
-    } else {
-      res.status(404).json({ error: 'Frage nicht gefunden' });
-    }
-  });
-});
-
 // Endpoint zum Aktualisieren aller Daten in der JSON-Datei
 app.put('/api/updateAll', (req, res) => {
   if (!req.body || !req.body.lastID || !req.body.questions) {
@@ -142,6 +112,45 @@ app.put('/api/updateAll', (req, res) => {
       return;
     }
     res.json({ success: true });
+  });
+});
+
+// Endpoint zum Löschen von Fragen oder Antworten
+app.delete('/api/deleteElement', (req, res) => {
+  const elementId = req.body.elementId;
+
+  if (!elementId) {
+    res.status(400).json({ error: 'Bad Request: elementId is required.' });
+    return;
+  }
+
+  fs.readFile('quiz.json', 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+      return;
+    }
+
+    let jsonData = JSON.parse(data);
+
+    const isQuestion = jsonData.questions.some(question => question.name === elementId);
+
+    if (isQuestion) {
+      jsonData.questions = jsonData.questions.filter(question => question.name !== elementId);
+    } else {
+      jsonData.questions.forEach(question => {
+        question.answers = question.answers.filter(answer => answer.id !== elementId);
+      });
+    }
+
+    fs.writeFile('quiz.json', JSON.stringify(jsonData, null, 2), 'utf8', (err) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+        return;
+      }
+      res.json({ success: true });
+    });
   });
 });
 

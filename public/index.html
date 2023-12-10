@@ -17,6 +17,10 @@
             </div>
             <div class="searchQuestion">
                 <input type="text" id="searchInput" placeholder="Suche..." title="search a question">
+                <!-- Hier wird die Autovervollständigungsliste eingefügt -->
+                <div class="autoCompleteContainer">
+                  <ul id="autoCompleteList"></ul>
+                </div>
             </div>
             <div class="menuItem">
                 <span id="updateQuiz" onclick="updateData()" onmouseover="mousseOnMemuIem(this)" onmouseout="mousseOutOfMemuIem(this)" title="save all changes on questions and answers" >save changes</span>

@@ -1,5 +1,5 @@
 {
-  "lastID": 36,
+  "lastID": 30,
   "questions": [
     {
       "name": "Question 1",
@@ -180,43 +180,16 @@
           "points": 2,
           "correct": true,
           "percentage": -2
-        }
-      ]
-    },
-    {
-      "name": "reality",
-      "text": "is it real?",
-      "answers": [
+        },
         {
           "id": 20,
-          "text": " know",
-          "points": 2,
-          "correct": true,
-          "percentage": -3
-        },
-        {
-          "id": 21,
-          "text": "don't know",
-          "points": 2,
-          "correct": true,
-          "percentage": -3
-        },
-        {
-          "id": 22,
-          "text": "maybe",
-          "points": 2,
-          "correct": false,
-          "percentage": -3
-        },
-        {
-          "id": 23,
           "text": "jas",
           "points": -2,
           "correct": false,
           "percentage": -2
         },
         {
-          "id": 24,
+          "id": 21,
           "text": "a",
           "points": 8,
           "correct": true,
@@ -225,128 +198,66 @@
       ]
     },
     {
-      "name": "wjehwje",
-      "text": "dfrf",
+      "name": "reality",
+      "text": "is it real?",
+      "answers": [
+        {
+          "id": 22,
+          "text": " know",
+          "points": 2,
+          "correct": true,
+          "percentage": -3
+        },
+        {
+          "id": 23,
+          "text": "don't know",
+          "points": 2,
+          "correct": true,
+          "percentage": -3
+        },
+        {
+          "id": 24,
+          "text": "maybe",
+          "points": 2,
+          "correct": false,
+          "percentage": -3
+        }
+      ]
+    },
+    {
+      "name": "hgsfdhga",
+      "text": "sdggfg",
       "answers": [
         {
           "id": 25,
           "text": "Berlin",
-          "points": 0,
+          "points": 8,
           "correct": false,
-          "percentage": 50
-        }
-      ]
-    },
-    {
-      "name": "fdhgsdfg",
-      "text": "gdfsgsdfg",
-      "answers": [
-        {
-          "id": 26,
-          "text": "Paris",
-          "points": 10,
-          "correct": true,
-          "percentage": 100
+          "percentage": 80
         },
         {
-          "id": 27,
-          "text": "Jupiter",
-          "points": 10,
+          "id": 26,
+          "text": "tzfrdsfdgh",
+          "points": -4,
           "correct": true,
-          "percentage": 100
-        }
-      ]
-    },
-    {
-      "name": "zhtrh",
-      "text": "kiu6uik",
-      "answers": [
-        {
-          "id": 28,
-          "text": "yaounde",
-          "points": 30,
-          "correct": true,
-          "percentage": 100
-        }
-      ]
-    },
-    {
-      "name": "rfsf",
-      "text": "fdfd",
-      "answers": [
-        {
-          "id": 29,
-          "text": "hgsfadh",
-          "points": 923,
-          "correct": true,
-          "percentage": 100
-        }
-      ]
-    },
-    {
-      "name": "dfd",
-      "text": "dfd",
-      "answers": [
-        {
-          "id": 30,
-          "text": "London",
-          "points": 0,
-          "correct": false,
-          "percentage": 100
-        }
-      ]
-    },
-    {
-      "name": "dfd2",
-      "text": "dfdfd",
-      "answers": [
-        {
-          "id": 31,
-          "text": "dfd",
-          "points": 45,
-          "correct": true,
-          "percentage": -1
-        }
-      ]
-    },
-    {
-      "name": "jhsafgjaed",
-      "text": "lsdghflkds",
-      "answers": []
-    },
-    {
-      "name": -145,
-      "text": "ist Marius klug?",
-      "answers": [
-        {
-          "id": 32,
-          "text": "ja",
-          "points": 10,
-          "correct": true,
-          "percentage": 100
-        }
-      ]
-    },
-    {
-      "name": "question0",
-      "text": "new question",
-      "answers": [
-        {
-          "id": 33,
-          "text": "New Answer",
-          "points": 10,
-          "correct": false,
-          "percentage": 100
+          "percentage": 4
         }
       ]
     },
     {
       "name": "question 0",
-      "text": "new question",
+      "text": "bist du zufrieden?",
       "answers": [
         {
-          "id": 34,
-          "text": "badidr",
+          "id": 27,
+          "text": "ja",
+          "points": 10,
+          "correct": false,
+          "percentage": 100
+        },
+        {
+          "id": 28,
+          "text": "nein",
           "points": 10,
           "correct": false,
           "percentage": 100
@@ -354,12 +265,12 @@
       ]
     },
     {
-      "name": "question 0.3925929844358482",
-      "text": "atstion",
+      "name": "question 02",
+      "text": "bist du zufrieden?",
       "answers": [
         {
-          "id": 35,
-          "text": "wer",
+          "id": 29,
+          "text": "ja",
           "points": 10,
           "correct": false,
           "percentage": 100
