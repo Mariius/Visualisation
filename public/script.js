@@ -144,28 +144,24 @@ function init() {
           });
 
   
-  var newQuestionKey =  Math.floor(Math.random());
-  var answerKey = Math.floor(Math.random()); 
+  var newQuestionKey = "question " + Math.abs(Math.floor(Math.random()));
+  var answerKey = 0; // antwort id initialisieren, sie wird dann vom server gesetzt.
   myPalette.model = new go.GraphLinksModel([
-    // { text: "New Node", color: "#ACE600" },
-    // {key: Math.random(), text: "new Answer", isGroup: true} ,
-    // {key: newQuestionKey ,text: "new question", isGroup:true, horiz:true} ,
-
     {key:newQuestionKey, text:"new question" ,isGroup:true,horiz:true},
     {key:answerKey, text:"New Answer",isGroup:true, group:newQuestionKey},
-    {text:("ist correct:"+"_"),group:answerKey},
+    {text:("correct:"+"_"),group:answerKey},
     {text:"points: 10","group":answerKey},
     {text:"percentage: 100","group":answerKey},
     
   ]);
 
-  // search
+  // search a question-----------------
   document.addEventListener("DOMContentLoaded", function () {
     
     // Neues HTML-Element für die Autovervollständigungsliste
     const autoCompleteList = document.getElementById("autoCompleteList");
 
-    function search() {
+    function searchQuestion() {
       try {
         const searchingEl = document.getElementById("searchInput").value.toLowerCase();
         console.log("Search term:", searchingEl);
@@ -218,10 +214,6 @@ function init() {
       const autoCompleteList = document.getElementById("autoCompleteList");
       autoCompleteList.innerHTML = "";
   
-      // // Leere die vorhandene Liste
-      // while (autoCompleteList.firstChild) {
-      //   autoCompleteList.removeChild(autoCompleteList.firstChild);
-      // }
   
       // Füge die Texte der gefilterten Nodes zur Liste hinzu
       filteredNodes.forEach((node) => {
@@ -250,7 +242,7 @@ function init() {
 
     // Event Listener für das Input-Feld, um die Liste bei Eingabe anzuzeigen und zu aktualisieren
     document.getElementById('searchInput').addEventListener('input', (event) => {
-      search();
+      searchQuestion();
       // Zeige die Liste, wenn das Suchfeld nicht leer ist
       if (event.target.value !== "") {
         showAutoCompleteList();
