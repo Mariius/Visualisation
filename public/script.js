@@ -272,9 +272,9 @@ function showCustomContextMenu(x, y) {
   contextMenu.style.border = '1px solid #ccc';
   contextMenu.style.padding = '5px';
   contextMenu.style.zIndex = '1000';
-
   // Fügen Sie Menüelemente hinzu (ersetzen Sie dies durch Ihre eigenen Aktionen)
-  var copyMenuItem = document.createElement('div');
+  var copyMenuItem = document.createElement('div'); 
+  
   copyMenuItem.textContent = 'Copy';
   copyMenuItem.addEventListener('click', function () {
     // Fügen Sie die Logik für die "Copy"-Aktion hinzu
@@ -313,6 +313,16 @@ function showCustomContextMenu(x, y) {
     contextMenu.remove();
   });
   contextMenu.appendChild(redoMenuItem);
+
+  var deleteMenuItem = document.createElement('div');
+  deleteMenuItem.textContent = 'Delete';
+  deleteMenuItem.addEventListener('click', function () {
+    // Fügen Sie die Logik für die "Redo"-Aktion hinzu
+    
+   // alert('Redo action');
+    contextMenu.remove();
+  });
+  contextMenu.appendChild(deleteMenuItem);
 
   // Fügen Sie das benutzerdefinierte Kontextmenü zum DOM hinzu
   document.body.appendChild(contextMenu);
