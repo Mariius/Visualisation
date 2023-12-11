@@ -268,12 +268,23 @@ function showCustomContextMenu(x, y) {
   contextMenu.style.position = 'absolute';
   contextMenu.style.left = x + 'px';
   contextMenu.style.top = y + 'px';
-  contextMenu.style.backgroundColor = '#fff';
+  contextMenu.style.backgroundColor = '#333';
+  contextMenu.style.color = '#fff';
   contextMenu.style.border = '1px solid #ccc';
   contextMenu.style.padding = '5px';
   contextMenu.style.zIndex = '1000';
+  var style = document.createElement('style');
+  style.textContent = `
+    span:hover {
+      background-color: #bb7474;
+      color: #fff;
+    }
+  `;
+
+  contextMenu.appendChild(style);
   // Fügen Sie Menüelemente hinzu (ersetzen Sie dies durch Ihre eigenen Aktionen)
-  var copyMenuItem = document.createElement('div'); 
+  var copyMenuItem = document.createElement('span');
+  copyMenuItem.style.display = 'block'; 
   
   copyMenuItem.textContent = 'Copy';
   copyMenuItem.addEventListener('click', function () {
@@ -284,7 +295,8 @@ function showCustomContextMenu(x, y) {
   });
   contextMenu.appendChild(copyMenuItem);
 
-  var pasteMenuItem = document.createElement('div');
+  var pasteMenuItem = document.createElement('span');
+  pasteMenuItem.style.display = 'block'; 
   pasteMenuItem.textContent = 'Paste';
   pasteMenuItem.addEventListener('click', function () {
     // Fügen Sie die Logik für die "Paste"-Aktion hinzu
@@ -294,7 +306,8 @@ function showCustomContextMenu(x, y) {
   });
   contextMenu.appendChild(pasteMenuItem);
 
-  var undoMenuItem = document.createElement('div');
+  var undoMenuItem = document.createElement('span');
+  undoMenuItem.style.display = 'block'; 
   undoMenuItem.textContent = 'Undo';
   undoMenuItem.addEventListener('click', function () {
     // Fügen Sie die Logik für die "Undo"-Aktion hinzu
@@ -304,17 +317,31 @@ function showCustomContextMenu(x, y) {
   });
   contextMenu.appendChild(undoMenuItem);
 
-  var redoMenuItem = document.createElement('div');
+  var redoMenuItem = document.createElement('span');
+  redoMenuItem.style.display = 'block'; 
   redoMenuItem.textContent = 'Redo';
   redoMenuItem.addEventListener('click', function () {
     // Fügen Sie die Logik für die "Redo"-Aktion hinzu
-    myDiagram.commandHandler.redo(); 
+    myDiagram.commandHandler.redo();
    // alert('Redo action');
     contextMenu.remove();
   });
   contextMenu.appendChild(redoMenuItem);
 
-  var deleteMenuItem = document.createElement('div');
+  var duplicateMenuItem = document.createElement('span');
+  duplicateMenuItem.style.display = 'block'; 
+  duplicateMenuItem.textContent = 'Duplicate';
+  duplicateMenuItem.addEventListener('click', function () {
+    // Fügen Sie die Logik für die "Redo"-Aktion hinzu
+    myDiagram.commandHandler.copySelection(); 
+    myDiagram.commandHandler.pasteSelection();
+   // alert('Redo action');
+    contextMenu.remove();
+  });
+  contextMenu.appendChild(duplicateMenuItem);
+
+  var deleteMenuItem = document.createElement('span');
+  deleteMenuItem.style.display = 'block'; 
   deleteMenuItem.textContent = 'Delete';
   deleteMenuItem.addEventListener('click', function(event) {
     if (event.name !== "ObjectSingleClicked") return;
