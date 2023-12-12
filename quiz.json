@@ -1,5 +1,5 @@
 {
-  "lastID": 30,
+  "lastID": 27,
   "questions": [
     {
       "name": "Question 1",
@@ -234,13 +234,6 @@
           "points": 8,
           "correct": false,
           "percentage": 80
-        },
-        {
-          "id": 26,
-          "text": "tzfrdsfdgh",
-          "points": -4,
-          "correct": true,
-          "percentage": 4
         }
       ]
     },
@@ -249,28 +242,8 @@
       "text": "bist du zufrieden?",
       "answers": [
         {
-          "id": 27,
-          "text": "ja",
-          "points": 10,
-          "correct": false,
-          "percentage": 100
-        },
-        {
-          "id": 28,
+          "id": 26,
           "text": "nein",
-          "points": 10,
-          "correct": false,
-          "percentage": 100
-        }
-      ]
-    },
-    {
-      "name": "question 02",
-      "text": "bist du zufrieden?",
-      "answers": [
-        {
-          "id": 29,
-          "text": "ja",
           "points": 10,
           "correct": false,
           "percentage": 100

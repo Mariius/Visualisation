@@ -343,32 +343,27 @@ function showCustomContextMenu(x, y) {
   var deleteMenuItem = document.createElement('span');
   deleteMenuItem.style.display = 'block'; 
   deleteMenuItem.textContent = 'Delete';
-  deleteMenuItem.addEventListener('click', function(event) {
-    if (event.name !== "ObjectSingleClicked") return;
-    var part = event.subject.part;
-  
-    // Überprüfen Sie, ob ein gültiges Teil (Element oder Verbindung) ausgewählt wurde  
-    if (part instanceof go.Part) {
-      // Überprüfen Sie, ob das Teil ein Knoten (Node) ist   
-       if (part instanceof go.Node) {
-  
-        // Zugriff auf die Daten des ausgewählten Knotens     
-         var data = part.data;
-  
-        // Überprüfen Sie, ob das Datenobjekt einen "key" hat      
-        if (data && data.key !== undefined) {
-  
-          // Hier haben Sie den "key" des ausgewählten Elements        
-          var selectedKey = data.key;
-  
-          console.log("Selected Key:", selectedKey);
+  deleteMenuItem.addEventListener('click', function() {
+    // Hier den ausgewählten Knoten abrufen
+    var selectedNode = myDiagram.selection.first();
 
-          // Fügen Sie hier Ihren Code für die Verwendung des "key" hinzu
-  
-        }
-  
+    // Überprüfen, ob ein gültiges Teil (Element oder Verbindung) ausgewählt wurde  
+    if (selectedNode instanceof go.Node) {
+      // Zugriff auf die Daten des ausgewählten Knotens     
+      var data = selectedNode.data;
+
+      // Überprüfen Sie, ob das Datenobjekt einen "key" hat      
+      if (data && data.key !== undefined) {
+
+        // Hier haben Sie den "key" des ausgewählten Elements        
+        var selectedKey = data.key;
+
+        console.log("Selected Key:", selectedKey);
+        myDiagram.remove(selectedNode);
+        deleteElementOnServer(selectedKey);
+
+        // Fügen Sie hier Ihren Code für die Verwendung des "key" hinzu
       }
-  
     }
     
    // alert('Redo action');
