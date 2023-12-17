@@ -5,13 +5,22 @@ function init() {
     // when a drag-drop occurs in the Diagram's background, make it a top-level node
     mouseDrop: e => finishDrop(e, null),
     layout:  // Diagram has horizontal layout with wrapping
-        new go.GridLayout(
-            {
-                wrappingColumn: Infinity,
-                spacing: new go.Size(5, 5),  // optional: set spacing between nodes
-                cellSize: new go.Size(1, 1),
-                alignment: go.GridLayout.Position
-            }),
+        // new go.GridLayout(
+        //     {
+        //         wrappingColumn: Infinity,
+        //         spacing: new go.Size(5, 5),  // optional: set spacing between nodes
+        //         cellSize: new go.Size(1, 1),
+        //         alignment: go.GridLayout.Position
+        //     }),
+        new go.ForceDirectedLayout( {
+            defaultSpringLength: 0,
+            defaultElectricalCharge: 30,
+            wrappingColumn: Infinity,
+            spacing: new go.Size(5, 5),  // optional: set spacing between nodes
+            cellSize: new go.Size(1, 1),
+            alignment: go.GridLayout.Position
+          })
+        ,
     "commandHandler.archetypeGroupData": { isGroup: true, text: "Group", horiz: false },
     "undoManager.isEnabled": true
 });
@@ -130,6 +139,18 @@ function init() {
           opacity: 0.90
         })
         .bind("text", "text", null, null));  // `null` as the fourth argument makes this a two-way binding
+
+
+  myDiagram.linkTemplate =
+    go.GraphObject.make(go.Link,
+      {
+        routing: go.Link.Normal,
+        curve: go.Link.Bezier,
+        corner: 10,
+        selectable: false
+      },
+      go.GraphObject.make(go.Shape, { strokeWidth: 2, stroke: "black" })
+    );
 
   // ------- Graphic Add question.---------------
   myPalette =
@@ -419,12 +440,13 @@ function loadData() {
       quizData.nodeDataArray.push({text: "lastID: "+ data.lastID})
       data.questions.forEach(question =>{
 
-        quizData.nodeDataArray.push({key: question.name ,text: question.text, isGroup:true, horiz:true});
+        quizData.nodeDataArray.push({key: question.name ,text: question.text,  horiz:true});
         question.answers.forEach(answer => {
           quizData.nodeDataArray.push({key:answer.id, text: answer.text, isGroup: true, group: question.name});
           quizData.nodeDataArray.push({text: "correct: "+answer.correct, group:answer.id});
           quizData.nodeDataArray.push({text: "points: "+answer.points, group:answer.id});
           quizData.nodeDataArray.push({text: "percentage: "+answer.percentage, group:answer.id});
+          quizData.linkDataArray.push({from: question.name, to: answer.id});
         })
 
       });
