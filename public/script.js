@@ -140,6 +140,19 @@ function init() {
         })
         .bind("text", "text", null, null));  // `null` as the fourth argument makes this a two-way binding
 
+  myDiagram.nodeTemplateMap.add("questionNode",
+  go.GraphObject.make(go.Node, "Auto",
+    { click: function(e, node) {toggleAnswersVisibility(node);} },
+    go.GraphObject.make(go.Shape, "RoundedRectangle", { fill: "rgba(255, 221, 51, 0.55)", stroke: "black" }),
+    go.GraphObject.make(go.TextBlock, { margin: 8 }, new go.Binding("text", "text", function (text) {
+      // Limit the text to, for example, 10 characters
+      if (text.length > 13) {
+        return text.substring(0, 10) + "...";
+      } else {
+        return text;
+      }
+    }))
+  ));
 
   myDiagram.linkTemplate =
     go.GraphObject.make(go.Link,
@@ -440,7 +453,7 @@ function loadData() {
       quizData.nodeDataArray.push({text: "lastID: "+ data.lastID})
       data.questions.forEach(question =>{
 
-        quizData.nodeDataArray.push({key: question.name ,text: question.text,  horiz:true});
+        quizData.nodeDataArray.push({key: question.name ,text: question.text,  horiz:true, category: "questionNode"});
         question.answers.forEach(answer => {
           quizData.nodeDataArray.push({key:answer.id, text: answer.text, isGroup: true, group: question.name});
           quizData.nodeDataArray.push({text: "correct: "+answer.correct, group:answer.id});
@@ -458,6 +471,33 @@ function loadData() {
 
     // Daten beim Laden speichern
     originalNodeDataArray = JSON.parse(JSON.stringify(myDiagram.model.nodeDataArray));
+}
+
+function toggleAnswersVisibility(parentNode) {
+  console.log(" cliqued")
+  // Überprüfen, ob findTreeChildrenNodes definiert ist
+  if (parentNode.findTreeChildrenNodes) {
+    // Iterieren Sie durch alle Kinder des Elternknotens
+    parentNode.findTreeChildrenNodes().each(function(childNode) {
+        // Überprüfen, ob childNode definiert ist und die visible-Eigenschaft hat
+        if (childNode && 'visible' in childNode) {
+            // Umschalten der Sichtbarkeit des Kindknotens
+            childNode.visible = !childNode.visible;
+
+            // Überprüfen, ob links definiert ist
+            if (childNode.links) {
+                // Iterieren Sie durch alle Verbindungen des Kindknotens
+                childNode.links.each(function(link) {
+                    // Überprüfen, ob link definiert ist und die visible-Eigenschaft hat
+                    if (link && 'visible' in link) {
+                        // Umschalten der Sichtbarkeit der Verbindung zum Kindknoten
+                        link.visible = !link.visible;
+                    }
+                });
+            }
+        }
+    });
+}
 }
 
 
