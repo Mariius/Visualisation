@@ -144,14 +144,7 @@ function init() {
   go.GraphObject.make(go.Node, "Auto",
     { click: function(e, node) {toggleAnswersVisibility(node);} },
     go.GraphObject.make(go.Shape, "RoundedRectangle", { fill: "rgba(255, 221, 51, 0.55)", stroke: "black" }),
-    go.GraphObject.make(go.TextBlock, { margin: 8 }, new go.Binding("text", "text", function (text) {
-      // Limit the text to, for example, 10 characters
-      if (text.length > 13) {
-        return text.substring(0, 10) + "...";
-      } else {
-        return text;
-      }
-    }))
+    go.GraphObject.make(go.TextBlock, { margin: 8 }, new go.Binding("text", "text",))
   ));
 
   myDiagram.linkTemplate =
@@ -450,27 +443,33 @@ function loadData() {
       console.log(data);
 
       var quizData = { "nodeDataArray": [], "linkDataArray": [] };
-      quizData.nodeDataArray.push({text: "lastID: "+ data.lastID})
-      data.questions.forEach(question =>{
-
-        quizData.nodeDataArray.push({key: question.name ,text: question.text,  horiz:true, category: "questionNode"});
+      quizData.nodeDataArray.push({text: "lastID: "+ data.lastID});
+      data.questions.forEach(question => {
+        quizData.nodeDataArray.push({ key: question.name, text: question.text, horiz: true, category: "questionNode" });
         question.answers.forEach(answer => {
-          quizData.nodeDataArray.push({key:answer.id, text: answer.text, isGroup: true, group: question.name});
-          quizData.nodeDataArray.push({text: "correct: "+answer.correct, group:answer.id});
-          quizData.nodeDataArray.push({text: "points: "+answer.points, group:answer.id});
-          quizData.nodeDataArray.push({text: "percentage: "+answer.percentage, group:answer.id});
-          quizData.linkDataArray.push({from: question.name, to: answer.id});
+          quizData.nodeDataArray.push({ key: answer.id, text: answer.text, isGroup: true, group: question.name, visible: false });
+          quizData.nodeDataArray.push({ text: "correct: " + answer.correct, group: answer.id });
+          quizData.nodeDataArray.push({ text: "points: " + answer.points, group: answer.id });
+          quizData.nodeDataArray.push({ text: "percentage: " + answer.percentage, group: answer.id });
+          quizData.linkDataArray.push({ from: question.name, to: answer.id });
         })
-
       });
       myDiagram.model = go.Model.fromJson(quizData);
 
       originalNodeDataArray = quizData.nodeDataArray.slice(); // Kopiere die Daten für die spätere Verwendung
-      myDiagram.model = go.Model.fromJson(quizData);
-    });
 
-    // Daten beim Laden speichern
-    originalNodeDataArray = JSON.parse(JSON.stringify(myDiagram.model.nodeDataArray));
+      // Sichtbarkeit für alle Links und Knoten standardmäßig auf false setzen
+      myDiagram.nodes.each(function (node) {
+        node.visible = node.data.visible !== undefined ? node.data.visible : true;
+      });
+
+      myDiagram.links.each(function (link) {
+        link.visible = link.data.visible !== undefined ? link.data.visible : true;
+      });
+    })
+    .catch(error => {
+      console.error('Error loading data:', error);
+    });
 }
 
 function toggleAnswersVisibility(parentNode) {
