@@ -45,9 +45,9 @@ header {
 
 #main-content {
     flex: 1;
-    /* height: 100vh; */
+    height: 100vh;
     background-color: rgb(214, 106, 106); /* Hintergrundfarbe für den Hauptinhalt */
-    /* overflow: hidden; */
+    /* overflow: auto; */
     transition: all 0.3s ease; /* Animation für die Breitenänderung */
     display: flex;
     
@@ -56,8 +56,8 @@ header {
 .newContainer {
     flex: 0;
     display: none;
-    /* height: 100vh; */
-    /* overflow: hidden; */
+    height: 100vh;
+    overflow: auto;
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
     transition: all 0.3s ease; /* Animation für die Breitenänderung */

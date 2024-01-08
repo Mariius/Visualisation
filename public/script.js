@@ -483,6 +483,17 @@ function toggleAnswersVisibility(parentNode) {
             // Umschalten der Sichtbarkeit des Kindknotens
             childNode.visible = !childNode.visible;
 
+            // Setzen Sie das ForceDirectedLayout nur für die "Answers"-Groups
+      myDiagram.nodes.each(function (node) {
+        if (node.category === "questionNode") {
+          var layout = go.GraphObject.make(go.ForceDirectedLayout, {
+            defaultSpringLength: 0,
+            defaultElectricalCharge: 30,
+          });
+          node.layout = layout;
+        }
+      });
+
             // Überprüfen, ob links definiert ist
             if (childNode.links) {
                 // Iterieren Sie durch alle Verbindungen des Kindknotens
